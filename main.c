@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
+/*   Updated: 2024/03/15 12:59:50 by apeposhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "include/minibash.h"
+#include "include/minishell.h"
 
 static void	prompt(t_data *data)
 {
@@ -26,9 +37,9 @@ static void	prompt(t_data *data)
 	}
 }
 
-void	set_data(t_data *data, char** env)
+void	set_data(t_data *data, char **env)
 {
-	data->envp = arrdup(env);
+	data->envp = ft_arrdup(env);
 	data->exit_status = 0;
 	data->exit = false;
 	data->input = NULL;
@@ -37,8 +48,9 @@ void	set_data(t_data *data, char** env)
 
 int	main(int argc, char **argv, char **env)
 {
+	t_data	data;
+
 	(void)argv;
-	t_data data;
 	set_data(&data, env);
 	if (argc != 1)
 		printf("All arguments will be ignored\n");

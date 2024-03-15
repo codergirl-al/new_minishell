@@ -24,7 +24,7 @@
 # run:
 # 	./$(TARGET)
 
-NAME			=		minibash
+NAME			=		minishell
 NAME_TEST		=		test
 CC				=		cc
 AR				=		ar rcs

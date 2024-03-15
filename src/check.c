@@ -6,12 +6,11 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 11:44:34 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:57:51 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minibash.h"
-#include <ctype.h>
+#include "../include/minishell.h"
 
 /*
 // ...	none
