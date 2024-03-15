@@ -6,19 +6,19 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:56:06 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 10:58:22 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:24:13 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib.h"
 
-int ft_arrlen(const void** arr)
+int	ft_arrlen(const void **arr)
 {
-    int it;
+	int	it;
 
-    it = -1;
-    if (arr)
-        while (arr[++it])
-            ;
-    return (it);
+	it = -1;
+	if (arr)
+		while (arr[++it])
+			;
+	return (it);
 }
