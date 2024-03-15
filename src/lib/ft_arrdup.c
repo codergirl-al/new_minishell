@@ -6,13 +6,11 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:55:59 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 11:30:06 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:32:39 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib.h"
-
-int	ft_arrlen(char **arr);
 
 char	**ft_arrdup(char **arr)
 {
