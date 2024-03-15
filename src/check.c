@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 12:57:51 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:13:52 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 #define FLAG_1 (1 << 2)
 #define FLAG_2 (1 << 3)
 #define FLAG_3 (1 << 4)
+#define FLAG_4 (1 << 5)
+
 
 static int	istoken(char c)
 {
