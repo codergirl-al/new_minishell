@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/16 18:21:32 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/16 23:04:06 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	prompt(t_data *data)
 			ft_parse_input(data->input, &shell_commands);
 			// executer
 		}
-		else if (!data->input || data->exit)
+		else if (!data->input || data->exit || g_sig < 256)
 			break ;
 		if (data->prev_input)
 			free(data->prev_input);
@@ -42,6 +42,7 @@ static void	prompt(t_data *data)
 
 void	set_data(t_data *data, char **env)
 {
+	g_sig = 256;
 	data->envp = ft_arrdup(env);
 	data->exit_status = 0;
 	data->exit = false;
