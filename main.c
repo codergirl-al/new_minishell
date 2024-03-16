@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 15:43:47 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/16 15:28:40 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	prompt(t_data *data)
 {
 	t_list	shell_commands;
 
+	setup_signal_handling();
 	while (1)
 	{
 		printf(GREEN);

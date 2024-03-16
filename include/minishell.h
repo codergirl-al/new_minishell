@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 17:05:53 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/16 15:27:41 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <signal.h>
+# include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -30,6 +31,8 @@
 # define ORANGE "\033[38;5;202m\033[22m"
 # define GRAY "\033[1;30m"
 # define DEFAULT "\033[1;39m"
+
+int	g_sig;
 
 enum e_type
 {
@@ -63,6 +66,6 @@ typedef struct s_command
 int		checker(char **input);
 int		ft_parse_input(char *input, t_list	*lst);
 int		parse_cmd(t_exec *exe, char *str);
-// void	handle_sigint(int sig);
+void	setup_signal_handling(void);
 
 #endif
