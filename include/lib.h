@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 11:32:57 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:51:33 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-int		ft_arrlen(const void **arr);
+int		ft_arrlen(char **arr);
 char	*ft_arrcmp(void **arr, void *keyword);
 char	**ft_arrdup(char **arr);
 char	*ft_strjoin(char *s1, char *s2);

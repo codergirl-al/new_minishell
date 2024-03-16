@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 12:59:50 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:43:47 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	prompt(t_data *data)
 {
+	t_list	shell_commands;
+
 	while (1)
 	{
 		printf(GREEN);
@@ -25,7 +27,7 @@ static void	prompt(t_data *data)
 		{
 			data->exit_status = checker(&data->input);
 			add_history(data->input);
-			ft_parse_input(data->input);
+			ft_parse_input(data->input, &shell_commands);
 			// executer
 		}
 		else if (!data->input || data->exit)

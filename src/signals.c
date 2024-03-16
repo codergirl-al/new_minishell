@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrlen.c                                        :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 10:56:06 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 14:06:24 by apeposhi         ###   ########.fr       */
+/*   Created: 2024/03/15 16:14:56 by apeposhi          #+#    #+#             */
+/*   Updated: 2024/03/15 16:33:59 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lib.h"
+// #include "../include/minishell.h"
 
-int	ft_arrlen(char **arr)
-{
-	int	it;
+// void handle_sigint(int sig) {
+	
+// }
 
-	it = -1;
-	if (arr)
-		while (arr[++it])
-			;
-	return (it);
-}
+// void handle_sigquit(int sig) {
+	
+// }
+
+// void handle_eof() {
+	
+// }

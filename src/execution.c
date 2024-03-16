@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 13:05:28 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:14:22 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_getpath(char **env, char *f_cmd)
 	char	*s_tmp;
 
 	s_tmp = NULL;
-	path = ft_arrcmp(env, "PATH=");
+	path = ft_arrcmp((void **)env, "PATH=");
 	if (!path)
 		return (NULL);
 	path += 5;
@@ -37,16 +37,15 @@ char	*ft_getpath(char **env, char *f_cmd)
 	return (s_tmp);
 }
 
-int	execute(t_command *commande, t_data *data)
+int	execute(t_command *commande, t_data *data, int stdin)
 {
-	char	*path;
-	char	**arr;
+	t_exec	*exe;
 
-	parse_cmd(&arr, commande->cmd);
-	path = ft_getpath(data->envp, arr[0]);
+	parse_cmd(exe, commande->cmd);
 	dup2(stdin, STDIN_FILENO);
 	close(stdin);
-	execve(path, arr, data->envp);
+	exe->path = ft_getpath(data->envp, exe->cmd[0]);
+	execve(exe->path, exe->cmd, data->envp);
 	return (1);
 }
 
@@ -66,7 +65,7 @@ int	execution(t_list *list, t_data *data)
 		{
 			if (!fork())
 			{
-				execute(cmd, data);
+				execute(cmd, data, stdin);
 				return (1);
 			}
 			close(stdin);
@@ -82,7 +81,7 @@ int	execution(t_list *list, t_data *data)
 				close(fd[0]);
 				dup2(fd[1], STDOUT_FILENO);
 				close(fd[1]);
-				execute(cmd, data);
+				execute(cmd, data, stdin);
 				return (1);
 			}
 			close(fd[1]);

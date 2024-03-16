@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 13:13:01 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:05:53 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdbool.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <stdio.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -46,14 +46,23 @@ typedef struct s_data
 	char	*prev_input;
 }	t_data;
 
+typedef struct s_exec
+{
+	char	**cmd;
+	int		fd_in;
+	int		fd_out;
+	char	*path;
+}	t_exec;
+
 typedef struct s_command
 {
 	char	*cmd;
 	int		type;
 }	t_command;
 
-int	checker(char **input);
-int	ft_parse_input(char *input, t_list	lst);
-int	parse_cmd(char ***arr, char *str);
+int		checker(char **input);
+int		ft_parse_input(char *input, t_list	*lst);
+int		parse_cmd(t_exec *exe, char *str);
+// void	handle_sigint(int sig);
 
 #endif
