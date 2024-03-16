@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:14:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/16 17:19:51 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:17:57 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,12 @@ void	handle_signal(int sig)
 		g_sig = 0;
 }
 
-void	setup_signal_handling(void)
-{
-	struct	termios term_settings;
+void setup_signal_handling(void) {
+    struct sigaction sa;
 
-    // Disable the control characters for terminal like Ctrl-C (handled within the program)
-	tcgetattr(STDIN_FILENO, &term_settings);
-	term_settings.c_lflag &= ~ECHOCTL; // Disable echo control characters like ^C for Ctrl-C
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_settings);
-    // Setup signal handlers
-	signal(SIGQUIT, SIG_IGN); // Ignore Ctrl-\"
-	signal(SIGINT, handle_signal); // Handle Ctrl-C as specified
+    sa.sa_handler = &handle_signal;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_RESTART;
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
 }

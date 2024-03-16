@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/16 15:28:40 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:21:32 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	prompt(t_data *data)
 {
 	t_list	shell_commands;
 
-	setup_signal_handling();
-	while (1)
+	while (g_sig >= 256)
 	{
+		setup_signal_handling();
 		printf(GREEN);
 		if (data->exit_status)
 			printf(RED);
@@ -54,6 +54,7 @@ int	main(int argc, char **argv, char **env)
 	t_data	data;
 
 	(void)argv;
+	setup_signal_handling();
 	set_data(&data, env);
 	if (argc != 1)
 		printf("All arguments will be ignored\n");
