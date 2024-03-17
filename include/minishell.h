@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 03:48:33 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:11:09 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include "lib.h"
+
 # define RED "\033[1;31m"
 # define GREEN "\033[0;32m"
 # define YELLOW "\033[0;33m"
@@ -31,6 +32,8 @@
 # define ORANGE "\033[38;5;202m\033[22m"
 # define GRAY "\033[1;30m"
 # define DEFAULT "\033[1;39m"
+
+int	g_sig;
 
 enum e_type
 {
@@ -58,5 +61,8 @@ typedef struct s_exec
 int		checker(char **input);
 int		iter_cmd(t_data *data);
 void	setup_signal_handling(void);
+void 	s_child_case(int sig);
+void	s_heredoc_case(int sig);
+void	handle_signals_extended(void (*func)(int));
 
 #endif

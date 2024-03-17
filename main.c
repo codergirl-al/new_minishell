@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 03:53:49 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:17:18 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	main(int argc, char **argv, char **env)
 	t_data	data;
 
 	(void)argv;
-	setup_signal_handling();
 	set_data(&data, env);
 	if (argc != 1)
 		printf("All arguments will be ignored\n");
