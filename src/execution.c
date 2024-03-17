@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 03:50:43 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:56:32 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ char	*ft_getpath(char **env, char *f_cmd)
 	return (s_tmp);
 }
 
-int	execute(char *commande, t_data *data, int *stdin)
+int	execute(char *cmd, t_data *data, int *stdin)
 {
-	t_exec	*exe;
+	// t_exec	*exe;
 	
+	(void) data;
+	(void) cmd;
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
-	exe->path = ft_getpath(data->envp, exe->cmd[0]);
-	execve(exe->path, exe->cmd, data->envp);
+	// exe->path = ft_getpath(data->envp, exe->cmd[0]);
+	// execve(exe->path, exe->cmd, data->envp);
 	return (1);
 }
 
@@ -52,7 +54,7 @@ int execute_pipe(char *cmd, t_data *data, int *stdin)
 {
 	int	fd[2];
 	
-	if (!pipe(fd) && fork() == 0)
+	if (!pipe(fd) && !fork())
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
@@ -60,8 +62,6 @@ int execute_pipe(char *cmd, t_data *data, int *stdin)
 		execute(cmd, data, stdin);
 		return (1);
 	}
-	else
-		perror("minishell");
 	close(fd[1]);
 	close(*stdin);
 	*stdin = fd[0];
@@ -75,8 +75,6 @@ int execute_last(char *cmd, t_data *data, int *stdin)
 		execute(cmd, data, stdin);
 		return (1);
 	}
-	else
-		perror("minishell");
 	close(*stdin);
 	while (waitpid(-1, NULL, WUNTRACED) != -1)
 		;
