@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 03:56:32 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/17 14:07:27 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_getpath(char **env, char *f_cmd)
 		while (*tmp && *tmp != ':')
 			tmp++;
 		*tmp++ = '\0';
-		s_tmp = ft_strjoin(ft_strjoin(path, "/"), f_cmd);
+		s_tmp = ft_strjoin_11(path, ft_strjoin_01("/", f_cmd));
 	}
 	return (s_tmp);
 }
