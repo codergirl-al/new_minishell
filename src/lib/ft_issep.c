@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_issep.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:06:04 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 03:44:34 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:37:06 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	ft_issep(char c)
 {
-	return ((c == ' ') || (c == '\n') || (c == '\t')); /// check
+	return ((c == 32) || ((c >= 9) && (c <= 13)));
 }

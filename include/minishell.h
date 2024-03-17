@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 14:04:53 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:43:01 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ void	setup_signal_handling(void);
 void 	s_child_case(int sig);
 void	s_heredoc_case(int sig);
 void	handle_signals_extended(void (*func)(int));
+
+int parse_cmd(char *str, t_data *data, int it, t_exec *exe);
 
 #endif
