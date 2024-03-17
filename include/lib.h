@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 14:51:33 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:42:10 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
-
+int		ft_issep(char c);
 int		ft_arrlen(char **arr);
 char	*ft_arrcmp(void **arr, void *keyword);
 char	**ft_arrdup(char **arr);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t	ft_strlen(const char *s);
-t_list	*ft_lstlast(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-t_list	*ft_lstnew(void *content);
 
 
 #endif

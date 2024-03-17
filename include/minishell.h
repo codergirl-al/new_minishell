@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/16 15:27:41 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:48:33 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 # define GRAY "\033[1;30m"
 # define DEFAULT "\033[1;39m"
 
-int	g_sig;
-
 enum e_type
 {
 	PIPED = 1,
@@ -57,15 +55,8 @@ typedef struct s_exec
 	char	*path;
 }	t_exec;
 
-typedef struct s_command
-{
-	char	*cmd;
-	int		type;
-}	t_command;
-
 int		checker(char **input);
-int		ft_parse_input(char *input, t_list	*lst);
-int		parse_cmd(t_exec *exe, char *str);
+int		iter_cmd(t_data *data);
 void	setup_signal_handling(void);
 
 #endif

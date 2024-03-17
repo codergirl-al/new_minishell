@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/16 23:04:06 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:48:17 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+int	g_sig;
 
 static void	prompt(t_data *data)
 {
@@ -28,8 +30,7 @@ static void	prompt(t_data *data)
 		{
 			data->exit_status = checker(&data->input);
 			add_history(data->input);
-			ft_parse_input(data->input, &shell_commands);
-			// executer
+			(void) iter_cmd(data);
 		}
 		else if (!data->input || data->exit || g_sig < 256)
 			break ;

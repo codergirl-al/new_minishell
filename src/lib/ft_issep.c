@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_issep.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 10:57:37 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 11:30:23 by apeposhi         ###   ########.fr       */
+/*   Created: 2024/03/15 11:06:04 by apeposhi          #+#    #+#             */
+/*   Updated: 2024/03/17 03:44:34 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib.h"
 
-/*
-** @param lst: the start of a linked list
-** @return the last node of the linked list
-*/
-t_list	*ft_lstlast(t_list *lst)
+int	ft_issep(char c)
 {
-	while (lst)
-	{
-		if (!lst->next)
-			return (lst);
-		lst = lst->next;
-	}
-	return (lst);
+	return ((c == ' ') || (c == '\n') || (c == '\t')); /// check
 }

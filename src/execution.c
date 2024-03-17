@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 17:14:22 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:50:43 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,59 +37,73 @@ char	*ft_getpath(char **env, char *f_cmd)
 	return (s_tmp);
 }
 
-int	execute(t_command *commande, t_data *data, int stdin)
+int	execute(char *commande, t_data *data, int *stdin)
 {
 	t_exec	*exe;
-
-	parse_cmd(exe, commande->cmd);
-	dup2(stdin, STDIN_FILENO);
-	close(stdin);
+	
+	dup2(*stdin, STDIN_FILENO);
+	close(*stdin);
 	exe->path = ft_getpath(data->envp, exe->cmd[0]);
 	execve(exe->path, exe->cmd, data->envp);
 	return (1);
 }
 
-int	execution(t_list *list, t_data *data)
+int execute_pipe(char *cmd, t_data *data, int *stdin)
 {
-	int			stdin;
-	int			fd[2];
-	t_list		*tmp;
-	t_command	*cmd;
-
-	tmp = list;
-	stdin = dup(STDIN_FILENO);
-	while (tmp)
+	int	fd[2];
+	
+	if (!pipe(fd) && fork() == 0)
 	{
-		cmd = (t_command *) list->content;
-		if (cmd->type == SEMICOLONED)
-		{
-			if (!fork())
-			{
-				execute(cmd, data, stdin);
-				return (1);
-			}
-			close(stdin);
-			while (waitpid(-1, NULL, WUNTRACED) != -1)
-				;
-			stdin = dup(STDIN_FILENO);
-		}
-		else if (cmd->type == PIPED)
-		{
-			pipe(fd);
-			if (fork() == 0)
-			{
-				close(fd[0]);
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-				execute(cmd, data, stdin);
-				return (1);
-			}
-			close(fd[1]);
-			close(stdin);
-			stdin = fd[0];
-		}
-		tmp = tmp->next;
+		close(fd[0]);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		execute(cmd, data, stdin);
+		return (1);
 	}
+	else
+		perror("minishell");
+	close(fd[1]);
+	close(*stdin);
+	*stdin = fd[0];
+	return (0);
+}
+
+int execute_last(char *cmd, t_data *data, int *stdin)
+{
+	if (!fork())
+	{
+		execute(cmd, data, stdin);
+		return (1);
+	}
+	else
+		perror("minishell");
+	close(*stdin);
+	while (waitpid(-1, NULL, WUNTRACED) != -1)
+		;
+	*stdin = dup(STDIN_FILENO);
+	return (0);
+}
+
+int	iter_cmd(t_data *data)
+{
+	char	*start;
+	char	*end;
+	int		stdin;
+
+	start = data->input;
+	end = data->input;
+	stdin = dup(STDIN_FILENO);
+	while (data->input && *end)
+	{
+		if (*end == '|')
+		{
+			*end = 0;
+			execute_pipe(start, data, &stdin);
+			start = end + 1;
+		}
+		end++;
+	}
+	execute_last(start, data, &stdin);
 	close(stdin);
 	return (0);
 }
