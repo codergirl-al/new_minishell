@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 17:43:14 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/18 18:43:57 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ static void	prompt(t_data *data)
 	while (g_sig >= 256)
 	{
 		setup_signal_handling();
-		printf(GREEN);
 		if (data->exit_status)
-			printf(RED);
-		if (isatty(fileno(stdin)))
+			data->input = readline(RED"➜ "DEFAULT);
+		else if (isatty(fileno(stdin)))
 			data->input = readline(GREEN"➜ "DEFAULT);
 		if (data->input && *data->input)
 		{

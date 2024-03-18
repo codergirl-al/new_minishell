@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 16:14:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 19:42:31 by ykerdel          ###   ########.fr       */
+/*   Created: 2024/03/15 16:14:56 by ykerdel          #+#    #+#             */
+/*   Updated: 2024/03/18 18:43:36 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
 int parse_cmd(char *str, t_data *data, int it, t_exec *exe)
 {

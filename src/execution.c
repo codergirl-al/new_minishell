@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 19:43:16 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/18 18:44:08 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <stdio.h>
 
-char	*ft_getpath(char **env, char *f_cmd)
+static char	*ft_getpath(char **env, char *f_cmd)
 {
 	char	*path;
 	char	*tmp;
@@ -37,8 +37,7 @@ char	*ft_getpath(char **env, char *f_cmd)
 	}
 	return (s_tmp);
 }
-
-int	execute(char *cmd, t_data *data, int *stdin)
+static int	execute(char *cmd, t_data *data, int *stdin)
 {
 	t_exec	exe;
 	
@@ -54,7 +53,7 @@ int	execute(char *cmd, t_data *data, int *stdin)
 	return (1);
 }
 
-int execute_pipe(char *cmd, t_data *data, int *stdin)
+static int execute_pipe(char *cmd, t_data *data, int *stdin)
 {
 	int	fd[2];
 	
@@ -72,7 +71,7 @@ int execute_pipe(char *cmd, t_data *data, int *stdin)
 	return (0);
 }
 
-int execute_last(char *cmd, t_data *data, int *stdin)
+static int execute_last(char *cmd, t_data *data, int *stdin)
 {
 	if (!fork())
 	{

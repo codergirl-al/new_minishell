@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/17 21:27:09 by apeposhi         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/18 16:42:21 by ykerdel          ###   ########.fr       */
+>>>>>>> e3debbaf3369b2da6d8deceaa29e2ca6ae949060
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +62,10 @@ typedef struct s_exec
 	char	*path;
 }	t_exec;
 
+// parse
 int		checker(char **input);
 int		iter_cmd(t_data *data);
+int		parse_cmd(char *str, t_data *data, int it, t_exec *exe);
 
 // Signals
 void	setup_signal_handling(void);
