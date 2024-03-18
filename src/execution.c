@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/18 16:41:27 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/18 16:46:09 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*ft_getpath(char **env, char *f_cmd)
 		return (NULL);
 	path += 5;
 	tmp = path;
-	while (!access(path, X_OK))
+	while (access(s_tmp, X_OK))
 	{
 		if (s_tmp)
 			free(s_tmp);
@@ -36,7 +36,6 @@ static char	*ft_getpath(char **env, char *f_cmd)
 	}
 	return (s_tmp);
 }
-
 static int	execute(char *cmd, t_data *data, int *stdin)
 {
 	t_exec	exe;
