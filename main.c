@@ -6,24 +6,21 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 13:17:18 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:43:57 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-int	g_sig;
 
 static void	prompt(t_data *data)
 {
 	while (g_sig >= 256)
 	{
 		setup_signal_handling();
-		printf(GREEN);
 		if (data->exit_status)
-			printf(RED);
-		if (isatty(fileno(stdin)))
-			data->input = readline("➜ "DEFAULT);
+			data->input = readline(RED"➜ "DEFAULT);
+		else if (isatty(fileno(stdin)))
+			data->input = readline(GREEN"➜ "DEFAULT);
 		if (data->input && *data->input)
 		{
 			data->exit_status = checker(&data->input);

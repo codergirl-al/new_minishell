@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/18 16:39:32 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:45:25 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,15 @@ typedef struct s_exec
 	char	*path;
 }	t_exec;
 
+// parse
 int		checker(char **input);
 int		iter_cmd(t_data *data);
+int		parse_cmd(char *str, t_data *data, int it, t_exec *exe);
 
 // Signals
 void	setup_signal_handling(void);
 void 	s_child_case(int sig);
 void	s_heredoc_case(int sig);
 void	handle_signals_extended(void (*func)(int));
-
-// Builtins
-void	b_cd(t_data *data, char **args);
-void	echo(char **args);
-void	b_env(t_data *data);
-void	b_exit(t_data *data, char **args);
-void	b_export(t_data *data, char **args);
-void	b_pwd(void);
-void	b_unset(t_data *data, char **args);
 
 #endif
