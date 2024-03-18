@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 21:23:55 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:39:32 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include "lib.h"
+# include <limits.h>
 
 # define RED "\033[1;31m"
 # define GREEN "\033[0;32m"
