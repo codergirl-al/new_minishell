@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 14:05:31 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:11:02 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ int	checker(char **input)
 		flag = not_valid(*input);
 		if ((flag & FLAG_S) && (flag & FLAG_D)) {
   			print_error(flag);
-		return (2); // check
+			return (2); /// check
 		}
 		else if (flag)
 			interactive_promt(input, flag);
