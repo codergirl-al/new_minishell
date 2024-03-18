@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 14:07:27 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:41:27 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_getpath(char **env, char *f_cmd)
+static char	*ft_getpath(char **env, char *f_cmd)
 {
 	char	*path;
 	char	*tmp;
@@ -37,20 +37,23 @@ char	*ft_getpath(char **env, char *f_cmd)
 	return (s_tmp);
 }
 
-int	execute(char *cmd, t_data *data, int *stdin)
+static int	execute(char *cmd, t_data *data, int *stdin)
 {
-	// t_exec	*exe;
+	t_exec	exe;
 	
 	(void) data;
 	(void) cmd;
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
-	// exe->path = ft_getpath(data->envp, exe->cmd[0]);
-	// execve(exe->path, exe->cmd, data->envp);
+
+	if (parse_cmd(cmd, data, 0, &exe))
+		return (1); /// error malloc fail
+	exe.path = ft_getpath(data->envp, exe.cmd[0]);
+	execve(exe.path, exe.cmd, data->envp);
 	return (1);
 }
 
-int execute_pipe(char *cmd, t_data *data, int *stdin)
+static int execute_pipe(char *cmd, t_data *data, int *stdin)
 {
 	int	fd[2];
 	
@@ -68,7 +71,7 @@ int execute_pipe(char *cmd, t_data *data, int *stdin)
 	return (0);
 }
 
-int execute_last(char *cmd, t_data *data, int *stdin)
+static int execute_last(char *cmd, t_data *data, int *stdin)
 {
 	if (!fork())
 	{
