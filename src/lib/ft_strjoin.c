@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:59:07 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 14:04:20 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:48:02 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*ft_strjoin_11(char *s1, char *s2)
 		return (NULL);
 	strcpy (dest, s1);
 	strcpy (dest + s1_len, s2);
-	free (s1);
-	free (s2);
+	// free (s1);
+	// free (s2);
 	return (dest);
 }
 
@@ -43,6 +43,6 @@ char	*ft_strjoin_01(char *s1, char *s2)
 		return (NULL);
 	strcpy (dest, s1);
 	strcpy (dest + s1_len, s2);
-	free (s2);
+	// free (s2);
 	return (dest);
 }

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 14:07:27 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/17 19:43:16 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdio.h>
 
 char	*ft_getpath(char **env, char *f_cmd)
 {
@@ -24,7 +25,7 @@ char	*ft_getpath(char **env, char *f_cmd)
 		return (NULL);
 	path += 5;
 	tmp = path;
-	while (!access(path, X_OK))
+	while (access(s_tmp, X_OK))
 	{
 		if (s_tmp)
 			free(s_tmp);
@@ -39,14 +40,17 @@ char	*ft_getpath(char **env, char *f_cmd)
 
 int	execute(char *cmd, t_data *data, int *stdin)
 {
-	// t_exec	*exe;
+	t_exec	exe;
 	
 	(void) data;
 	(void) cmd;
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
-	// exe->path = ft_getpath(data->envp, exe->cmd[0]);
-	// execve(exe->path, exe->cmd, data->envp);
+
+	if (parse_cmd(cmd, data, 0, &exe))
+		return (1); /// error malloc fail
+	exe.path = ft_getpath(data->envp, exe.cmd[0]);
+	execve(exe.path, exe.cmd, data->envp);
 	return (1);
 }
 
