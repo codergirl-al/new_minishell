@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/19 12:36:54 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:02:34 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,16 @@ void	s_heredoc_case(int sig);
 void	handle_signals_extended(void (*func)(int));
 
 // Builtins
-int		b_cd(char *path);
-void	b_echo(char **args);
+int		b_cd(char *path, char **env);
+int		b_echo(char **args);
 void	b_env(t_data *data);
 void	b_exit(t_data *data, char **args);
 void	b_export(t_data *data, char **args);
 void	b_pwd(void);
 void	b_unset(t_data *data, char **args);
+
 // Builtin utils
 int		update_env(char *name, char *old, int tof);
-char	*get_env_value(char	*val);
+int		handle_error(int r_value, char *r_message);
 
 #endif
