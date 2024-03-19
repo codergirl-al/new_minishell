@@ -6,13 +6,12 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:14 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:25:06 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:29:45 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 #include <errno.h>
-
 
 static int my_atoi(const char *str, int *out)
 {

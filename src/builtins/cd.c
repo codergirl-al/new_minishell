@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/19 16:22:44 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:33:13 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	goto_home(char **env)
 {
 	char	*home;
 	
-	home = ft_arrcmp((void **)env, "HOME");
+	home = ft_arrcmp((void **)env, "HOME=");
 	if (!home)
 	{
 		ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
