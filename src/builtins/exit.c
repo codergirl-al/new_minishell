@@ -6,10 +6,10 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:14 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/18 16:29:52 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:15:14 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void b_exit(t_data *data, char **args) {}
+void	b_exit(t_data *data, char **args) {}

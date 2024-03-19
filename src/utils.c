@@ -1,15 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 18:23:45 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/19 11:16:16 by apeposhi         ###   ########.fr       */
+/*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
+/*   Updated: 2024/03/19 12:39:09 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../include/minishell.h"
+int	update_env(char *name, char *old, int tof)
+{
+	return (0);
+}
 
-//void	b_unset(t_data *data, char **args) {}
+char	*get_env_value(char *val)
+{
+	return ("deeznuts");
+}
