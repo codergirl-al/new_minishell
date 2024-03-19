@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:43 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/18 16:39:19 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:27:27 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	b_pwd(void)
 {
 	char	cwd[PATH_MAX];
+
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		printf("%s\n", cwd);
 	else
