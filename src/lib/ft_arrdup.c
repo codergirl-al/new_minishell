@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arrdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:55:59 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/15 11:32:39 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:28:26 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ char	**ft_arrdup(char **arr)
 			return (NULL);
 		}
 	}
+	new_arr[i] = NULL;
 	return (new_arr);
 }

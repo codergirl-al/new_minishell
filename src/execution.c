@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/18 16:46:09 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/20 15:32:07 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,19 @@ static char	*ft_getpath(char **env, char *f_cmd)
 		while (*tmp && *tmp != ':')
 			tmp++;
 		*tmp++ = '\0';
-		s_tmp = ft_strjoin_11(path, ft_strjoin_01("/", f_cmd));
+		s_tmp = ft_strjoin(path, ft_strjoin("/", f_cmd, 0), STRFREE_S2);
 	}
 	return (s_tmp);
 }
+
 static int	execute(char *cmd, t_data *data, int *stdin)
 {
 	t_exec	exe;
 	
-	(void) data;
-	(void) cmd;
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
 
-	if (parse_cmd(cmd, data, 0, &exe))
+	if (!parse_cmd(cmd, data, 0, &exe))
 		return (1); /// error malloc fail
 	exe.path = ft_getpath(data->envp, exe.cmd[0]);
 	execve(exe.path, exe.cmd, data->envp);
