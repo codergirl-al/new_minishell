@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/20 15:32:07 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/20 20:24:21 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	execute(char *cmd, t_data *data, int *stdin)
 	
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
-
+	exe.fd_in = 0;
+	exe.fd_out = 0;
 	if (!parse_cmd(cmd, data, 0, &exe))
 		return (1); /// error malloc fail
 	exe.path = ft_getpath(data->envp, exe.cmd[0]);

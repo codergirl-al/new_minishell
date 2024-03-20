@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/18 17:11:02 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/18 17:49:29 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ static void	interactive_promt(char **input, int flag)
 		printf(" dquote");
 	else if (flag & FLAG_S)
 		printf(" quote");
-	*input = ft_strjoin_11(*input, ft_strjoin_01("\n", readline("> " DEFAULT)));
+	*input = ft_strjoin(*input, ft_strjoin("\n", readline("> " DEFAULT), STRFREE_S2), STRFREE_S1 | STRFREE_S2);
 }
 
 int	checker(char **input)

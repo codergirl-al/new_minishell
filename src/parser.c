@@ -1,9 +1,26 @@
-#include "../include/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-#define FLAG_D (1 << 0)
-#define FLAG_S (1 << 1)
+#include "../include/minishell.h"
+
+#define IS_SQUOTE  (1 << 0)
+#define IS_DQUOTE  (1 << 1)
+#define IS_EXP     (1 << 2)
+
+
+int redirect(char **str, t_exec *exe)
+{
+  if (str)
+  {
+    if(!strncmp("<", *str, 1))
+      exe->fd_in = ft_open();// redirect in
+    else if(!strncmp(">", *str, 1))
+      exe->fd_out = ft_open();// redirect out
+    else if(!strncmp("<<", *str, 2))
+      exe->fd_in = ft_open();// heredoc
+    else if(!strncmp(">>", *str, 2))
+      exe->fd_out = ft_open();// redirect out append
+  }
+  return (0);
+}
 
 int parse_cmd(char *str, t_data *data, int it, t_exec *exe) {
   char *start;
@@ -11,12 +28,19 @@ int parse_cmd(char *str, t_data *data, int it, t_exec *exe) {
 
   i = it;
   if (str) {
-    while (*str && ft_issep(*str))
+    while (*str && (ft_issep(*str) || *str == '>' || *str == '<'))
+    {
+      if (((*str == '<') || (*str == '>')) && redirect(&str, exe))
+        return (0);
       *(str++) = 0;
-    if (*str && !ft_issep(*str)) {
+    }
+    if (*str && !ft_issep(*str))
+    {
       start = str;
       i++;
-    } else {
+    }
+    else
+    {
       exe->cmd = malloc(sizeof(char *) * i + 1);
       if (!exe->cmd)
         return (0);
@@ -24,47 +48,20 @@ int parse_cmd(char *str, t_data *data, int it, t_exec *exe) {
       return (i);
     }
     while (*str && !ft_issep(*str))
+    {
+      if ((*str == '\'') || (*str == '\"'))
+        str = iter_quotes(str);
+      else if (*str == '$')
+      {
+
+        i += cmdlen(str);
+      }
+      // parsing
       str++;
+    }
     if (!parse_cmd(str, data, i, exe))
       return (0);
     exe->cmd[i - 1] = start;
   }
   return (i);
-}
-
-char *iter_quotes(char *str) {
-  int flag;
-
-  flag = 0;
-  if (str) {
-    if (*str == '\"')
-      flag ^= FLAG_D;
-    else if (*str == '\'')
-      flag ^= FLAG_S;
-    str++;
-    while (*str && flag) {
-      if (!(flag & FLAG_S) && (*str == '\"'))
-        flag ^= FLAG_D;
-      else if (!(flag & FLAG_D) && (*str == '\''))
-        flag ^= FLAG_S;
-      str++;
-    }
-  }
-  return (str);
-}
-
-char *get_env(char **env, char *var_name)
-{
-	char	*var;
-
-	var = NULL;
-	if (var_name && env)
-	{
-		var_name = ft_strjoin(var_name, "=", 0);
-		var = ft_arrcmp((void **) env, var_name);
-		free(var_name);
-	}
-	if (!var)
-		return (NULL);
-	return (var + ft_strlen(var_name));
 }

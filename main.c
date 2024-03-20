@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/18 16:50:06 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/20 18:02:06 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		printf("All arguments will be ignored\n");
 	prompt(&data);
-	exit(data.exit_status);
+	return(data.exit_status);
 }
