@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:33:13 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:04:29 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,3 +61,15 @@ int b_cd(char *path, char **env)
 	free(oldpwd);
 	return (update_cwd());
 }
+
+// int main (int argc, char **argv, char ** env)
+// {
+// 	// b_cd(argv[1], env);
+// while (argc)
+// {
+// 	dprintf(2, "argv[argc] = <%s>\n", argv[argc]);
+// 	argc--;
+// }
+
+// 	return (0);
+// }
