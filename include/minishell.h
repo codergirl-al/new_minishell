@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/20 18:00:55 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/22 00:40:50 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define GRAY "\033[1;30m"
 # define DEFAULT "\033[1;39m"
 
-int	g_sig;
+// int	g_sig;
 
 enum e_type
 {
