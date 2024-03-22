@@ -28,7 +28,6 @@ int redirect(char **str, t_exec *exe)
   (void) exe;
   char *start;
   int flag;
-
   if (str && *str)
   {
     flag = 0;
@@ -48,7 +47,9 @@ int redirect(char **str, t_exec *exe)
     {
       if (exe->fd_out > 0)
         close(exe->fd_out);
+char *tmp = *str;
       exe->fd_out = ft_open(start, *str - start, flag);
+*str = tmp;
     }
     else
     {
@@ -68,9 +69,10 @@ int parse_cmd(char *str, t_data *data, int it, t_exec *exe) {
   if (str) {
     while (*str && (ft_issep(*str) || *str == '>' || *str == '<'))
     {
-      if (((*str == '<') || (*str == '>')) && redirect(&str, exe))
-        return (0);
-      *(str++) = 0;
+      if ((*str == '<') || (*str == '>'))
+        redirect(&str, exe);
+      else
+        *(str++) = 0;
     }
     if (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
     {
