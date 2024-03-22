@@ -47,9 +47,7 @@ int redirect(char **str, t_exec *exe)
     {
       if (exe->fd_out > 0)
         close(exe->fd_out);
-char *tmp = *str;
       exe->fd_out = ft_open(start, *str - start, flag);
-*str = tmp;
     }
     else
     {
