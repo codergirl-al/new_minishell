@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/21 16:04:29 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:38:12 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int update_cwd(void)
     cwd = getcwd(NULL, 0);
     if (!cwd)
 		return (handle_error(1, "minishell: error retrieving current directory"));
-	result = update_env("PWD", cwd, 0);
+	result = update_env(env, "PWD", cwd);
 	free(cwd);
 	return (result == 0 ? 0 : 1);
 }
@@ -57,7 +57,7 @@ int b_cd(char *path, char **env)
 		free(oldpwd);
 		return (cd_error_message(path));
 	}
-	update_env("OLDPWD", oldpwd, 0);
+	update_env(env, "OLDPWD", oldpwd);
 	free(oldpwd);
 	return (update_cwd());
 }

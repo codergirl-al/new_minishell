@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/19 17:14:51 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:39:03 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	b_pwd(void);
 void	b_unset(t_data *data, char **args);
 
 // Builtin utils
-int		update_env(char *name, char *old, int tof);
+int		update_env(char ***env, char *name, char *old);
 int		handle_error(int r_value, char *r_message);
 
 #endif

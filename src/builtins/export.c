@@ -3,13 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 20:25:48 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:22:09 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../include/minishell.h"
+#include "../../include/minishell.h"
 
-// void b_export(t_data *data, char **args) {}
+void	b_export(t_data *data, char **args)
+{
+	
+}
