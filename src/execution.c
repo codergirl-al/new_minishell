@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/20 20:24:21 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/22 01:55:11 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <unistd.h>
 
 static char	*ft_getpath(char **env, char *f_cmd)
 {
@@ -48,6 +49,16 @@ static int	execute(char *cmd, t_data *data, int *stdin)
 	if (!parse_cmd(cmd, data, 0, &exe))
 		return (1); /// error malloc fail
 	exe.path = ft_getpath(data->envp, exe.cmd[0]);
+	if (exe.fd_in > 0)
+	{
+		dup2(exe.fd_in, STDIN_FILENO);
+		close(exe.fd_in);	
+	}
+	if (exe.fd_out > 0)
+	{
+		dup2(exe.fd_out, STDOUT_FILENO);
+		close(exe.fd_out);	
+	}
 	execve(exe.path, exe.cmd, data->envp);
 	return (1);
 }
