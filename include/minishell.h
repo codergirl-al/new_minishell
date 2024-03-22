@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/22 00:40:50 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/22 01:21:10 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "lib.h"
 # include <stdlib.h>
+# include <fcntl.h>
 # include <stdbool.h>
 # include <unistd.h>
 # include <stdio.h>
