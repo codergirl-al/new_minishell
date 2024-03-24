@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 16:40:15 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/24 17:04:40 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 
 int		ft_issep(char c);
+int		ft_isalnum(int c);
+int		ft_isalpha(int c);
 int		ft_arrlen(char **arr);
 char	*ft_arrcmp(void **arr, void *keyword);
 char	**ft_arrdup(char **arr);
