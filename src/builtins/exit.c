@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:14 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/20 19:35:39 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/24 18:50:35 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ void	b_exit(char **args)
 
 	exit_status = 0;
 	if (args[1] && args[2])
-	{
-		fprintf(stderr, "exit: too many arguments\n");
-		return ;
-	}
+		return(handle_void_error("exit: too many arguments\n"));
 	if (args[1])
 	{
 		if (!my_atoi(args[1], &exit_status))
