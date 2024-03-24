@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 19:06:19 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/24 19:09:51 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	s_heredoc_case(int sig);
 void	handle_signals_extended(void (*func)(int));
 
 // Builtins
-void    execute_builtin(char *cmd, char *path, char ***env, char *assign, const char *key, char **args);
 int		b_cd(char *path, char **env);
 int		b_echo(char **args);
 void	b_env(char	***env);
@@ -84,6 +83,7 @@ void	b_unset(char ***env, const char *key);
 int		handle_error(int r_value, char *r_message);
 void    handle_void_error(char  *message);
 void    handle_void_perror(char  *message);
+void    execute_builtin(char *cmd, char *path, char ***env, char *assign, const char *key, char **args);
 int		update_env_var(char **env, const char *key, const char *value);
 
 #endif
