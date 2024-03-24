@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 15:19:56 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/24 17:30:05 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,18 @@ int	handle_error(int r_value, char *r_message)
 {
 	perror(r_message);
 	return (r_value);
+}
+
+void    handle_void_perror(char *message)
+{
+    perror(message);
+    return ;
+}
+
+void    handle_void_error(char  *message)
+{
+    fprintf(stderr, message);
+    return ;
 }
 
 int	update_env_var(char **env, const char *key, const char *value)
