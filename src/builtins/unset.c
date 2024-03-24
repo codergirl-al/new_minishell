@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:45 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 16:07:08 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/24 18:11:31 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ void	b_unset(char ***env, const char *key)
 	size_t	j;
 	size_t	key_len;
 	
-	if (!env || !*env || !key) {
-		fprintf(stderr, "Invalid arguments provided.\n");
-		return ;
-    }
+	if (!env || !*env || !key)
+		handle_void_error("Invalid arguments provided.\n");
 
 	key_len = strlen(key);
 	i = 0;
