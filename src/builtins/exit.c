@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:14 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 15:45:43 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:24:20 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	my_atoi(const char *str, int *out)
 }
 
 
-void	b_exit(char **args)
+void	b_exit(t_data data)
 {
 	int	exit_status;
 

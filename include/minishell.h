@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 18:19:58 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:31:08 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,17 @@ void	handle_signals_extended(void (*func)(int));
 // Builtins
 int		b_cd(char *path, char **env);
 int		b_echo(char **args);
-void	b_env(char	***env);
-void	b_exit(char **args);
-void	b_export(char ***env, char *assign);
+void	b_env(char	**env);
+void	b_exit(t_data data);
+void	b_export(char **env, char *assign);
 void	b_pwd(void);
-void	b_unset(char **env, char **cmds)
+void	b_unset(char **env, char **cmds);
 
 // Builtin utils
 int		handle_error(int r_value, char *r_message);
 void    handle_void_error(char  *message);
 void    handle_void_perror(char  *message);
-void    execute_builtin(char *cmd, char *path, char ***env, char *assign, const char *key, char **args);
+void    execute_builtin(t_data *data, t_exec *exe);
 int		update_env_var(char **env, const char *key, const char *value);
 
 #endif

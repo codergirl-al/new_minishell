@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 17:50:42 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:31:42 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void    handle_void_error(char  *message)
 
 void    execute_builtin(t_data *data, t_exec *exe)
 {
-
     if (!strcmp("cd", exe->cmd[0]))
         b_cd(exe->cmd[1], data);
     else if (!strcmp("echo", exe->cmd[0]))

@@ -28,13 +28,13 @@ int	validate_export_var(const char *name)
 	return (1);
 }
 
-static void	handle_reallocation(char ***env, char ***new_env, char *new_var)
+static void	handle_reallocation(char **env, char **new_env, char *new_var)
 {
 	size_t	size;
 	size_t	i;
 
 	size = 0;
-	while ((*env)[size])
+	while (env[size])
 		++size;
 	new_env = malloc(sizeof(char *) * (size + 2));
 	if (!new_env)
@@ -44,12 +44,12 @@ static void	handle_reallocation(char ***env, char ***new_env, char *new_var)
 	}
 	i = -1;
 	while (++i < size)
-		(*new_env)[i] = (*env)[i];
-	(*env)[size] = new_var;
-	(*env)[size + 1] = NULL;
+		new_env[i] = env[i];
+	env[size] = new_var;
+	env[size + 1] = NULL;
 }
 
-void	handle_env(char ***env, const char *name, const char *value)
+void	handle_env(char **env, const char *name, const char *value)
 {
 	char	*new_var;
 	char	**new_env;
@@ -64,19 +64,19 @@ void	handle_env(char ***env, const char *name, const char *value)
 	i = -1;
 	while ((*env)[++i])
 	{
-		if (ft_strncmp((*env)[i], name, strlen(name)) == 0 && (*env)[i][strlen(name)] == '=')
+		if (ft_strncmp(env[i], name, strlen(name)) == 0 && env[i][strlen(name)] == '=')
 		{
-			free((*env)[i]);
-			(*env)[i] = new_var;
+			free(env[i]);
+			env[i] = new_var;
 			return ;
 		}
 	}
-	handle_reallocation(env, &new_env, new_var);
-	free(*env);
-	*env = new_env;
+	handle_reallocation(env, new_env, new_var);
+	free(env);
+	env = new_env;
 }
 
-void	b_export(char ***env, char *assignment)
+void	b_export(char **env, char *assignment)
 {
 	char	*pos;
 	char	*name;
