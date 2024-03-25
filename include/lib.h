@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 01:35:54 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/25 03:06:43 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,8 @@ size_t	ft_strlen(const char *s);
 char	*ft_substr(char *str, unsigned int start, size_t len);
 
 t_list	*ft_lstnew(void *content);
+int		ft_lstsize(t_list *lst);
+char **lst_to_arr(t_list *head);
+
 
 #endif

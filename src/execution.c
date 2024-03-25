@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 02:53:28 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/25 03:07:34 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*ft_getpath(char **env, char *f_cmd)
 
 static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
 {
-(void)(lst);
+	exe.cmd = lst_to_arr(lst);
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
 	exe.path = ft_getpath(data->envp, exe.cmd[0]);

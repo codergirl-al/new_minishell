@@ -114,12 +114,11 @@ int redirect(char **str, t_exec *exe)
 t_list *set_arg(char *start, t_list *old)
 {
   t_list *new;
-  t_arg *content;
+  char *content;
 
-  content = (t_arg *)malloc(sizeof(t_arg));
+  content = strdup(start);
   if (!content)
     return (NULL);
-  content->arg = strdup(start);
   new = ft_lstnew((void *) content);
   if (!new)
     return (NULL);
