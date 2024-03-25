@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 15:59:54 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:50:42 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void    execute_builtin(t_data *data, t_exec *exe)
     else if (!strcmp("unset", exe->cmd[0]))
         b_unset(data->envp, exe->cmd);
 }
+
+// work on this later
 
 int	update_env_var(char **env, const char *key, const char *value)
 {

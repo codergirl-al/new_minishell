@@ -6,36 +6,40 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:45 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 15:43:37 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:18:17 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	b_unset(char ***env, char **cmds)
+void	b_unset(t_data data, char **cmds)
 {
 	size_t	i;
 	size_t	j;
-	size_t	key_len;
+	size_t	k;
+	int	key_len;
 	
-	if (!env || !*env || !key)
-		handle_void_error("Invalid arguments provided.\n");
-
-	key_len = strlen(key);
-	i = 0;
-	while ((*env)[i] != NULL)
+	if (!data.envp || !cmds)
+		return (handle_void_error("Invalid arguments provided.\n"));
+	k = 0;
+	while (cmds[++k])
 	{
-		if (strncmp((*env)[i], key, key_len) == 0 && (*env)[i][key_len] == '=')
+		i = 0;
+		key_len = ft_strlen(cmds[k]);
+		while ((data.envp)[i] != NULL)
 		{
-			free((*env)[i]);
-			j = i;
-			while ((*env)[j] != NULL)
+			if (strncmp((data.envp)[i], cmds[k], key_len) == 0 && (data.envp)[i][key_len] == '=')
 			{
-				(*env)[j] = (*env)[j + 1];
-				j++;
+				free((data.envp)[i]);
+				j = i;
+				while ((data.envp)[j] != NULL)
+				{
+					(data.envp)[j] = (data.envp)[j + 1];
+					j++;
+				}
+				break;
 			}
-			break;
+			i++;
 		}
-		i++;
 	}
 }

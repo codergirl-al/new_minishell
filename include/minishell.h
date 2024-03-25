@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 17:44:49 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:02:30 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	b_env(char	***env);
 void	b_exit(char **args);
 void	b_export(char ***env, char *assign);
 void	b_pwd(void);
-void	b_unset(char ***env, const char *key);
+void	b_unset(t_data data, char **cmds);
 
 // Builtin utils
 int		handle_error(int r_value, char *r_message);
