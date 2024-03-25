@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 03:03:12 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/25 02:44:57 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ enum e_type
 	SEMICOLONED = 0,
 };
 
+typedef struct s_arg
+{
+	char	*arg;
+}	t_arg;
+
 typedef struct s_data
 {
 	char	**envp;
@@ -67,7 +72,7 @@ int cmdlen(char *str, int flag);
 // parse
 int		checker(char **input);
 int		iter_cmd(t_data *data);
-int		parse_cmd(char *str, t_data *data, int it, t_exec *exe);
+t_list	*parse_cmd(char *str, t_data *data, t_exec *exe);
 
 // Signals
 void	setup_signal_handling(void);

@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/22 01:55:11 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/25 02:53:28 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,11 @@ static char	*ft_getpath(char **env, char *f_cmd)
 	return (s_tmp);
 }
 
-static int	execute(char *cmd, t_data *data, int *stdin)
+static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
 {
-	t_exec	exe;
-	
+(void)(lst);
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
-	exe.fd_in = 0;
-	exe.fd_out = 0;
-	if (!parse_cmd(cmd, data, 0, &exe))
-		return (1); /// error malloc fail
 	exe.path = ft_getpath(data->envp, exe.cmd[0]);
 	if (exe.fd_in > 0)
 	{
@@ -66,32 +61,45 @@ static int	execute(char *cmd, t_data *data, int *stdin)
 static int execute_pipe(char *cmd, t_data *data, int *stdin)
 {
 	int	fd[2];
-	
+	t_exec	exe;
+	t_list	*lst;
+
+	exe.fd_in = 0;
+	exe.fd_out = 0;
+	lst = parse_cmd(cmd, data, &exe);
 	if (!pipe(fd) && !fork())
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
-		execute(cmd, data, stdin);
+		execute(lst, data, stdin, exe);
 		return (1);
 	}
 	close(fd[1]);
 	close(*stdin);
 	*stdin = fd[0];
+// free_lst
 	return (0);
 }
 
 static int execute_last(char *cmd, t_data *data, int *stdin)
 {
+	t_exec	exe;
+	t_list	*lst;
+
+	exe.fd_in = 0;
+	exe.fd_out = 0;
+	lst = parse_cmd(cmd, data, &exe);
 	if (!fork())
 	{
-		execute(cmd, data, stdin);
+		execute(lst, data, stdin, exe);
 		return (1);
 	}
 	close(*stdin);
 	while (waitpid(-1, NULL, WUNTRACED) != -1)
 		;
 	*stdin = dup(STDIN_FILENO);
+// free_lst
 	return (0);
 }
 

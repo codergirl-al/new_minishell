@@ -1,5 +1,6 @@
 
 #include "../include/minishell.h"
+#include <stdio.h>
 
 #define IS_INOOUT  (1 << 0)
 #define IS_DOUBLE   (1 << 1)
@@ -59,53 +60,97 @@ int redirect(char **str, t_exec *exe)
   return (0);
 }
 
-int parse_cmd(char *str, t_data *data, int it, t_exec *exe) {
-  char *start;
-  int i;
-  int len;
-  int f_flag;
+// int parse_cmd(char *str, t_data *data, int it, t_exec *exe) {
+//   char *start;
+//   int i;
+//   int len;
+//   int f_flag;
 
-  len = 0;
-  i = it;
+//   len = 0;
+//   i = it;
+//   if (str) {
+//     while (*str && (ft_issep(*str) || *str == '>' || *str == '<'))
+//     {
+//       if ((*str == '<') || (*str == '>'))
+//         redirect(&str, exe);
+//       else
+//         *(str++) = 0;
+//     }
+//     if (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
+//     {
+//       start = str;
+//       f_flag = 1;
+//       if (*str != '$')
+//       {
+//         f_flag = 0;
+//         i++;
+//       }
+//       while (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
+//       {
+//         if ((*str == '\'') || (*str == '\"'))
+//           str = iter_quotes(str);
+//         else if (*str == '$')
+//           len += cmdlen(get_env(data->envp, &str), f_flag);
+//         f_flag = 0;
+//         str++;
+//       }
+//     }
+//     else
+//     {
+//       exe->cmd = malloc(sizeof(char *) * i + 1);
+//       if (!exe->cmd)
+//         return (0);
+//       exe->cmd[i] = NULL;
+//       return (i);
+//     }
+//     if (!parse_cmd(str, data, i + len, exe))
+//       return (0);
+
+//     exe->cmd[i - 1] = start;
+//   }
+//   return (i);
+// }
+
+t_list *set_arg(char *start, t_list *old)
+{
+  t_list *new;
+  t_arg *content;
+
+  content = (t_arg *)malloc(sizeof(t_arg));
+  if (!content)
+    return (NULL);
+  content->arg = strdup(start);
+  new = ft_lstnew((void *) content);
+  if (!new)
+    return (NULL);
+  new->next = old;
+  return (new);
+}
+
+t_list *parse_cmd(char *str, t_data *data, t_exec *exe) {
+  char *start;
+  t_list  *new;
+  t_list  *old;
+
+  new = NULL;
   if (str) {
     while (*str && (ft_issep(*str) || *str == '>' || *str == '<'))
     {
       if ((*str == '<') || (*str == '>'))
         redirect(&str, exe);
       else
-        *(str++) = 0;
+        *(str++) = 0; // check if the redirect is set to null "ls>out"
     }
     if (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
-    {
       start = str;
-      f_flag = 1;
-      if (*str != '$')
-      {
-        f_flag = 0;
-        i++;
-      }
-      while (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
-      {
-        if ((*str == '\'') || (*str == '\"'))
-          str = iter_quotes(str);
-        else if (*str == '$')
-          len += cmdlen(get_env(data->envp, &str), f_flag);
-        f_flag = 0;
-        str++;
-      }
-    }
     else
-    {
-      exe->cmd = malloc(sizeof(char *) * i + 1);
-      if (!exe->cmd)
-        return (0);
-      exe->cmd[i] = NULL;
-      return (i);
-    }
-    if (!parse_cmd(str, data, i + len, exe))
-      return (0);
-
-    exe->cmd[i - 1] = start;
+      return (NULL);
+    while (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
+        str++;
+    old = parse_cmd(str, data, exe);
+    new = set_arg(start, old);
+    if (!new)
+      return (NULL);
   }
-  return (i);
+  return (new);
 }
