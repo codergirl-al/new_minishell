@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/15 16:14:56 by ykerdel          #+#    #+#             */
+/*   Updated: 2024/03/18 18:43:36 by apeposhi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
 #define IS_INOOUT  (1 << 0)
 #define IS_DOUBLE   (1 << 1)
@@ -59,57 +69,6 @@ int redirect(char **str, t_exec *exe)
   }
   return (0);
 }
-
-// int parse_cmd(char *str, t_data *data, int it, t_exec *exe) {
-//   char *start;
-//   int i;
-//   int len;
-//   int f_flag;
-
-//   len = 0;
-//   i = it;
-//   if (str) {
-//     while (*str && (ft_issep(*str) || *str == '>' || *str == '<'))
-//     {
-//       if ((*str == '<') || (*str == '>'))
-//         redirect(&str, exe);
-//       else
-//         *(str++) = 0;
-//     }
-//     if (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
-//     {
-//       start = str;
-//       f_flag = 1;
-//       if (*str != '$')
-//       {
-//         f_flag = 0;
-//         i++;
-//       }
-//       while (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
-//       {
-//         if ((*str == '\'') || (*str == '\"'))
-//           str = iter_quotes(str);
-//         else if (*str == '$')
-//           len += cmdlen(get_env(data->envp, &str), f_flag);
-//         f_flag = 0;
-//         str++;
-//       }
-//     }
-//     else
-//     {
-//       exe->cmd = malloc(sizeof(char *) * i + 1);
-//       if (!exe->cmd)
-//         return (0);
-//       exe->cmd[i] = NULL;
-//       return (i);
-//     }
-//     if (!parse_cmd(str, data, i + len, exe))
-//       return (0);
-
-//     exe->cmd[i - 1] = start;
-//   }
-//   return (i);
-// }
 
 t_list *set_arg(char *start, t_list *old)
 {

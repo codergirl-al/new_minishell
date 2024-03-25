@@ -6,31 +6,46 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:38 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/17 21:17:27 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:06:15 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	echo(char **args)
+static int	safe_write(int fd, const char *buf, size_t count)
 {
-	int		i;
-	bool	n_flag;
+    ssize_t	written;
+	
+	written = write(fd, buf, count);
+    if (written == -1 || (size_t)written != count)
+		return (handle_error(1, "minishell: echo: write error"));
+    return (0);
+}
 
-	n_flag = false;
-		i = 1;
-	if (args[1] && strcmp(args[1], "-n") == 0)
+int	b_echo(char **args)
+{
+	bool	newline;
+	int		i;
+	
+	newline = true;
+	i = 1;
+	if (args[i] && strcmp(args[i], "-n") == 0)
 	{
-		n_flag = true;
+		newline = false;
 		i++;
 	}
-	while (args[i])
+	while(args[i])
 	{
-		printf("%s", args[i]);
+		if (safe_write(STDOUT_FILENO, args[i], strlen(args[i])))
+			return (1);
 		if (args[i + 1])
-			printf(" ");
+			if (safe_write(STDOUT_FILENO, " ", 1))
+				return 1;
 		i++;
 	}
-	if (!n_flag)
-		printf("\n");
+
+	if (newline)
+		if (safe_write(STDOUT_FILENO, "\n", 1))
+			return (1);
+	return (0);
 }

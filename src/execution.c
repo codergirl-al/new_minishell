@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <unistd.h>
 
 static char	*ft_getpath(char **env, char *f_cmd)
 {

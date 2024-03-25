@@ -25,6 +25,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include "lib.h"
+# include <limits.h>
 
 # define RED "\033[1;31m"
 # define GREEN "\033[0;32m"
@@ -81,12 +82,19 @@ void	s_heredoc_case(int sig);
 void	handle_signals_extended(void (*func)(int));
 
 // Builtins
-void	b_cd(t_data *data, char **args);
-void	echo(char **args);
-void	b_env(t_data *data);
-void	b_exit(t_data *data, char **args);
-void	b_export(t_data *data, char **args);
+int		b_cd(char *path, char **env);
+int		b_echo(char **args);
+void	b_env(char	***env);
+void	b_exit(char **args);
+void	b_export(char ***env, char *assign);
 void	b_pwd(void);
-void	b_unset(t_data *data, char **args);
+void	b_unset(char ***env, const char *key);
+
+// Builtin utils
+int		handle_error(int r_value, char *r_message);
+void    handle_void_error(char  *message);
+void    handle_void_perror(char  *message);
+void    execute_builtin(char *cmd, char *path, char ***env, char *assign, const char *key, char **args);
+int		update_env_var(char **env, const char *key, const char *value);
 
 #endif
