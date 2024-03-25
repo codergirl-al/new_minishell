@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/18 18:44:08 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 03:07:34 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
 
 static char	*ft_getpath(char **env, char *f_cmd)
 {
@@ -33,22 +32,27 @@ static char	*ft_getpath(char **env, char *f_cmd)
 		while (*tmp && *tmp != ':')
 			tmp++;
 		*tmp++ = '\0';
-		s_tmp = ft_strjoin_11(path, ft_strjoin_01("/", f_cmd));
+		s_tmp = ft_strjoin(path, ft_strjoin("/", f_cmd, 0), STRFREE_S2);
 	}
 	return (s_tmp);
 }
-static int	execute(char *cmd, t_data *data, int *stdin)
+
+static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
 {
-	t_exec	exe;
-	
-	(void) data;
-	(void) cmd;
+	exe.cmd = lst_to_arr(lst);
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
-
-	if (parse_cmd(cmd, data, 0, &exe))
-		return (1); /// error malloc fail
 	exe.path = ft_getpath(data->envp, exe.cmd[0]);
+	if (exe.fd_in > 0)
+	{
+		dup2(exe.fd_in, STDIN_FILENO);
+		close(exe.fd_in);	
+	}
+	if (exe.fd_out > 0)
+	{
+		dup2(exe.fd_out, STDOUT_FILENO);
+		close(exe.fd_out);	
+	}
 	execve(exe.path, exe.cmd, data->envp);
 	return (1);
 }
@@ -56,32 +60,45 @@ static int	execute(char *cmd, t_data *data, int *stdin)
 static int execute_pipe(char *cmd, t_data *data, int *stdin)
 {
 	int	fd[2];
-	
+	t_exec	exe;
+	t_list	*lst;
+
+	exe.fd_in = 0;
+	exe.fd_out = 0;
+	lst = parse_cmd(cmd, data, &exe);
 	if (!pipe(fd) && !fork())
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
-		execute(cmd, data, stdin);
+		execute(lst, data, stdin, exe);
 		return (1);
 	}
 	close(fd[1]);
 	close(*stdin);
 	*stdin = fd[0];
+// free_lst
 	return (0);
 }
 
 static int execute_last(char *cmd, t_data *data, int *stdin)
 {
+	t_exec	exe;
+	t_list	*lst;
+
+	exe.fd_in = 0;
+	exe.fd_out = 0;
+	lst = parse_cmd(cmd, data, &exe);
 	if (!fork())
 	{
-		execute(cmd, data, stdin);
+		execute(lst, data, stdin, exe);
 		return (1);
 	}
 	close(*stdin);
 	while (waitpid(-1, NULL, WUNTRACED) != -1)
 		;
 	*stdin = dup(STDIN_FILENO);
+// free_lst
 	return (0);
 }
 

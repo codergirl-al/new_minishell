@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 15:46:29 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:44:49 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "lib.h"
 # include <stdlib.h>
+# include <fcntl.h>
 # include <stdbool.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -34,13 +35,18 @@
 # define GRAY "\033[1;30m"
 # define DEFAULT "\033[1;39m"
 
-int	g_sig;
+// int	g_sig;
 
 enum e_type
 {
 	PIPED = 1,
 	SEMICOLONED = 0,
 };
+
+typedef struct s_arg
+{
+	char	*arg;
+}	t_arg;
 
 typedef struct s_data
 {
@@ -59,10 +65,15 @@ typedef struct s_exec
 	char	*path;
 }	t_exec;
 
+// utils
+char	*iter_quotes(char *str);
+char *get_env(char **env, char **str);
+int cmdlen(char *str, int flag);
+
 // parse
 int		checker(char **input);
 int		iter_cmd(t_data *data);
-int		parse_cmd(char *str, t_data *data, int it, t_exec *exe);
+t_list	*parse_cmd(char *str, t_data *data, t_exec *exe);
 
 // Signals
 void	setup_signal_handling(void);
