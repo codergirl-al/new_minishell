@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 16:13:23 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:04:01 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,15 @@ static int cd_error_message(char *path) {
 	return (1);
 }
 
+// ~
+// --
+
 int b_cd(char *path, char **env)
 {
+	char *oldpwd;
 	if (!path)
 		return (goto_home(env));
-	char *oldpwd = getcwd(NULL, 0);
+	oldpwd = getcwd(NULL, 0);
 	if (chdir(path) != 0)
 	{
 		free(oldpwd);
@@ -61,15 +65,3 @@ int b_cd(char *path, char **env)
 	free(oldpwd);
 	return (update_cwd(env));
 }
-
-// int main (int argc, char **argv, char ** env)
-// {
-// 	// b_cd(argv[1], env);
-// while (argc)
-// {
-// 	dprintf(2, "argv[argc] = <%s>\n", argv[argc]);
-// 	argc--;
-// }
-
-// 	return (0);
-// }

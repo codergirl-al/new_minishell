@@ -6,13 +6,13 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:45 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 18:11:31 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:43:37 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	b_unset(char ***env, const char *key)
+void	b_unset(char ***env, char **cmds)
 {
 	size_t	i;
 	size_t	j;

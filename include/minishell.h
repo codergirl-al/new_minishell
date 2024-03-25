@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 02:44:57 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:44:49 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_data
 {
 	char	**envp;
 	int		exit_status;
-	bool	exit;
+	// bool	exit;
 	char	*input;
 	char	*prev_input;
 }	t_data;
