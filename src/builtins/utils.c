@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 19:06:10 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:59:54 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,24 @@ void    handle_void_error(char  *message)
     return ;
 }
 
-//work in progress as to how the args will look like
-// let's have a chat about it tomorrow
-void    execute_builtin(char *cmd, char *path, char ***env, char *assign, const char *key, char **args)
+void    execute_builtin(t_data *data, t_exec *exe)
 {
-    size_t  i;
 
-    i = -1;
-    while (cmd[++i] != NULL)
-    {
-        if (cmd == "cd")
-            b_cd(path, args);
-        else if (cmd == "echo")
-            b_echo(args);
-        else if (cmd == "env")
-            b_env(env);
-        else if (cmd == "exit")
-            b_exit(args);
-        else if (cmd == "export")
-            b_export(env, assign);
-        else if (cmd == "pwd")
-            b_pwd();
-        else if (cmd == "unset")
-            b_unset(env, key);
-    }
+    if (!strcmp("cd", exe->cmd[0]))
+        b_cd(exe->cmd[1], data);
+    else if (!strcmp("echo", exe->cmd[0]))
+        b_echo(exe->cmd);
+    else if (!strcmp("env", exe->cmd[0]))
+        b_env(data->envp);
+    else if (!strcmp("exit", exe->cmd[0]))
+        b_exit(data);
+    else if (!strcmp("export", exe->cmd[0]))
+        b_export(data->envp, exe->cmd[1]);
+    else if (!strcmp("pwd", exe->cmd[0]))
+        b_pwd();
+    else if (!strcmp("unset", exe->cmd[0]))
+        b_unset(data->envp, exe->cmd);
 }
-
 
 int	update_env_var(char **env, const char *key, const char *value)
 {
@@ -64,27 +56,27 @@ int	update_env_var(char **env, const char *key, const char *value)
 		return (1);
 	}
 
-	// char *key_equals = malloc(strlen(key) + 2);
-	// if (!key_equals)
-	// 	return(handle_error(EXIT_FAILURE, "Memory allocation failed for key search string"));
-    // sprintf(key_equals, "%s=", key);
+	char *key_equals = malloc(strlen(key) + 2);
+	if (!key_equals)
+		return(handle_error(EXIT_FAILURE, "Memory allocation failed for key search string"));
+    sprintf(key_equals, "%s=", key);
 
-    // char *found = ft_arrcmp((void **)*env, (void *)key_equals);
-    // if (found) {
-    //     int index = (found - (char *)*env) / sizeof(char *);
+    char *found = ft_arrcmp((void **)*env, (void *)key_equals);
+    if (found) {
+        int index = (found - (char *)*env) / sizeof(char *);
 
-    //     free((*env)[index]);
+        free((*env)[index]);
         
-    //     size_t new_entry_len = strlen(key) + strlen(value) + 2;
-    //     char *new_entry = malloc(new_entry_len);
-    //     if (!new_entry) {
-    //         perror("Unable to allocate memory for new environment value");
-    //         free(key_equals);
-    //         exit(EXIT_FAILURE);
-    //     }
-    //     snprintf(new_entry, new_entry_len, "%s=%s", key, value);
-    //     (*env)[index] = new_entry;
-    // }
-    // free(key_equals);
+        size_t new_entry_len = strlen(key) + strlen(value) + 2;
+        char *new_entry = malloc(new_entry_len);
+        if (!new_entry) {
+            perror("Unable to allocate memory for new environment value");
+            free(key_equals);
+            exit(EXIT_FAILURE);
+        }
+        snprintf(new_entry, new_entry_len, "%s=%s", key, value);
+        (*env)[index] = new_entry;
+    }
+    free(key_equals);
     return (0);
 }

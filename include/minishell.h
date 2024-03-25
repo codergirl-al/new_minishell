@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 19:09:51 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:46:29 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data
 {
 	char	**envp;
 	int		exit_status;
-	bool	exit;
+	// bool	exit;
 	char	*input;
 	char	*prev_input;
 }	t_data;
