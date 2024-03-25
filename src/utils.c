@@ -1,29 +1,34 @@
 
 #include "../include/minishell.h"
+#include <stdio.h>
 
 #define FLAG_D (1 << 0)
 #define FLAG_S (1 << 1)
 
-int cmdlen(char *str)
+int cmdlen(char *str, int f_flag)
 {
 	int i;
 	int len;
+	int flag;
 
+	flag = 0;
 	i = 0;
 	len = 0;
 	if (str)
 	{
+		if (!f_flag && !(str[i] && ft_issep(str[i])))
+		 	flag = 1;
 		while (str[i])
 		{
-			if (ft_issep(str[i]))
-				len++;
 			while (str[i] && ft_issep(str[i]))
 				i++;
+			if (str[i] && !ft_issep(str[i]))
+				len++;
 			while (str[i] && !ft_issep(str[i]))
 				i++;
 		}
 	}
-	return (len);
+	return (len - flag);
 }
 
 char *iter_quotes(char *str)
@@ -38,18 +43,27 @@ char *iter_quotes(char *str)
 	return (str + i);
 }
 
-char *get_env(char **env, char *var_name)
+char *get_env(char **env, char **str)
 {
 	char	*var;
+	char	*var_name;
+	int		i;
 
-	var = NULL;
-	if (var_name && env)
+	i = 0;
+	if ((*str) && env && *(*str) == '$')
 	{
-		var_name = ft_strjoin(var_name, "=", 0);
+		(*str)++;
+		while ((*str)[i] && ((*str)[i] != '\'' && (*str)[i] != '\"' && (*str)[i] != '$' && !ft_issep((*str)[i])))
+			i++;
+		var_name = ft_substr((*str), 0, i);
+		*str += i - 1;
+		var_name = ft_strjoin(var_name, "=", STRFREE_S1);
 		var = ft_arrcmp((void **) env, var_name);
-		free(var_name);
+        if (!var)
+            return (free(var_name), NULL);
+        i = ft_strlen(var_name);
+        free(var_name);
+        return (var + i);
 	}
-	if (!var)
-		return (NULL);
-	return (var + ft_strlen(var_name));
+    return (NULL);
 }
