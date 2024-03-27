@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 18:31:42 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:00:55 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,20 @@ void    execute_builtin(t_data *data, t_exec *exe)
 
 // work on this later
 
-int	update_env_var(char **env, const char *key, const char *value)
-{
-	if (!env || !*env || !key || !value) {
-		fprintf(stderr, "Invalid argument(s) provided to update_env_var.\n");
-		return (1);
-	}
-
-	char *key_equals = malloc(strlen(key) + 2);
-	if (!key_equals)
-		return(handle_error(EXIT_FAILURE, "Memory allocation failed for key search string"));
-    sprintf(key_equals, "%s=", key);
-
-    char *found = ft_arrcmp((void **)*env, (void *)key_equals);
-    if (found) {
-        int index = (found - (char *)*env) / sizeof(char *);
-
-        free((*env)[index]);
-        
-        size_t new_entry_len = strlen(key) + strlen(value) + 2;
-        char *new_entry = malloc(new_entry_len);
-        if (!new_entry) {
-            perror("Unable to allocate memory for new environment value");
-            free(key_equals);
-            exit(EXIT_FAILURE);
-        }
-        snprintf(new_entry, new_entry_len, "%s=%s", key, value);
-        (*env)[index] = new_entry;
+void update_env_var(char ***env, const char *name, const char *value) {
+  for (size_t i = 0; (*env)[i] != NULL; i++) {
+    if (strncmp((*env)[i], name, strlen(name)) == 0 &&
+        (*env)[i][strlen(name)] == '=') {
+      free((*env)[i]);
+      size_t len = strlen(name) + strlen(value) + 2;
+      char *new_var = malloc(len);
+      if (new_var == NULL) {
+        perror("Failed to allocate memory for environment variable");
+        return;
+      }
+      snprintf(new_var, len, "%s=%s", name, value);
+      (*env)[i] = new_var;
+      return;
     }
-    free(key_equals);
-    return (0);
+  }
 }

@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 18:31:08 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:47:36 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	s_heredoc_case(int sig);
 void	handle_signals_extended(void (*func)(int));
 
 // Builtins
-int		b_cd(char *path, char **env);
+void	b_cd(char *path, t_data *data);
 int		b_echo(char **args);
 void	b_env(char	**env);
 void	b_exit(t_data data);
