@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/26 22:47:36 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/27 12:56:07 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define GRAY "\033[1;30m"
 # define DEFAULT "\033[1;39m"
 
-// int	g_sig;
+int	g_sig;
 
 enum e_type
 {
@@ -52,7 +52,6 @@ typedef struct s_data
 {
 	char	**envp;
 	int		exit_status;
-	// bool	exit;
 	char	*input;
 	char	*prev_input;
 }	t_data;
@@ -67,8 +66,8 @@ typedef struct s_exec
 
 // utils
 char	*iter_quotes(char *str);
-char *get_env(char **env, char **str);
-int cmdlen(char *str, int flag);
+char	*get_env(char **env, char **str);
+int		cmdlen(char *str, int flag);
 
 // parse
 int		checker(char **input);
@@ -77,7 +76,7 @@ t_list	*parse_cmd(char *str, t_data *data, t_exec *exe);
 
 // Signals
 void	setup_signal_handling(void);
-void 	s_child_case(int sig);
+void	s_child_case(int sig);
 void	s_heredoc_case(int sig);
 void	handle_signals_extended(void (*func)(int));
 
@@ -92,9 +91,9 @@ void	b_unset(char **env, char **cmds);
 
 // Builtin utils
 int		handle_error(int r_value, char *r_message);
-void    handle_void_error(char  *message);
-void    handle_void_perror(char  *message);
-void    execute_builtin(t_data *data, t_exec *exe);
+void	handle_void_error(char *message);
+void	handle_void_perror(char *message);
+void	execute_builtin(t_data *data, t_exec *exe);
 int		update_env_var(char **env, const char *key, const char *value);
 
 #endif

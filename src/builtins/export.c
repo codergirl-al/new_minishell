@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>           +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/21 16:22:09 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:03:25 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,13 @@ void	handle_env(char **env, const char *name, const char *value)
 	len = ft_strlen(name) + ft_strlen(value) + 2;
 	new_var = malloc(len);
 	if (!new_var)
-		return (handle_void_perror("Failed to allocate memory for new environment variable"));
+		return (handle_void_perror("Failed to allocate memory."));
 	snprintf(new_var, len, "%s=%s", name, value);
 	i = -1;
 	while ((*env)[++i])
 	{
-		if (ft_strncmp(env[i], name, strlen(name)) == 0 && env[i][strlen(name)] == '=')
+		if (ft_strncmp(env[i], name, strlen(name)) == 0 && \
+			env[i][strlen(name)] == '=')
 		{
 			free(env[i]);
 			env[i] = new_var;
@@ -92,7 +93,7 @@ void	b_export(char **env, char *assignment)
 	{
 		fprintf(stderr, "export: '%s' is not a valid identifier\n", assignment);
 		*pos = '=';
-		return;
+		return ;
 	}
 	*pos = '=';
 	name = assignment;

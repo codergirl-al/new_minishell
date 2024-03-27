@@ -6,13 +6,13 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:00 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 18:31:01 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/27 13:06:43 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void b_env(char	**env)
+void	b_env(char	**env)
 {
 	int	i;
 
