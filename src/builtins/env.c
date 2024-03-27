@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:00 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 13:06:43 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/27 21:24:22 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void	b_env(char	**env)
 	int	i;
 
 	i = -1;
-	while ((*env)[++i])
+	while (env[++i])
 		printf("%s\n", env[i]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 14:49:18 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:11:19 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static char	*ft_getpath(char **env, char *f_cmd)
 static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
 {
 	exe.cmd = lst_to_arr(lst);
+	execute_builtin(data, &exe);
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
 	exe.path = ft_getpath(data->envp, exe.cmd[0]);

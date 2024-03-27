@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:38 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 13:06:17 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:13:19 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	safe_write(int fd, const char *buf, size_t count)
 {
-	size_t	written;
+	int	written;
 
 	written = write(fd, buf, count);
 	if (written == -1 || (size_t)written != count)
