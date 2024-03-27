@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/18 17:49:29 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/27 14:09:16 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 #define FLAG_2 (1 << 3)
 #define FLAG_3 (1 << 4)
 #define FLAG_4 (1 << 5)
-
 
 static int	istoken(char c)
 {
@@ -81,8 +80,9 @@ void	reset_flag(int *flag)
 
 int	set_flag(char c, char c_next)
 {
-	int flag = 0;
+	int	flag;
 
+	flag = 0;
 	if (c == '|')
 		flag ^= FLAG_1;
 	else if (c == '&')
@@ -90,14 +90,15 @@ int	set_flag(char c, char c_next)
 	else if (c == ';')
 	{
 		flag ^= FLAG_1;
-	flag ^= FLAG_2;
+		flag ^= FLAG_2;
 	}
 	if (c_next && c_next == c)
 		flag ^= FLAG_3;
 	return (flag);
 }
 
-static int	not_valid(char *str) {
+static int	not_valid(char *str)
+{
 	int	flag;
 	int	it;
 	int	len_cmd;
@@ -105,12 +106,14 @@ static int	not_valid(char *str) {
 	flag = 0;
 	it = 0;
 	len_cmd = 0;
-	while (str[it]) {
+	while (str[it])
+	{
 		if (!(flag & FLAG_S) && str[it] == '\"')
 			flag ^= FLAG_D;
 		else if (!(flag & FLAG_D) && str[it] == '\'')
 			flag ^= FLAG_S;
-		else if (!(flag & FLAG_S) && !(flag & FLAG_D) && istoken(str[it])) {
+		else if (!(flag & FLAG_S) && !(flag & FLAG_D) && istoken(str[it]))
+		{
 			reset_flag(&flag);
 			flag ^= set_flag(str[it], str[it + 1]);
 			if (!len_cmd || ((flag & FLAG_1) && (flag & FLAG_2) && (flag & FLAG_3)))
@@ -151,9 +154,10 @@ int	checker(char **input)
 	while (1)
 	{
 		flag = not_valid(*input);
-		if ((flag & FLAG_S) && (flag & FLAG_D)) {
-  			print_error(flag);
-			return (2); /// check
+		if ((flag & FLAG_S) && (flag & FLAG_D))
+		{
+			print_error(flag);
+			return (2); // check
 		}
 		else if (flag)
 			interactive_promt(input, flag);

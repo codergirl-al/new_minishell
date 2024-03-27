@@ -6,62 +6,63 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 16:04:01 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/27 13:04:31 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int update_cwd(char **env)
+char	*find_env_var(char **env, const char *name)
 {
-	char	*cwd;
-	int		res;
+	size_t	name_len;
+	size_t	i;
 
-    cwd = getcwd(NULL, 0);
-    if (!cwd)
-		return(handle_error(1, "minishell: error retrieving current directory"));
-	res = update_env_var(env, "PWD", cwd);
-	free(cwd);
-	return (res);
-}
-
-static int	goto_home(char **env)
-{
-	char	*home;
-	
-	home = ft_arrcmp((void **)env, "HOME=");
-	if (!home)
+	name_len = ft_strlen(name);
+	i = -1;
+	while (env[++i] != NULL)
 	{
-		ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
-		return (1);
+		if (strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+			return (env[i] + name_len + 1);
 	}
-	if (chdir(home) != 0)
-		return (handle_error(1, "minishell: cd: error changing to HOME directory"));
-	return (update_cwd(env));
+	return (NULL);
 }
 
-static int cd_error_message(char *path) {
-	ft_putstr_fd("minishell: cd: `", STDERR_FILENO);
-	ft_putstr_fd(path, STDERR_FILENO);
-	ft_putstr_fd("': No such file or directory\n", STDERR_FILENO);
-	return (1);
-}
-
-// ~
-// --
-
-int b_cd(char *path, char **env)
+void	b_cd(char *path, t_data *data)
 {
-	char *oldpwd;
-	if (!path)
-		return (goto_home(env));
-	oldpwd = getcwd(NULL, 0);
+	char	old_path[1024];
+	char	new_path[1024];
+
+	if (!data)
+		return (handle_void_error("cd: invalid data structure\n"));
+	if (getcwd(old_path, sizeof(old_path)) == NULL)
+	{
+		perror("cd: error getting current directory");
+		data->exit_status = 1;
+		return ;
+	}
+	if (path == NULL || *path == '\0')
+	{
+		path = find_env_var(data->envp, "HOME");
+		if (path == NULL)
+		{
+			fprintf(stderr, "cd: HOME not set\n");
+			data->exit_status = 1;
+			return ;
+		}
+	}
 	if (chdir(path) != 0)
 	{
-		free(oldpwd);
-		return (cd_error_message(path));
+		perror("cd");
+		data->exit_status = 1;
+		return ;
 	}
-	update_env_var(env, "OLDPWD", oldpwd);
-	free(oldpwd);
-	return (update_cwd(env));
+	update_env_var(&(data->envp), "OLDPWD", old_path);
+	if (getcwd(new_path, sizeof(new_path)) == NULL)
+	{
+		perror("cd: error getting new directory");
+		data->exit_status = 1;
+		return ;
+	}
+	update_env_var(&(data->envp), "PWD", new_path);
+	data->exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 14:50:04 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:51:16 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		printf("All arguments will be ignored\n");
 	prompt(&data);
-	return(data.exit_status);
+	return (data.exit_status);
 }

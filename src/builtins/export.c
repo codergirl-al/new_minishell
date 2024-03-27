@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>           +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/21 16:22:09 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:03:25 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	validate_export_var(const char *name)
 	return (1);
 }
 
-static void	handle_reallocation(char ***env, char ***new_env, char *new_var)
+static void	handle_reallocation(char **env, char **new_env, char *new_var)
 {
 	size_t	size;
 	size_t	i;
 
 	size = 0;
-	while ((*env)[size])
+	while (env[size])
 		++size;
 	new_env = malloc(sizeof(char *) * (size + 2));
 	if (!new_env)
@@ -44,12 +44,12 @@ static void	handle_reallocation(char ***env, char ***new_env, char *new_var)
 	}
 	i = -1;
 	while (++i < size)
-		(*new_env)[i] = (*env)[i];
-	(*env)[size] = new_var;
-	(*env)[size + 1] = NULL;
+		new_env[i] = env[i];
+	env[size] = new_var;
+	env[size + 1] = NULL;
 }
 
-void	handle_env(char ***env, const char *name, const char *value)
+void	handle_env(char **env, const char *name, const char *value)
 {
 	char	*new_var;
 	char	**new_env;
@@ -59,24 +59,25 @@ void	handle_env(char ***env, const char *name, const char *value)
 	len = ft_strlen(name) + ft_strlen(value) + 2;
 	new_var = malloc(len);
 	if (!new_var)
-		return (handle_void_perror("Failed to allocate memory for new environment variable"));
+		return (handle_void_perror("Failed to allocate memory."));
 	snprintf(new_var, len, "%s=%s", name, value);
 	i = -1;
 	while ((*env)[++i])
 	{
-		if (ft_strncmp((*env)[i], name, strlen(name)) == 0 && (*env)[i][strlen(name)] == '=')
+		if (ft_strncmp(env[i], name, strlen(name)) == 0 && \
+			env[i][strlen(name)] == '=')
 		{
-			free((*env)[i]);
-			(*env)[i] = new_var;
+			free(env[i]);
+			env[i] = new_var;
 			return ;
 		}
 	}
-	handle_reallocation(env, &new_env, new_var);
-	free(*env);
-	*env = new_env;
+	handle_reallocation(env, new_env, new_var);
+	free(env);
+	env = new_env;
 }
 
-void	b_export(char ***env, char *assignment)
+void	b_export(char **env, char *assignment)
 {
 	char	*pos;
 	char	*name;
@@ -92,7 +93,7 @@ void	b_export(char ***env, char *assignment)
 	{
 		fprintf(stderr, "export: '%s' is not a valid identifier\n", assignment);
 		*pos = '=';
-		return;
+		return ;
 	}
 	*pos = '=';
 	name = assignment;
