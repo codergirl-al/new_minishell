@@ -6,15 +6,16 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/26 01:14:40 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:49:34 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIB_H
 # define LIB_H
 
-#include <stdlib.h>
-#include <string.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 
 typedef	struct	s_list
 {
@@ -28,6 +29,8 @@ typedef	struct	s_list
 #define STRFREE_S2 (1 << 1)
 
 int		ft_issep(char c);
+int		ft_isalnum(int c);
+int		ft_isalpha(int c);
 int		ft_arrlen(char **arr);
 char	*ft_arrcmp(void **arr, void *keyword);
 char	**ft_arrdup(char **arr);
@@ -40,6 +43,7 @@ char	*ft_swapstr(char *src, char *swap, int *ints, int free_flag);
 t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
 char **lst_to_arr(t_list *head);
-
+void	ft_putstr_fd(char *s, int fd);
+char	*ft_strchr(const char *s, int c);
 
 #endif

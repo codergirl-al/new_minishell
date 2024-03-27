@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 18:25:00 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 19:01:18 by apeposhi         ###   ########.fr       */
+/*   Created: 2024/03/24 17:03:42 by apeposhi          #+#    #+#             */
+/*   Updated: 2024/03/24 17:04:07 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/lib.h"
 
-void b_env(char	***env)
+int	ft_isalpha(int c)
 {
-	int	i;
-
-	i = -1;
-	while ((*env)[++i])
-		printf("%s\n", (*env)[i]);
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }

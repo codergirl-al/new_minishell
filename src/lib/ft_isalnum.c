@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 18:25:00 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/24 19:01:18 by apeposhi         ###   ########.fr       */
+/*   Created: 2024/03/24 17:05:02 by apeposhi          #+#    #+#             */
+/*   Updated: 2024/03/24 17:05:43 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/lib.h"
 
-void b_env(char	***env)
+int	ft_isalnum(int c)
 {
-	int	i;
-
-	i = -1;
-	while ((*env)[++i])
-		printf("%s\n", (*env)[i]);
+	if (ft_isalpha(c) || (c >= '0' && c <= '9'))
+		return (1);
+	else
+		return (0);
 }

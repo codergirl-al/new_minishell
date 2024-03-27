@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 14:47:34 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:49:25 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include "lib.h"
+# include <limits.h>
 
 # define RED "\033[1;31m"
 # define GREEN "\033[0;32m"
@@ -51,7 +52,7 @@ typedef struct s_data
 {
 	char	**envp;
 	int		exit_status;
-	bool	exit;
+	// bool	exit;
 	char	*input;
 	char	*prev_input;
 }	t_data;
@@ -79,5 +80,21 @@ void	setup_signal_handling(void);
 void 	s_child_case(int sig);
 void	s_heredoc_case(int sig);
 void	handle_signals_extended(void (*func)(int));
+
+// Builtins
+int		b_cd(char *path, char **env);
+int		b_echo(char **args);
+void	b_env(char	***env);
+void	b_exit(char **args);
+void	b_export(char ***env, char *assign);
+void	b_pwd(void);
+void	b_unset(char ***env, const char *key);
+
+// Builtin utils
+int		handle_error(int r_value, char *r_message);
+void    handle_void_error(char  *message);
+void    handle_void_perror(char  *message);
+void    execute_builtin(char *cmd, char *path, char ***env, char *assign, const char *key, char **args);
+int		update_env_var(char **env, const char *key, const char *value);
 
 #endif

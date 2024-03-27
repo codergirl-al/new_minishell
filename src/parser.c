@@ -6,13 +6,11 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:46:23 by khnishou          #+#    #+#             */
-/*   Updated: 2024/03/27 14:46:27 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:49:09 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <stdio.h>
-#include <string.h>
 
 #define IS_INOOUT  (1 << 0)
 #define IS_DOUBLE   (1 << 1)
