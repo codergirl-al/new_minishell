@@ -62,44 +62,38 @@ int redirect(char **str, t_exec *exe)
   return (0);
 }
 
-char *parse_arg(char *str, t_data *data)
+char *parse_arg(char **cont, t_data *data)
 {
   int it[2] = {0, 0};
 	int i;
 	int len;
-  char *cont;
   char *exp;
-
-  cont = strdup(str);
-  if (!cont)
-    return (NULL);
-
-  while (cont[it[0]])
+  while ((*cont)[it[0]])
 	{
-    if (cont[it[0]] == '\'')
+    if ((*cont)[it[0]] == '\'')
     {
-      it[1] = iter_quotes(cont + it[0]) - (cont + it[0]) + 1;
+      it[1] = iter_quotes((*cont) + it[0]) - ((*cont) + it[0]) + 1;
 			i = it[0];
-			cont = ft_swapstr(cont, ft_substr(cont, it[0] + 1, it[1] - 2, 0),  it, STRFREE_SRC | STRFREE_ARG);
+			(*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, 0),  it, STRFREE_SRC | STRFREE_ARG);
 			it[0] = i;
   	  it[0] += it[1] - 2;
     }
-		else if (cont[it[0]] == '\"')
+		else if ((*cont)[it[0]] == '\"')
 		{
-			it[1] = iter_quotes(cont + it[0]) - (cont + it[0]) + 1;
+			it[1] = iter_quotes((*cont) + it[0]) - ((*cont) + it[0]) + 1;
 			len = it[1] + it[0] - 2;
 			i = it[0];
-			cont = ft_swapstr(cont, ft_substr(cont, it[0] + 1, it[1] - 2, 0),  it, STRFREE_SRC | STRFREE_ARG);
+			(*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, 0),  it, STRFREE_SRC | STRFREE_ARG);
 			it[0] = i;
-			while (cont[it[0]] && it[0] < len)
+			while ((*cont)[it[0]] && it[0] < len)
 			{
-				if (cont[it[0]] == '$')
+				if ((*cont)[it[0]] == '$')
 				{
-					it[1] = get_env(data->envp, cont + it[0], &exp);
+					it[1] = get_env(data->envp, (*cont) + it[0], &exp);
 					i = it[0];
 					if (it[1] != 1)
 					{
-						cont = ft_swapstr(cont, exp, it, STRFREE_SRC);
+						(*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC);
             it[0] = i;
             it[0] += ft_strlen(exp) - 1;
             len += (-it[1]) + ft_strlen(exp);
@@ -108,22 +102,22 @@ char *parse_arg(char *str, t_data *data)
 				it[0]++;
 			}
 		}
-    else if (cont[it[0]] == '$') // value doesn t exist
+    else if ((*cont)[it[0]] == '$') // value doesn t exist
     {
-      it[1] = get_env(data->envp, cont + it[0], &exp);
+      it[1] = get_env(data->envp, (*cont) + it[0], &exp);
       i = it[0];
       if (it[1] != 1)
       {
-        cont = ft_swapstr(cont, exp, it, STRFREE_SRC);
+        (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC);
         it[0] = i;
         it[0] += ft_strlen(exp) - 1;
         len += (-it[1]) + ft_strlen(exp);
-        // creat a list
       }
+      // creat a list
     }
     it[0]++; // echo "111"'2222'
   }
-  return (cont);
+  return ((*cont));
 }
 
 t_list *set_arg(t_data *data, char *str, t_list *old, bool exp_flag)
@@ -131,10 +125,11 @@ t_list *set_arg(t_data *data, char *str, t_list *old, bool exp_flag)
   t_list *new;
   char *cont;
 
+  cont = strdup(str);
+  if (!cont)
+    return (NULL);
   if (exp_flag)
-    cont = parse_arg(str, data);
-  else
-    cont = strdup(str);
+    parse_arg(&cont, data);
   new = ft_lstnew((void *) cont);
   if (!new)
     return (NULL);
