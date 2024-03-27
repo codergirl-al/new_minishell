@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 02:44:57 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:08:15 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ typedef struct s_exec
 
 // utils
 char	*iter_quotes(char *str);
-char *get_env(char **env, char **str);
+int get_env(char **env, char *str, char **exp);
 int cmdlen(char *str, int flag);
 
 // parse
 int		checker(char **input);
 int		iter_cmd(t_data *data);
-t_list	*parse_cmd(char *str, t_data *data, t_exec *exe);
+t_list	*parse_cmd(char *str, t_data *data, t_exec *exe, bool exp_flag);
 
 // Signals
 void	setup_signal_handling(void);

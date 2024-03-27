@@ -1,6 +1,7 @@
 
 #include "../include/minishell.h"
 #include <stdio.h>
+#include <string.h>
 
 #define IS_INOOUT  (1 << 0)
 #define IS_DOUBLE   (1 << 1)
@@ -10,14 +11,15 @@ int ft_open(char *start, int len, int flag)
   int fd;
   char *file_name;
 
-  file_name = ft_substr(start, 0, len);
-  if (!(flag & IS_INOOUT) && !(flag & IS_INOOUT))
+  fd = 0;
+  file_name = ft_substr(start, 0, len, 0);
+  if (!(flag & IS_INOOUT) && !(flag & IS_DOUBLE))
     fd = open(file_name, O_RDONLY);
-  else if ((flag & IS_INOOUT) && !(flag & IS_INOOUT))
+  else if ((flag & IS_INOOUT) && !(flag & IS_DOUBLE))
     fd = open(file_name,O_RDWR | O_TRUNC | O_CREAT, 0000644);
-  // else if (!(flag & IS_INOOUT) && (flag & IS_INOOUT))
+  // else if (!(flag & IS_INOOUT) && (flag & IS_DOUBLE))
   //   fd = heredoc_handler(file_name);
-  else if ((flag & IS_INOOUT) && (flag & IS_INOOUT))
+  else if ((flag & IS_INOOUT) && (flag & IS_DOUBLE))
     fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0000644);
   if (fd == -1)
     perror("Minishell");
@@ -60,73 +62,87 @@ int redirect(char **str, t_exec *exe)
   return (0);
 }
 
-// int parse_cmd(char *str, t_data *data, int it, t_exec *exe) {
-//   char *start;
-//   int i;
-//   int len;
-//   int f_flag;
+char *parse_arg(char *str, t_data *data)
+{
+  int it[2] = {0, 0};
+	int i;
+	int len;
+  char *cont;
+  char *exp;
 
-//   len = 0;
-//   i = it;
-//   if (str) {
-//     while (*str && (ft_issep(*str) || *str == '>' || *str == '<'))
-//     {
-//       if ((*str == '<') || (*str == '>'))
-//         redirect(&str, exe);
-//       else
-//         *(str++) = 0;
-//     }
-//     if (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
-//     {
-//       start = str;
-//       f_flag = 1;
-//       if (*str != '$')
-//       {
-//         f_flag = 0;
-//         i++;
-//       }
-//       while (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
-//       {
-//         if ((*str == '\'') || (*str == '\"'))
-//           str = iter_quotes(str);
-//         else if (*str == '$')
-//           len += cmdlen(get_env(data->envp, &str), f_flag);
-//         f_flag = 0;
-//         str++;
-//       }
-//     }
-//     else
-//     {
-//       exe->cmd = malloc(sizeof(char *) * i + 1);
-//       if (!exe->cmd)
-//         return (0);
-//       exe->cmd[i] = NULL;
-//       return (i);
-//     }
-//     if (!parse_cmd(str, data, i + len, exe))
-//       return (0);
+  cont = strdup(str);
+  if (!cont)
+    return (NULL);
 
-//     exe->cmd[i - 1] = start;
-//   }
-//   return (i);
-// }
+  while (cont[it[0]])
+	{
+    if (cont[it[0]] == '\'')
+    {
+      it[1] = iter_quotes(cont + it[0]) - (cont + it[0]) + 1;
+			i = it[0];
+			cont = ft_swapstr(cont, ft_substr(cont, it[0] + 1, it[1] - 2, 0),  it, STRFREE_SRC | STRFREE_ARG);
+			it[0] = i;
+  	  it[0] += it[1] - 2;
+    }
+		else if (cont[it[0]] == '\"')
+		{
+			it[1] = iter_quotes(cont + it[0]) - (cont + it[0]) + 1;
+			len = it[1] + it[0] - 2;
+			i = it[0];
+			cont = ft_swapstr(cont, ft_substr(cont, it[0] + 1, it[1] - 2, 0),  it, STRFREE_SRC | STRFREE_ARG);
+			it[0] = i;
+			while (cont[it[0]] && it[0] < len)
+			{
+				if (cont[it[0]] == '$')
+				{
+					it[1] = get_env(data->envp, cont + it[0], &exp);
+					i = it[0];
+					if (it[1] != 1)
+					{
+						cont = ft_swapstr(cont, exp, it, STRFREE_SRC);
+            it[0] = i;
+            it[0] += ft_strlen(exp) - 1;
+            len += (-it[1]) + ft_strlen(exp);
+					}
+				}
+				it[0]++;
+			}
+		}
+    else if (cont[it[0]] == '$') // value doesn t exist
+    {
+      it[1] = get_env(data->envp, cont + it[0], &exp);
+      i = it[0];
+      if (it[1] != 1)
+      {
+        cont = ft_swapstr(cont, exp, it, STRFREE_SRC);
+        it[0] = i;
+        it[0] += ft_strlen(exp) - 1;
+        len += (-it[1]) + ft_strlen(exp);
+        // creat a list
+      }
+    }
+    it[0]++; // echo "111"'2222'
+  }
+  return (cont);
+}
 
-t_list *set_arg(char *start, t_list *old)
+t_list *set_arg(t_data *data, char *str, t_list *old, bool exp_flag)
 {
   t_list *new;
-  char *content;
+  char *cont;
 
-  content = strdup(start);
-  if (!content)
-    return (NULL);
-  new = ft_lstnew((void *) content);
+  if (exp_flag)
+    cont = parse_arg(str, data);
+  else
+    cont = strdup(str);
+  new = ft_lstnew((void *) cont);
   if (!new)
     return (NULL);
   new->next = old;
   return (new);
 }
 
-t_list *parse_cmd(char *str, t_data *data, t_exec *exe) {
+t_list *parse_cmd(char *str, t_data *data, t_exec *exe, bool exp_flag) {
   char *start;
   t_list  *new;
   t_list  *old;
@@ -138,7 +154,7 @@ t_list *parse_cmd(char *str, t_data *data, t_exec *exe) {
       if ((*str == '<') || (*str == '>'))
         redirect(&str, exe);
       else
-        *(str++) = 0; // check if the redirect is set to null "ls>out"
+        *(str++) = 0;
     }
     if (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
       start = str;
@@ -146,8 +162,8 @@ t_list *parse_cmd(char *str, t_data *data, t_exec *exe) {
       return (NULL);
     while (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
         str++;
-    old = parse_cmd(str, data, exe);
-    new = set_arg(start, old);
+    old = parse_cmd(str, data, exe, exp_flag);
+    new = set_arg(data, start, old, exp_flag);
     if (!new)
       return (NULL);
   }

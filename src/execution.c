@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 03:07:34 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/25 21:34:44 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int execute_pipe(char *cmd, t_data *data, int *stdin)
 
 	exe.fd_in = 0;
 	exe.fd_out = 0;
-	lst = parse_cmd(cmd, data, &exe);
+	lst = parse_cmd(cmd, data, &exe, true);
 	if (!pipe(fd) && !fork())
 	{
 		close(fd[0]);
@@ -89,7 +89,7 @@ static int execute_last(char *cmd, t_data *data, int *stdin)
 
 	exe.fd_in = 0;
 	exe.fd_out = 0;
-	lst = parse_cmd(cmd, data, &exe);
+	lst = parse_cmd(cmd, data, &exe, true);
 	if (!fork())
 	{
 		execute(lst, data, stdin, exe);

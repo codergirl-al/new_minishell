@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:59:07 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/22 01:44:59 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/25 04:21:37 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static unsigned int	tt_strlcpy(char *dest, const char *src, double size)
 	return (lsrc);
 }
 
-char	*ft_substr(char *str, unsigned int start, size_t len)
+char	*ft_substr(char *str, unsigned int start, size_t len, int free_flag)
 {
 	char	*dest;
 	size_t	size;
@@ -51,5 +51,7 @@ char	*ft_substr(char *str, unsigned int start, size_t len)
         return (NULL);
 	}
 	tt_strlcpy(dest, str + start, len);
+	if (free_flag & STRFREE_SRC)
+		free(str);
 	return (dest);
 }
