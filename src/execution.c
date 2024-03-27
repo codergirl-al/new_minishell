@@ -6,12 +6,11 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/25 21:34:44 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/27 14:47:11 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-#include <unistd.h>
 
 static char	*ft_getpath(char **env, char *f_cmd)
 {
