@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 15:08:17 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:17:09 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,73 +103,73 @@
 // 	handle_env(*data->envp, name, value);
 // }
 
-#include "../../include/minishell.h"
+// #include "../../include/minishell.h"
 
-// Corrected validation function
-int validate_export_var(const char *name) {
-    if (!name || !*name || (!ft_isalpha(*name) && *name != '_'))
-        return (0);
-    for (const char *ptr = name + 1; *ptr; ptr++) {
-        if (!ft_isalnum(*ptr) && *ptr != '_')
-            return (0);
-    }
-    return (1);
-}
+// // Corrected validation function
+// int validate_export_var(const char *name) {
+//     if (!name || !*name || (!ft_isalpha(*name) && *name != '_'))
+//         return (0);
+//     for (const char *ptr = name + 1; *ptr; ptr++) {
+//         if (!ft_isalnum(*ptr) && *ptr != '_')
+//             return (0);
+//     }
+//     return (1);
+// }
 
-// Assuming these functions are correctly defined elsewhere
+// // Assuming these functions are correctly defined elsewhere
 
-void update_or_add_env_var(char ***env, char *name, char *value) {
-    size_t len = ft_strlen(name) + ft_strlen(value) + 2;
-    char *new_var = malloc(len);
-    if (!new_var) {
-        handle_void_error("Failed to allocate memory for new environment variable.");
-        return;
-    }
-    snprintf(new_var, len, "%s=%s", name, value);
+// void update_or_add_env_var(char ***env, char *name, char *value) {
+//     size_t len = ft_strlen(name) + ft_strlen(value) + 2;
+//     char *new_var = malloc(len);
+//     if (!new_var) {
+//         handle_void_error("Failed to allocate memory for new environment variable.");
+//         return;
+//     }
+//     snprintf(new_var, len, "%s=%s", name, value);
 
-    for (size_t i = 0; (*env)[i]; i++) {
-        if (strncmp((*env)[i], name, ft_strlen(name)) == 0 && (*env)[i][ft_strlen(name)] == '=') {
-            free((*env)[i]);
-            (*env)[i] = new_var;
-            return; // Existing variable updated; no further action required.
-        }
-    }
+//     for (size_t i = 0; (*env)[i]; i++) {
+//         if (strncmp((*env)[i], name, ft_strlen(name)) == 0 && (*env)[i][ft_strlen(name)] == '=') {
+//             free((*env)[i]);
+//             (*env)[i] = new_var;
+//             return; // Existing variable updated; no further action required.
+//         }
+//     }
 
-    // Variable not found; add as a new variable.
-    // Calculate the current size of the environment array.
-    size_t size;
-    for (size = 0; (*env)[size]; size++);
+//     // Variable not found; add as a new variable.
+//     // Calculate the current size of the environment array.
+//     size_t size;
+//     for (size = 0; (*env)[size]; size++);
 
-    // Allocate space for the new environment array.
-    char **new_env = malloc(sizeof(char *) * (size + 2)); // +1 for new entry, +1 for NULL
-    if (!new_env) {
-        free(new_var); // Cleanup new_var on allocation failure.
-        handle_void_error("Failed to allocate memory for expanded environment array.");
-        return;
-    }
+//     // Allocate space for the new environment array.
+//     char **new_env = malloc(sizeof(char *) * (size + 2)); // +1 for new entry, +1 for NULL
+//     if (!new_env) {
+//         free(new_var); // Cleanup new_var on allocation failure.
+//         handle_void_error("Failed to allocate memory for expanded environment array.");
+//         return;
+//     }
 
-    // Copy existing variables to the new environment array.
-    for (size_t i = 0; i < size; i++) {
-        new_env[i] = (*env)[i];
-    }
-    new_env[size] = new_var; // Append the new variable.
-    new_env[size + 1] = NULL; // Null-terminate the new environment array.
+//     // Copy existing variables to the new environment array.
+//     for (size_t i = 0; i < size; i++) {
+//         new_env[i] = (*env)[i];
+//     }
+//     new_env[size] = new_var; // Append the new variable.
+//     new_env[size + 1] = NULL; // Null-terminate the new environment array.
 
-    free(*env); // Free the old environment array.
-    *env = new_env; // Update the pointer to point to the new array.
-}
+//     free(*env); // Free the old environment array.
+//     *env = new_env; // Update the pointer to point to the new array.
+// }
 
-void b_export(t_data *data, char *assignment) {
-    if (!assignment || validate_export_var(assignment)) {
-        handle_void_error("export: Invalid or missing argument.");
-        return;
-    }
-    char *pos = strchr(assignment, '=');
-    if (!pos) {
-        handle_void_error("export: Invalid format. Use NAME=VALUE.");
-        return;
-    }
-    *pos = '\0'; // Temporarily terminate the string to isolate the name.
-    update_or_add_env_var(&(data->envp), assignment, pos + 1);
-    *pos = '='; // Restore the original assignment string.
-}
+// void b_export(t_data *data, char *assignment) {
+//     if (!assignment || validate_export_var(assignment)) {
+//         handle_void_error("export: Invalid or missing argument.");
+//         return;
+//     }
+//     char *pos = strchr(assignment, '=');
+//     if (!pos) {
+//         handle_void_error("export: Invalid format. Use NAME=VALUE.");
+//         return;
+//     }
+//     *pos = '\0'; // Temporarily terminate the string to isolate the name.
+//     update_or_add_env_var(&(data->envp), assignment, pos + 1);
+//     *pos = '='; // Restore the original assignment string.
+// }

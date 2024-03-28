@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:46:23 by khnishou          #+#    #+#             */
-/*   Updated: 2024/03/28 15:03:30 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:25:54 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdio.h>
 
 #define IS_INOOUT  (1 << 0)
 #define IS_DOUBLE   (1 << 1)
@@ -79,7 +80,20 @@ char *parse_arg(char **cont, t_data *data)
   char *exp;
   while ((*cont)[it[0]])
 	{
-    if ((*cont)[it[0]] == '\'')
+    if ((*cont)[it[0]] == '$') // value doesn t exist
+    {
+      it[1] = get_env(data->envp, (*cont) + it[0], &exp);
+      i = it[0];
+      if (it[1] != 1)
+      {
+        (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC);
+        it[0] = i;
+        it[0] += ft_strlen(exp) - 1;
+        len += (-it[1]) + ft_strlen(exp);
+      }
+      it[0]++;
+    }
+    else if ((*cont)[it[0]] == '\'')
     {
       it[1] = iter_quotes((*cont) + it[0]) - ((*cont) + it[0]) + 1;
 			i = it[0];
@@ -111,20 +125,8 @@ char *parse_arg(char **cont, t_data *data)
 				it[0]++;
 			}
 		}
-    else if ((*cont)[it[0]] == '$') // value doesn t exist
-    {
-      it[1] = get_env(data->envp, (*cont) + it[0], &exp);
-      i = it[0];
-      if (it[1] != 1)
-      {
-        (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC);
-        it[0] = i;
-        it[0] += ft_strlen(exp) - 1;
-        len += (-it[1]) + ft_strlen(exp);
-      }
-      // creat a list
-    }
-    it[0]++; // echo "111"'2222'
+    else
+      it[0]++; // echo "111"'2222'
   }
   return ((*cont));
 }
@@ -165,7 +167,11 @@ t_list *parse_cmd(char *str, t_data *data, t_exec *exe, bool exp_flag) {
     else
       return (NULL);
     while (*str && !(ft_issep(*str) || *str == '>' || *str == '<'))
-        str++;
+    {
+      if (*str == '\'' || *str == '\"')
+        str = iter_quotes(str);
+      str++;
+    }
     old = parse_cmd(str, data, exe, exp_flag);
     new = set_arg(data, start, old, exp_flag);
     if (!new)
