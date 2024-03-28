@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 17:11:19 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:01:25 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static char	*ft_getpath(char **env, char *f_cmd)
 static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
 {
 	exe.cmd = lst_to_arr(lst);
-	execute_builtin(data, &exe);
 	dup2(*stdin, STDIN_FILENO);
 	close(*stdin);
 	exe.path = ft_getpath(data->envp, exe.cmd[0]);
@@ -82,6 +81,24 @@ static int execute_pipe(char *cmd, t_data *data, int *stdin)
 	return (0);
 }
 
+static int	is_builtin(t_list *lst) {
+	if (!strcmp("cd", (char *)lst->content))
+		return (1);
+	else if (!ft_strncmp("echo", (char *)lst->content, 5))
+		return (1);
+	else if (!ft_strncmp("env", (char *)lst->content, 4))
+		return (1);
+	else if (!ft_strncmp("exit", (char *)lst->content, 5))
+		return 1;
+	else if (!ft_strncmp("export", (char *)lst->content, 7))
+		return (1);
+	else if (!ft_strncmp("pwd", (char *)lst->content, 4))
+		return (1);
+	else if (!ft_strncmp("unset", (char *)lst->content, 6))
+		return (1);
+	return (0);
+}
+
 static int execute_last(char *cmd, t_data *data, int *stdin)
 {
 	t_exec	exe;
@@ -90,7 +107,11 @@ static int execute_last(char *cmd, t_data *data, int *stdin)
 	exe.fd_in = 0;
 	exe.fd_out = 0;
 	lst = parse_cmd(cmd, data, &exe, true);
-	if (!fork())
+	if (is_builtin(lst)) {
+		exe.cmd = lst_to_arr(lst);
+		execute_builtin(data, &exe);
+	}
+	else if (!fork())
 	{
 		execute(lst, data, stdin, exe);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 21:36:29 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:40:48 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ void	handle_signals_extended(void (*func)(int));
 
 // Builtins
 void	b_cd(char *path, t_data *data);
-int		b_echo(char **args);
+void	b_echo(char **cmds);
 void	b_env(char	**env);
 void	b_exit(t_data *data, char **args);
 void	b_export(t_data *data, char *assignment);
 void	b_pwd(void);
-void	b_unset(char ***env, char **cmds);
+void	b_unset(char **env, char **cmds);
 
 // Builtin utils
 int		handle_error(int r_value, char *r_message);

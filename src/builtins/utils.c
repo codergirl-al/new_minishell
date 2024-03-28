@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 21:38:36 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:01:55 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	execute_builtin(t_data *data, t_exec *exe)
 		b_cd(exe->cmd[1], data);
 	else if (!ft_strncmp("echo", exe->cmd[0], 5))
 		b_echo(exe->cmd);
-	else if (!ft_strncmp("enevo", exe->cmd[0], 4))
+	else if (!ft_strncmp("env", exe->cmd[0], 4))
 		b_env(data->envp);
 	else if (!ft_strncmp("exit", exe->cmd[0], 5))
 		b_exit(data, exe->cmd);
@@ -45,7 +45,7 @@ void	execute_builtin(t_data *data, t_exec *exe)
 	else if (!ft_strncmp("pwd", exe->cmd[0], 4))
 		b_pwd();
 	else if (!ft_strncmp("unset", exe->cmd[0], 6))
-		b_unset(&data->envp, exe->cmd);
+		b_unset(data->envp, exe->cmd);
 }
 
 void	update_env_var(char ***env, const char *name, const char *value)
