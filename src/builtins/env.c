@@ -6,17 +6,17 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:00 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 15:16:58 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/28 20:42:26 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// void	b_env(char	**env)
-// {
-// 	int	i;
+void	b_env(char	**env)
+{
+	int	i;
 
-// 	i = -1;
-// 	while (env[++i])
-// 		printf("%s\n", env[i]);
-// }
+	i = -1;
+	while (env[++i])
+		dprintf(2, "%s\n", env[i]);
+}
