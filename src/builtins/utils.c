@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 15:01:55 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:09:25 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	handle_error(int r_value, char *r_message)
-{
-	perror(r_message);
-	return (r_value);
-}
+// int	handle_error(int r_value, char *r_message)
+// {
+// 	perror(r_message);
+// 	return (r_value);
+// }
 
-void	handle_void_perror(char *message)
-{
-	perror(message);
-	return ;
-}
+// void	handle_void_perror(char *message)
+// {
+// 	perror(message);
+// 	return ;
+// }
 
 void	handle_void_error(char *message)
 {
@@ -51,8 +51,8 @@ void	execute_builtin(t_data *data, t_exec *exe)
 void	update_env_var(char ***env, const char *name, const char *value)
 {
 	size_t	i;
-	size_t	len;
-	char	*new_var;
+ 	size_t	len;
+ 	char	*new_var;
 
 	i = -1;
 	while ((*env)[++i] != NULL)

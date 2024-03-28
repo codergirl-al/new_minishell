@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 15:01:25 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:06:00 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <readline/history.h>
 
 static char	*ft_getpath(char **env, char *f_cmd)
 {
@@ -135,7 +136,9 @@ int	iter_cmd(t_data *data)
 	stdin = dup(STDIN_FILENO);
 	while (data->input && *end)
 	{
-		if (*end == '|')
+		if (*end == '\'' || *end == '\"')
+			end = iter_quotes(end);
+		else if (*end == '|')
 		{
 			*end = 0;
 			execute_pipe(start, data, &stdin);
