@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 14:51:44 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:10:45 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-# include "lib.h"
 # include <limits.h>
 
 # define RED "\033[1;31m"
@@ -35,7 +34,7 @@
 # define GRAY "\033[1;30m"
 # define DEFAULT "\033[1;39m"
 
-int	g_sig;
+// int	g_sig;
 
 enum e_type
 {
@@ -52,6 +51,7 @@ typedef struct s_data
 {
 	char	**envp;
 	int		exit_status;
+	bool	exit;
 	char	*input;
 	char	*prev_input;
 }	t_data;

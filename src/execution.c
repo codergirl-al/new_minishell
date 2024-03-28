@@ -6,11 +6,12 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 14:49:18 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:31:37 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <readline/history.h>
 
 static char	*ft_getpath(char **env, char *f_cmd)
 {
@@ -113,7 +114,9 @@ int	iter_cmd(t_data *data)
 	stdin = dup(STDIN_FILENO);
 	while (data->input && *end)
 	{
-		if (*end == '|')
+		if (*end == '\'' || *end == '\"')
+			end = iter_quotes(end);
+		else if (*end == '|')
 		{
 			*end = 0;
 			execute_pipe(start, data, &stdin);

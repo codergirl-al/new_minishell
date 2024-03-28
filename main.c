@@ -6,11 +6,13 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 14:51:16 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/27 16:44:36 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
+
+int	g_sig;
 
 static void	prompt(t_data *data)
 {
