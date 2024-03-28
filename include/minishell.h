@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 18:10:45 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:05:43 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,11 @@ typedef struct s_exec
 	char	*path;
 }	t_exec;
 
-// utils
+// Utils
 char	*iter_quotes(char *str);
-int get_env(char **env, char *str, char **exp);
-int cmdlen(char *str, int flag);
+int		get_env(char **env, char *str, char **exp);
 
-// parse
+// Parser
 int		checker(char **input);
 int		iter_cmd(t_data *data);
 t_list	*parse_cmd(char *str, t_data *data, t_exec *exe, bool exp_flag);
@@ -82,10 +81,10 @@ void	handle_signals_extended(void (*func)(int));
 
 // Builtins
 void	b_cd(char *path, t_data *data);
-int		b_echo(char **args);
+void	b_echo(char **cmds);
 void	b_env(char	**env);
-void	b_exit(t_data data);
-void	b_export(char **env, char *assign);
+void	b_exit(t_data *data, char **args);
+void	b_export(t_data *data, char *assignment);
 void	b_pwd(void);
 void	b_unset(char **env, char **cmds);
 
@@ -94,6 +93,6 @@ int		handle_error(int r_value, char *r_message);
 void	handle_void_error(char *message);
 void	handle_void_perror(char *message);
 void	execute_builtin(t_data *data, t_exec *exe);
-int		update_env_var(char **env, const char *key, const char *value);
+void	update_env_var(char ***env, const char *name, const char *value);
 
 #endif
