@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 13:04:31 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:46:01 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,24 @@ char	*find_env_var(char **env, const char *name)
 	return (NULL);
 }
 
+static void	handle_home_case(t_data *data, char *path)
+{
+	path = find_env_var(data->envp, path);
+	if (path == NULL)
+	{
+		fprintf(stderr, "cd: %s not set\n", path);
+		data->exit_status = 1;
+		return ;
+	}
+}
+
+static void	handle_cd_perror(t_data *data, char *message)
+{
+	perror(message);
+	data->exit_status = 1;
+	return ;
+}
+
 void	b_cd(char *path, t_data *data)
 {
 	char	old_path[1024];
@@ -41,28 +59,12 @@ void	b_cd(char *path, t_data *data)
 		return ;
 	}
 	if (path == NULL || *path == '\0')
-	{
-		path = find_env_var(data->envp, "HOME");
-		if (path == NULL)
-		{
-			fprintf(stderr, "cd: HOME not set\n");
-			data->exit_status = 1;
-			return ;
-		}
-	}
+		handle_home_case(data, "HOME");
 	if (chdir(path) != 0)
-	{
-		perror("cd");
-		data->exit_status = 1;
-		return ;
-	}
+		return (handle_cd_perror(data, "cd"));
 	update_env_var(&(data->envp), "OLDPWD", old_path);
 	if (getcwd(new_path, sizeof(new_path)) == NULL)
-	{
-		perror("cd: error getting new directory");
-		data->exit_status = 1;
-		return ;
-	}
+		return (handle_cd_perror(data, "cd: error getting new directory"));
 	update_env_var(&(data->envp), "PWD", new_path);
 	data->exit_status = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arrdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:55:59 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/20 15:28:26 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/03/28 16:17:13 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char	**ft_arrdup(char **arr)
 {
+	char	**new_arr;
 	int		len;
 	int		i;
 	int		j;
-	char	**new_arr;
 
 	len = ft_arrlen(arr);
 	if (len == -1)
@@ -26,7 +26,7 @@ char	**ft_arrdup(char **arr)
 	if (new_arr == NULL)
 		return (NULL);
 	i = -1;
-	while (++i < len)
+	while (arr[++i])
 	{
 		new_arr[i] = strdup(arr[i]);
 		if (new_arr[i] == NULL)

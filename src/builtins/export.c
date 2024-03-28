@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 16:23:03 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:09:35 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	validate_export_var(const char *name)
 	if (!name || !*name || !(ft_isalpha(*name)) || *name == '_')
 		return (0);
 	ptr = name + 1;
+    if (!ft_isalpha(*ptr) && *ptr != '_')
+        return (0);
 	while (*ptr)
 	{
 		if (!ft_isalnum(*ptr) && *ptr != '_')
@@ -28,7 +30,7 @@ int	validate_export_var(const char *name)
 	return (1);
 }
 
-static void	handle_reallocation(char **env, char **new_env, char *new_var)
+static void handle_reallocation(char **env, char **new_env, char *new_var)
 {
 	size_t	size;
 	size_t	i;
@@ -75,6 +77,8 @@ void	handle_env(char **env, char *name)
 	handle_reallocation(env, new_env, new_var);
 	free(env);
 	env = new_env;
+    free(new_var);
+    free(new_env);
 }
 
 void	b_export(t_data *data, char *assignment)
