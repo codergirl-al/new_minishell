@@ -6,21 +6,34 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 14:54:32 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/04/01 00:06:50 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/minishell.h"
 
+# include <stdlib.h>
+# include <fcntl.h>
+# include <stdbool.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <signal.h>
+# include <termios.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/wait.h>
+# include <limits.h>
+
+
 // ...	none
 // ..1	|
-// .1.	&
-// .11	;
+// .1.	<
+// .11	>
 // 1..		??
 // 1.1	||
-// 11.	&&
-// 111	;;
+// 11.	<<
+// 111	>>
 //								+-------+
 #define FLAG_d (1 << 0) //--'	|00 none|
 #define FLAG_s (1 << 1) //--"	|01 "|"	|
@@ -29,7 +42,7 @@
 #define FLAG_3 (1 << 4) //-------1 / 2	|
 // 								+-------+
 
-static int istoken(char c) { return ((c == '|') || (c == '&') || (c == ';')); }
+static int istoken(char c) { return ((c == '|') || (c == '>') || (c == '<')); }
 
 void print_error(int flag) {
   char c = 0;
@@ -37,9 +50,9 @@ void print_error(int flag) {
   if ((flag & FLAG_1) && !(flag & FLAG_2))
     c = '|';
   else if (!(flag & FLAG_1) && (flag & FLAG_2))
-    c = '&';
+    c = '<';
   else if ((flag & FLAG_1) && (flag & FLAG_2))
-    c = ';';
+    c = '>';
   printf("%c", c);
   if (flag & FLAG_3)
     printf("%c", c);
@@ -68,9 +81,9 @@ int set_flag(char c, char c_next) {
 
   if (c == '|')
     flag ^= FLAG_1;
-  else if (c == '&')
+  else if (c == '<')
     flag ^= FLAG_2;
-  else if (c == ';') {
+  else if (c == '>') {
     flag ^= FLAG_1;
     flag ^= FLAG_2;
   }
@@ -92,7 +105,7 @@ static int not_valid(char *str) {
     else if (!(flag & FLAG_s) && !(flag & FLAG_d) && istoken(str[it])) {
       reset_flag(&flag);
       flag ^= set_flag(str[it], str[it + 1]);
-      if (!len_cmd || ((flag & FLAG_1) && (flag & FLAG_2) && (flag & FLAG_3)))
+      if ((!len_cmd && (flag & FLAG_1) && !(flag & FLAG_2)) || ((flag & FLAG_1) && !(flag & FLAG_2) && (flag & FLAG_3)))
         return (set_error(flag));
       it += ((flag & FLAG_3) >> 4);
       len_cmd = 0;
@@ -109,17 +122,13 @@ static int not_valid(char *str) {
 
 static void interactive_promt(char **input, int flag) {
   printf(GRAY);
-  if (!(flag & FLAG_1) && (flag & FLAG_2) && (flag & FLAG_3))
-    printf(" cmdand");
-  else if ((flag & FLAG_1) && !(flag & FLAG_2) && (flag & FLAG_3))
-    printf(" cmdor");
-  else if ((flag & FLAG_1) && !(flag & FLAG_2))
+  if ((flag & FLAG_1) && !(flag & FLAG_2))
     printf(" pipe");
   if (flag & FLAG_d)
     printf(" dquote");
   else if (flag & FLAG_s)
     printf(" quote");
-  *input = ft_strjoin(*input, readline("> " DEFAULT), 0); /// add '\n'
+  *input = ft_strjoin(*input, ft_strjoin(readline("> " DEFAULT), "\n", 0), 0); // check leaks
 }
 
 int checker(char **input) {
@@ -127,7 +136,7 @@ int checker(char **input) {
 
   while (1) {
     flag = not_valid(*input);
-    if ((flag & FLAG_s) && (flag & FLAG_d)) {
+    if (((flag & FLAG_s) && (flag & FLAG_d))) {
       print_error(flag);
       return (2); // check
     } else if (flag)
