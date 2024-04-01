@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/01 00:06:50 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/04/01 14:36:36 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,10 @@
 # include <limits.h>
 
 
-// ...	none
-// ..1	|
-// .1.	<
-// .11	>
-// 1..		??
-// 1.1	||
-// 11.	<<
-// 111	>>
-//								+-------+
 #define FLAG_d (1 << 0) //--'	|00 none|
 #define FLAG_s (1 << 1) //--"	|01 "|"	|
-#define FLAG_1 (1 << 2) //------*10 "&"	|
-#define FLAG_2 (1 << 3) //-------11 ";"	|
+#define FLAG_1 (1 << 2) //------*10 "<"	|
+#define FLAG_2 (1 << 3) //-------11 ">"	|
 #define FLAG_3 (1 << 4) //-------1 / 2	|
 // 								+-------+
 
@@ -119,11 +110,26 @@ static int not_valid(char *str) {
     reset_flag(&flag);
   return (flag);
 }
+// ...	none
+// ..1	|
+// .1.	<
+// .11	>
+// 1..		??
+// 1.1	||
+// 11.	<<
+// 111	>>
+//								+-------+
 
 static void interactive_promt(char **input, int flag) {
   printf(GRAY);
-  if ((flag & FLAG_1) && !(flag & FLAG_2))
+  if (!(flag & FLAG_3) && !(flag & FLAG_2) && (flag & FLAG_1))
     printf(" pipe");
+  else if (!(flag & FLAG_3) && (flag & FLAG_2) && !(flag & FLAG_1))
+    printf(" inred");
+  else if (!(flag & FLAG_3) && (flag & FLAG_2))
+    printf(" outred");
+  else if ((flag & FLAG_3) && (flag & FLAG_2) && (flag & FLAG_1))
+    printf(" heredoc");
   if (flag & FLAG_d)
     printf(" dquote");
   else if (flag & FLAG_s)
