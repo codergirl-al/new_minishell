@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 15:09:25 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:38:03 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// int	handle_error(int r_value, char *r_message)
-// {
-// 	perror(r_message);
-// 	return (r_value);
-// }
+int	handle_error(int r_value, char *r_message)
+{
+	perror(r_message);
+	return (r_value);
+}
 
-// void	handle_void_perror(char *message)
-// {
-// 	perror(message);
-// 	return ;
-// }
+void	handle_void_perror(char *message)
+{
+	perror(message);
+	return ;
+}
 
 void	handle_void_error(char *message)
 {
