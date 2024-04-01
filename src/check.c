@@ -6,36 +6,22 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/01 14:36:36 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/01 14:38:37 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/minishell.h"
 
-# include <stdlib.h>
-# include <fcntl.h>
-# include <stdbool.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <signal.h>
-# include <termios.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <limits.h>
-
-
-#define FLAG_d (1 << 0) //--'	|00 none|
-#define FLAG_s (1 << 1) //--"	|01 "|"	|
-#define FLAG_1 (1 << 2) //------*10 "<"	|
-#define FLAG_2 (1 << 3) //-------11 ">"	|
-#define FLAG_3 (1 << 4) //-------1 / 2	|
-// 								+-------+
+#define FLAG_d (1 << 0)
+#define FLAG_s (1 << 1)
+#define FLAG_1 (1 << 2)
+#define FLAG_2 (1 << 3)
+#define FLAG_3 (1 << 4)
 
 static int istoken(char c) { return ((c == '|') || (c == '>') || (c == '<')); }
 
-void print_error(int flag) {
+static void print_error(int flag) {
   char c = 0;
   printf("minibash: syntax error near unexpected token `");
   if ((flag & FLAG_1) && !(flag & FLAG_2))
@@ -50,7 +36,7 @@ void print_error(int flag) {
   printf("\'\n");
 }
 
-int set_error(int flag) {
+static int set_error(int flag) {
   if (!(flag & FLAG_s))
     flag ^= FLAG_s;
   if (!(flag & FLAG_d))
@@ -58,7 +44,7 @@ int set_error(int flag) {
   return (flag);
 }
 
-void reset_flag(int *flag) {
+static void reset_flag(int *flag) {
   if (*flag & FLAG_1)
     *flag ^= FLAG_1;
   if (*flag & FLAG_2)
@@ -67,7 +53,7 @@ void reset_flag(int *flag) {
     *flag ^= FLAG_3;
 }
 
-int set_flag(char c, char c_next) {
+static int set_flag(char c, char c_next) {
   int flag = 0;
 
   if (c == '|')
@@ -110,15 +96,6 @@ static int not_valid(char *str) {
     reset_flag(&flag);
   return (flag);
 }
-// ...	none
-// ..1	|
-// .1.	<
-// .11	>
-// 1..		??
-// 1.1	||
-// 11.	<<
-// 111	>>
-//								+-------+
 
 static void interactive_promt(char **input, int flag) {
   printf(GRAY);
