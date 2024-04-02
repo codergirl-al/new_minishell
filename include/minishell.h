@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/01 14:43:14 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/02 17:31:27 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_exec {
 
 // Utils
 char    *iter_quotes(char *str);
-int     get_env(char **env, char *str, char **exp);
+int     get_env(char **env, char *str, char **exp, t_data *data);
 
 // Parser
 int     checker(char **input);

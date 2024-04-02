@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 17:37:48 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/02 17:13:04 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static char *ft_getpath(char **env, char *f_cmd) {
     while (*tmp && *tmp != ':')
       tmp++;
     if (*tmp && *tmp == ':')
-		*tmp++ = '\0';
-	s_tmp = ft_strjoin(path, ft_strjoin("/", f_cmd, 0), STRFREE_S2);
+      *tmp++ = '\0';
+    s_tmp = ft_strjoin(path, ft_strjoin("/", f_cmd, 0), STRFREE_S2);
   }
   if (!s_tmp)
-	s_tmp = ft_strjoin("./", f_cmd, 0);
+    s_tmp = ft_strjoin("./", f_cmd, 0);
   return (s_tmp);
 }
 
@@ -47,11 +47,11 @@ static int execute(t_list *lst, t_data *data, int *stdin, t_exec exe) {
   dup2(*stdin, STDIN_FILENO);
   exe.path = ft_getpath(data->envp, exe.cmd[0]);
   close(*stdin);
-  if (exe.fd_in > -1) {
+  if (exe.fd_in > 2) {
     dup2(exe.fd_in, STDIN_FILENO);
     close(exe.fd_in);
   }
-  if (exe.fd_out > -1) {
+  if (exe.fd_out > 2) {
     dup2(exe.fd_out, STDOUT_FILENO);
     close(exe.fd_out);
   }
@@ -65,9 +65,11 @@ static int execute_pipe(char *cmd, t_data *data, int *stdin) {
   t_exec exe;
   t_list *lst;
 
-  exe.fd_in = -1;
-  exe.fd_out = -1;
+  exe.fd_in = 0;
+  exe.fd_out = 1;
   lst = parse_cmd(cmd, data, &exe, true);
+  if (exe.fd_in < 0 || exe.fd_out < 0)
+    return 0;
   if (!pipe(fd) && !fork()) {
     close(fd[0]);
     dup2(fd[1], STDOUT_FILENO);
@@ -104,14 +106,16 @@ static int execute_last(char *cmd, t_data *data, int *stdin) {
   t_exec exe;
   t_list *lst;
 
-  exe.fd_in = -1;
-  exe.fd_out = -1;
+  exe.fd_in = 0;
+  exe.fd_out = 1;
   lst = parse_cmd(cmd, data, &exe, true);
   // if (is_builtin(lst)) {
   // 	exe.cmd = lst_to_arr(lst);
   // 	execute_builtin(data, &exe);
   // }
   // else if (!fork())
+  if (exe.fd_in < 0 || exe.fd_out < 0)
+    return 0;
   if (!fork()) {
     execute(lst, data, stdin, exe);
     return (1);

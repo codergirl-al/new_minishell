@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   lib.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/27 14:51:31 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:30:54 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIB_H
 # define LIB_H
 
+# include <limits.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
 # define STRFREE_S1 (1 << 0)
 # define STRFREE_S2 (1 << 1)
 
@@ -47,5 +49,6 @@ int		ft_lstsize(t_list *lst);
 char	**lst_to_arr(t_list *head);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strchr(const char *s, int c);
+char	*ft_itoa(int n);
 
 #endif
