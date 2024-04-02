@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/02 15:42:39 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/02 18:08:47 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static void interactive_promt(char **input, int flag) {
     printf(" dquote");
   else if (flag & FLAG_s)
     printf(" quote");
-  *input = ft_strjoin(*input, ft_strjoin(readline("> " DEFAULT), "\n", 0), 0); // check leaks
+  *input = ft_strjoin(*input, ft_strjoin("\n", readline("> " DEFAULT), 0), 0); // check leaks
 }
 
 int checker(char **input) {

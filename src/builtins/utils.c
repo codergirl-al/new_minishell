@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 15:17:18 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/02 18:06:14 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 // 	i = -1;
 // 	while ((*env)[++i] != NULL)
 // 	{
-// 		if (ft_strncmp((*env)[i], name, strlen(name)) == 0 && \
+// 		if (ft_strncmp((*env)[i], name, strlen(name)) == 0 &&
 // 			(*env)[i][strlen(name)] == '=')
 // 		{
 // 			free((*env)[i]);
