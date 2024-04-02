@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 15:05:43 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:46:49 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,8 @@ void	handle_void_error(char *message);
 void	handle_void_perror(char *message);
 void	execute_builtin(t_data *data, t_exec *exe);
 void	update_env_var(char ***env, const char *name, const char *value);
+
+// Heredoc
+int		handle_heredoc(const char *delimiter);
 
 #endif
