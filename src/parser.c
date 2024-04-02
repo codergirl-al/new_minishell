@@ -6,23 +6,26 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:46:23 by khnishou          #+#    #+#             */
-/*   Updated: 2024/03/28 16:25:54 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/02 16:01:25 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #define IS_INOOUT  (1 << 0)
 #define IS_DOUBLE   (1 << 1)
 
-int ft_open(char *start, int len, int flag)
+int ft_open(char *start, int len, int flag, t_data *data)
 {
   int fd;
-  char *file_name;
+  char *file_name; // check leaks
 
   fd = 0;
   file_name = ft_substr(start, 0, len, 0);
+  if (!(!(flag & IS_INOOUT) && (flag & IS_DOUBLE)))
+    parse_arg(&file_name, data);
   if (!(flag & IS_INOOUT) && !(flag & IS_DOUBLE))
     fd = open(file_name, O_RDONLY);
   else if ((flag & IS_INOOUT) && !(flag & IS_DOUBLE))
@@ -32,11 +35,15 @@ int ft_open(char *start, int len, int flag)
   else if ((flag & IS_INOOUT) && (flag & IS_DOUBLE))
     fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0000644);
   if (fd == -1)
-    perror("Minishell");
+  {
+    file_name = ft_strjoin("Minishell: ", file_name, STRFREE_S2);
+    perror(file_name);
+  }
+  free(file_name);
   return (fd);
 }
 
-int redirect(char **str, t_exec *exe)
+int redirect(char **str, t_exec *exe, t_data *data)
 {
   (void) exe;
   char *start;
@@ -50,23 +57,20 @@ int redirect(char **str, t_exec *exe)
       flag |= IS_DOUBLE;
     while (**str && (ft_issep(**str) || **str == '>' || **str == '<'))
       *(*str)++ = 0;
-    // if (**str && !(ft_issep(**str) || **str == '>' || **str == '<'))
-    // {
     start = *str;
-    // }
     while (**str && !(ft_issep(**str) || **str == '>' || **str == '<'))
       (*str)++;
     if (flag & IS_INOOUT)
     {
       if (exe->fd_out > 0)
         close(exe->fd_out);
-      exe->fd_out = ft_open(start, *str - start, flag);
+      exe->fd_out = ft_open(start, *str - start, flag, data);
     }
     else
     {
       if (exe->fd_in > 0)
         close(exe->fd_in);
-      exe->fd_in = ft_open(start, *str - start, flag);
+      exe->fd_in = ft_open(start, *str - start, flag, data);
     }
   }
   return (0);
@@ -80,7 +84,7 @@ char *parse_arg(char **cont, t_data *data)
   char *exp;
   while ((*cont)[it[0]])
 	{
-    if ((*cont)[it[0]] == '$') // value doesn t exist
+    if ((*cont)[it[0]] == '$')
     {
       it[1] = get_env(data->envp, (*cont) + it[0], &exp);
       i = it[0];
@@ -126,7 +130,7 @@ char *parse_arg(char **cont, t_data *data)
 			}
 		}
     else
-      it[0]++; // echo "111"'2222'
+      it[0]++;
   }
   return ((*cont));
 }
@@ -158,7 +162,7 @@ t_list *parse_cmd(char *str, t_data *data, t_exec *exe, bool exp_flag) {
     while (*str && (ft_issep(*str) || *str == '>' || *str == '<'))
     {
       if ((*str == '<') || (*str == '>'))
-        redirect(&str, exe);
+        redirect(&str, exe, data);
       else
         *(str++) = 0;
     }
