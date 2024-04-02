@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/01 14:38:37 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/02 15:42:39 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,12 @@ static int not_valid(char *str) {
     else if (!(flag & FLAG_d) && str[it] == '\'')
       flag ^= FLAG_s;
     else if (!(flag & FLAG_s) && !(flag & FLAG_d) && istoken(str[it])) {
-      reset_flag(&flag);
-      flag ^= set_flag(str[it], str[it + 1]);
-      if ((!len_cmd && (flag & FLAG_1) && !(flag & FLAG_2)) || ((flag & FLAG_1) && !(flag & FLAG_2) && (flag & FLAG_3)))
+      // reset_flag(&flag);
+      // flag ^= set_flag(str[it], str[it + 1]);
+      if ((!len_cmd && (flag & FLAG_2)))
+        return (set_error(flag));
+      flag = set_flag(str[it], str[it + 1]);
+      if ((!len_cmd && (flag & FLAG_1) && !(flag & FLAG_2))|| ((flag & FLAG_1) && !(flag & FLAG_2) && (flag & FLAG_3)))
         return (set_error(flag));
       it += ((flag & FLAG_3) >> 4);
       len_cmd = 0;
@@ -103,9 +106,9 @@ static void interactive_promt(char **input, int flag) {
     printf(" pipe");
   else if (!(flag & FLAG_3) && (flag & FLAG_2) && !(flag & FLAG_1))
     printf(" inred");
-  else if (!(flag & FLAG_3) && (flag & FLAG_2))
+  else if ((flag & FLAG_2) && (flag & FLAG_1))
     printf(" outred");
-  else if ((flag & FLAG_3) && (flag & FLAG_2) && (flag & FLAG_1))
+  else if ((flag & FLAG_3) && (flag & FLAG_2) && !(flag & FLAG_1))
     printf(" heredoc");
   if (flag & FLAG_d)
     printf(" dquote");

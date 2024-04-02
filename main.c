@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 15:04:53 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/04/01 15:29:45 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	prompt(t_data *data)
 		{
 			data->exit_status = checker(&data->input);
 			add_history(data->input);
-			(void) iter_cmd(data);
+			if (!data->exit_status)
+				(void) iter_cmd(data);
 		}
 		else if (!data->input || data->exit || g_sig < 256)
 			break ;
