@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:46:23 by khnishou          #+#    #+#             */
-/*   Updated: 2024/04/02 17:31:34 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:14:37 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int ft_open(char *start, int len, int flag, t_data *data) {
   if (!(flag & IS_INOOUT) && !(flag & IS_DOUBLE))
     fd = open(file_name, O_RDONLY);
   else if ((flag & IS_INOOUT) && !(flag & IS_DOUBLE))
-    fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0000644);
-  // else if (!(flag & IS_INOOUT) && (flag & IS_DOUBLE))
-  //   fd = heredoc_handler(file_name);
+    fd = open(file_name,O_RDWR | O_TRUNC | O_CREAT, 0000644);
+  else if (!(flag & IS_INOOUT) && (flag & IS_DOUBLE))
+    fd = handle_heredoc(file_name);
   else if ((flag & IS_INOOUT) && (flag & IS_DOUBLE))
     fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0000644);
   if (fd == -1) {
