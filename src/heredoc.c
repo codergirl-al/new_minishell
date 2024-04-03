@@ -6,11 +6,38 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:32:23 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/02 17:53:17 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:09:21 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// char *handle_heredoc_expansion(char *line, char **envp)
+// {
+// 	char	*buffer;
+// 	char	*env_var;
+// 	size_t	*env_var_index;
+// 	size_t	index;
+// 	size_t	i;
+
+// 	buffer[0] ='\0';
+// 	index = 0;
+// 	i = 0;
+// 	while (line[i] != '\0' && index < ft_strlen(buffer) - 1)
+// 	{
+// 		if (line[i] == '$')
+// 		{
+// 			env_var_index = 0;
+// 			i++;
+// 			while (ft_isalnum(line[i]) || line[i] == '_')
+// 			{
+// 				if (env_var_index < 
+// 			}
+			
+// 		}
+// 		i++;
+// 	}
+// }
 
 int	handle_heredoc(const char *delimiter)
 {
@@ -19,7 +46,7 @@ int	handle_heredoc(const char *delimiter)
 	char	*tmp_filename;
 	int		fd;
 
-	tmp_filename = "heredoc.tmp";
+	tmp_filename = "heredoc";
 	fd = open(tmp_filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	if (fd == -1)
 	{
