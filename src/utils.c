@@ -1,6 +1,7 @@
 
 #include "../include/minishell.h"
 #include <stdio.h>
+#include <string.h>
 
 #define FLAG_D (1 << 0)
 #define FLAG_S (1 << 1)
@@ -26,7 +27,7 @@ int get_env(char **env, char *str, char **exp, t_data *data) {
   if (str && env && *str == '$') {
     str++;
     if (str[i] && str[i] == '?') {
-      *exp = ft_itoa(data->exit_status); // check leaks
+      *exp = ft_itoa(data->exit_status);
       return (2);
     }
     while (str[i] && (str[i] != '\'' && str[i] != '\"' && str[i] != '$' &&
@@ -40,7 +41,7 @@ int get_env(char **env, char *str, char **exp, t_data *data) {
     if (!var)
       return (free(var_name), i);
     free(var_name);
-    *exp = var + i;
+    *exp = strdup(var + i);
     return (i);
   }
   return (0);
