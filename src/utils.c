@@ -16,7 +16,8 @@ char *iter_quotes(char *str) {
   return (str + i);
 }
 
-int get_env(char **env, char *str, char **exp, t_data *data) {
+int get_env(char **env, char *str, char **exp, t_data *data)
+{
   char *var;
   char *var_name;
   int i;

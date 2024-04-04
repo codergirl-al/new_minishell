@@ -6,36 +6,47 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:32:37 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:18:18 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*find_env_var(char **env, const char *name)
+char	*get_env_var_value(char **envp, const char *name)
 {
-	size_t	name_len;
-	size_t	i;
+	int	i;
+	size_t name_len;
 
+	if (!envp || !name)
+		return (NULL);
 	name_len = ft_strlen(name);
 	i = -1;
-	while (env[++i] != NULL)
+	while (envp[++i] != NULL)
 	{
-		if (strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
-			return (env[i] + name_len + 1);
+		if (strncmp(envp[i], name, name_len) == 0 && envp[i][name_len] == '=')
+			return (envp[i] + name_len + 1);
 	}
 	return (NULL);
 }
 
-static void	handle_home_case(t_data *data, char *path)
+void	handle_home_case(t_data *data, const char *var_name)
 {
-	path = find_env_var(data->envp, path);
-	if (path == NULL)
+	char	*home_path;
+	
+	home_path = get_env_var_value(data->envp, var_name);
+	if (home_path == NULL)
 	{
-		fprintf(stderr, "cd: %s not set\n", path);
+		fprintf(stderr, "cd: %s not set\n", var_name);
 		data->exit_status = 1;
 		return ;
 	}
+	if (chdir(home_path) != 0)
+	{
+		perror("cd: error changing to home directory");
+		data->exit_status = 1;
+	}
+	else
+		data->exit_status = 0;
 }
 
 static void	handle_cd_perror(t_data *data, char *message)
@@ -50,6 +61,7 @@ void	b_cd(char *path, t_data *data)
 	char	old_path[1024];
 	char	new_path[1024];
 
+	data->exit = 0;
 	if (!data)
 		return (handle_void_error("cd: invalid data structure\n"));
 	if (getcwd(old_path, sizeof(old_path)) == NULL)
@@ -58,7 +70,7 @@ void	b_cd(char *path, t_data *data)
 		data->exit_status = 1;
 		return ;
 	}
-	if (path == NULL || *path == '\0')
+	if (!ft_strncmp(path, "~", 2) || path == NULL || *path == '\0')
 		handle_home_case(data, "HOME");
 	if (chdir(path) != 0)
 		return (handle_cd_perror(data, "cd"));

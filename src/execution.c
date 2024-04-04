@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/02 17:13:04 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/04 15:29:52 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static int execute(t_list *lst, t_data *data, int *stdin, t_exec exe) {
     dup2(exe.fd_out, STDOUT_FILENO);
     close(exe.fd_out);
   }
-  //   printf("zebi%d %d path%s\n", exe.fd_in, exe.fd_out, exe.path);
   execve(exe.path, exe.cmd, data->envp);
   return (1);
 }
@@ -84,23 +83,23 @@ static int execute_pipe(char *cmd, t_data *data, int *stdin) {
   return (0);
 }
 
-// static int	is_builtin(t_list *lst) {
-// 	if (!strcmp("cd", (char *)lst->content))
-// 		return (1);
-// 	else if (!ft_strncmp("echo", (char *)lst->content, 5))
-// 		return (1);
-// 	else if (!ft_strncmp("env", (char *)lst->content, 4))
-// 		return (1);
-// 	else if (!ft_strncmp("exit", (char *)lst->content, 5))
-// 		return 1;
-// 	else if (!ft_strncmp("export", (char *)lst->content, 7))
-// 		return (1);
-// 	else if (!ft_strncmp("pwd", (char *)lst->content, 4))
-// 		return (1);
-// 	else if (!ft_strncmp("unset", (char *)lst->content, 6))
-// 		return (1);
-// 	return (0);
-// }
+static int	is_builtin(t_list *lst) {
+	if (!ft_strncmp("cd", (char *)lst->content, 3))
+		return (1);
+	else if (!ft_strncmp("echo", (char *)lst->content, 5))
+		return (1);
+	else if (!ft_strncmp("env", (char *)lst->content, 4))
+		return (1);
+	else if (!ft_strncmp("exit", (char *)lst->content, 5))
+		return 1;
+	else if (!ft_strncmp("export", (char *)lst->content, 7))
+		return (1);
+	else if (!ft_strncmp("pwd", (char *)lst->content, 4))
+		return (1);
+	else if (!ft_strncmp("unset", (char *)lst->content, 6))
+		return (1);
+	return (0);
+}
 
 static int execute_last(char *cmd, t_data *data, int *stdin) {
   t_exec exe;
@@ -109,10 +108,10 @@ static int execute_last(char *cmd, t_data *data, int *stdin) {
   exe.fd_in = 0;
   exe.fd_out = 1;
   lst = parse_cmd(cmd, data, &exe, true);
-  // if (is_builtin(lst)) {
-  // 	exe.cmd = lst_to_arr(lst);
-  // 	execute_builtin(data, &exe);
-  // }
+  if (is_builtin(lst)) {
+  	exe.cmd = lst_to_arr(lst);
+  	execute_builtin(data, &exe);
+  }
   // else if (!fork())
   if (exe.fd_in < 0 || exe.fd_out < 0)
     return 0;

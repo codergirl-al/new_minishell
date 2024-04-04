@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/03 15:13:03 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:02:22 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ void s_heredoc_case(int sig);
 void handle_signals_extended(void (*func)(int));
 
 // Builtins
-void b_cd(char *path, t_data *data);
-void b_echo(char **cmds);
-void b_env(char **env);
-void b_exit(t_data *data, char **args);
-void b_export(t_data *data, char *assignment);
-void b_pwd(void);
-void b_unset(char **env, char **cmds);
+void  b_cd(char *path, t_data *data);
+void  b_echo(char **cmds);
+void  b_env(char **env);
+void  b_exit(t_data *data, char **args);
+void  b_export(t_data *data, char *assignment);
+void  b_pwd(void);
+void  b_unset(char **env, char **cmds);
 
 // Builtin utils
 int handle_error(int r_value, char *r_message);
@@ -93,6 +93,6 @@ void execute_builtin(t_data *data, t_exec *exe);
 void update_env_var(char ***env, const char *name, const char *value);
 
 // Heredoc
-int		handle_heredoc(const char *delimiter);
+int	handle_heredoc(const char *delimiter, t_data *data);
 
 #endif
