@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/02 17:13:04 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:51:00 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int execute_pipe(char *cmd, t_data *data, int *stdin) {
   close(fd[1]);
   close(*stdin);
   *stdin = fd[0];
-  // free_lst
+  ft_lstfree(lst);
   return (0);
 }
 
@@ -124,7 +124,7 @@ static int execute_last(char *cmd, t_data *data, int *stdin) {
   while (waitpid(-1, NULL, WUNTRACED) != -1)
     ;
   *stdin = dup(STDIN_FILENO);
-  // free_lst
+  ft_lstfree(lst);
   return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/02 17:30:54 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:51:25 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ char	**lst_to_arr(t_list *head);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strchr(const char *s, int c);
 char	*ft_itoa(int n);
+void	ft_lstfree(t_list *lst);
+void	ft_arrfree(char **arr);
 
 #endif
