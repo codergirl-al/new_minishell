@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:46:23 by khnishou          #+#    #+#             */
-/*   Updated: 2024/04/03 15:14:37 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:26:09 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int ft_open(char *start, int len, int flag, t_data *data) {
   if (!(flag & IS_INOOUT) && !(flag & IS_DOUBLE))
     fd = open(file_name, O_RDONLY);
   else if ((flag & IS_INOOUT) && !(flag & IS_DOUBLE))
-    fd = open(file_name,O_RDWR | O_TRUNC | O_CREAT, 0000644);
+    fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0000644);
   else if (!(flag & IS_INOOUT) && (flag & IS_DOUBLE))
     fd = handle_heredoc(file_name);
   else if ((flag & IS_INOOUT) && (flag & IS_DOUBLE))
@@ -68,7 +68,7 @@ int redirect(char **str, t_exec *exe, t_data *data) {
       if (exe->fd_in > 2)
         close(exe->fd_in);
       else if (!(exe->fd_in < 0))
-       exe->fd_in = ft_open(start, *str - start, flag, data);
+        exe->fd_in = ft_open(start, *str - start, flag, data);
     }
   }
   return (0);
@@ -127,7 +127,7 @@ t_list *set_arg(t_data *data, char *str, t_list *old, bool exp_flag) {
   t_list *new;
   char *cont;
 
-  cont = strdup(str);
+  cont = ft_strdup(str);
   if (!cont)
     return (NULL);
   if (exp_flag)

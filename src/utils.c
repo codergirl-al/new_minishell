@@ -41,7 +41,7 @@ int get_env(char **env, char *str, char **exp, t_data *data) {
     if (!var)
       return (free(var_name), i);
     free(var_name);
-    *exp = strdup(var + i);
+    *exp = ft_strdup(var + i);
     return (i);
   }
   return (0);

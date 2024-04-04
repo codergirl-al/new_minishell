@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 13:51:00 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/04 14:25:33 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char *ft_getpath(char **env, char *f_cmd) {
   p1 = ft_arrcmp((void **)env, "PATH=");
   if (!p1)
     return (NULL);
-  path = strdup(p1);
+  path = ft_strdup(p1);
   path += 5;
   tmp = path;
   while (*path && access(s_tmp, X_OK)) {
