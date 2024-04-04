@@ -6,10 +6,11 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/01 15:29:45 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/04 13:54:30 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "include/lib.h"
 #include "include/minishell.h"
 
 int	g_sig;
@@ -39,7 +40,7 @@ static void	prompt(t_data *data)
 	}
 }
 
-void	set_data(t_data *data, char **env)
+static void set_data(t_data *data, char **env)
 {
 	g_sig = 256;
 	data->envp = ft_arrdup(env);
@@ -47,6 +48,11 @@ void	set_data(t_data *data, char **env)
 	data->exit = false;
 	data->input = NULL;
 	data->prev_input = NULL;
+}
+
+static void unset_data(t_data *data)
+{
+	ft_arrfree(data->envp);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -58,5 +64,6 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		printf("All arguments will be ignored\n");
 	prompt(&data);
+	unset_data(&data);
 	return (data.exit_status);
 }
