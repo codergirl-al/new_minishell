@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arrdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:55:59 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 14:27:12 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:02:39 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char **ft_arrdup(char **arr) {
   len = ft_arrlen(arr);
   if (len == -1)
     return (NULL);
-  new_arr = malloc(len * sizeof(char *));
+  new_arr = malloc((len + 1) * sizeof(char *));
   if (new_arr == NULL)
     return (NULL);
   i = -1;

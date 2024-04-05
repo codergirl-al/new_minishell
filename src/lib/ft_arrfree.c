@@ -3,13 +3,11 @@
 
 void ft_arrfree(char **arr)
 {
-	int size;
-
-	size = ft_arrlen(arr);
+    int i;
     if (arr == NULL)
         return;
-    int i = 0;
-    while (i < size)
+    i = 0;
+    while (arr[i])
     {
         free(arr[i]);
         i++;
