@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:46:23 by khnishou          #+#    #+#             */
-/*   Updated: 2024/04/05 15:16:08 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/05 15:27:48 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char *parse_arg(char **cont, t_data *data) {
       it[1] = get_env(data->envp, (*cont) + it[0], &exp, data);
       i = it[0];
       if (it[1] != 1) {
-        (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC);
+        (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC | STRFREE_ARG);
         it[0] = i;
         it[0] += ft_strlen(exp) - 1;
         len += (-it[1]) + ft_strlen(exp);
@@ -93,7 +93,7 @@ char *parse_arg(char **cont, t_data *data) {
     } else if ((*cont)[it[0]] == '\'') {
       it[1] = iter_quotes((*cont) + it[0]) - ((*cont) + it[0]) + 1;
       i = it[0];
-      (*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, 0),
+      (*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, STRFREE_SRC),
                            it, STRFREE_SRC | STRFREE_ARG);
       it[0] = i;
       it[0] += it[1] - 2;
@@ -101,7 +101,7 @@ char *parse_arg(char **cont, t_data *data) {
       it[1] = iter_quotes((*cont) + it[0]) - ((*cont) + it[0]) + 1;
       len = it[1] + it[0] - 2;
       i = it[0];
-      (*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, 0),
+      (*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, STRFREE_SRC),
                            it, STRFREE_SRC | STRFREE_ARG);
       it[0] = i;
       while ((*cont)[it[0]] && it[0] < len) {
@@ -109,7 +109,7 @@ char *parse_arg(char **cont, t_data *data) {
           it[1] = get_env(data->envp, (*cont) + it[0], &exp, data);
           i = it[0];
           if (it[1] != 1) {
-            (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC);
+            (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC | STRFREE_ARG);
             it[0] = i;
             it[0] += ft_strlen(exp) - 1;
             len += (-it[1]) + ft_strlen(exp);
