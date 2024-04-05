@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/05 17:44:21 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:57:24 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_env_var_value(char **envp, const char *name)
 void	handle_home_case(t_data *data, const char *var_name)
 {
 	char	*home_path;
-	
+
 	home_path = get_env_var_value(data->envp, var_name);
 	if (home_path == NULL)
 	{

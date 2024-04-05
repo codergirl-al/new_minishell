@@ -6,18 +6,19 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:32:23 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 14:29:20 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:13:07 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
- 
-static char *handle_heredoc_expansion(char *line, t_data *data)
+
+static char	*handle_heredoc_expansion(char *line, t_data *data)
 {
-	char	*env_var = NULL;
-	int ints[2];
+	char	*env_var;
+	int		ints[2];
 	size_t	i;
 
+	env_var = NULL;
 	i = -1;
 	while (line[++i] != '\0')
 	{
@@ -34,12 +35,14 @@ static char *handle_heredoc_expansion(char *line, t_data *data)
 
 char	*format_delimiter(const char *delimiter)
 {
+	char	*formatted;
 	size_t	len;
 
 	len = ft_strlen(delimiter);
-	if ((delimiter[0] == '\'' || delimiter[0] == '"') && delimiter[len - 1] == delimiter[0])
+	if ((delimiter[0] == '\'' || delimiter[0] == '"')
+		&& delimiter[len - 1] == delimiter[0])
 	{
-		char *formatted = strndup(delimiter + 1, len - 2);
+		formatted = strndup(delimiter + 1, len - 2);
 		if (!formatted)
 		{
 			perror("Failed to allocate memory for formatted delimiter");
@@ -56,26 +59,25 @@ int	handle_heredoc(const char *delimiter, t_data *data)
 	int		fd;
 	int		found;
 	char	*read;
-	char	*tmp_filename;
-	char	*delimiter_formatted;
+	char	*f_delimiter;
 
-	delimiter_formatted = format_delimiter(delimiter);
-	tmp_filename = "heredoc";
-	fd = open(tmp_filename, O_CREAT | O_RDWR | O_TRUNC, 0000644);
+	f_delimiter = format_delimiter(delimiter);
+	fd = open("heredoc", O_CREAT | O_RDWR | O_TRUNC, 0000644);
 	if (fd == -1)
 	{
 		perror("open error");
 		exit(EXIT_FAILURE);
 	}
 	found = 0;
- 	while (!found)
+	while (!found)
 	{
 		read = readline("heredoc> ");
 		if (read == NULL)
 			break ;
 		if (ft_strchr(read, '$') != NULL)
 			read = handle_heredoc_expansion(read, data);
-		if (ft_strncmp(read, delimiter_formatted, ft_strlen(delimiter_formatted)) == 0 && ft_strlen(read) == ft_strlen(delimiter_formatted))
+		if (ft_strncmp(read, f_delimiter, ft_strlen(f_delimiter)) == 0
+			&& ft_strlen(read) == ft_strlen(f_delimiter))
 		{
 			found = 1;
 			free (read);
@@ -83,7 +85,7 @@ int	handle_heredoc(const char *delimiter, t_data *data)
 		}
 		write(fd, read, strlen(read));
 		write(fd, "\n", 1);
-		free (read); 
+		free (read);
 	}
 	return (fd);
 }
