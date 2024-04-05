@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 13:54:30 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:15:35 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ static void	prompt(t_data *data)
 				(void) iter_cmd(data);
 		}
 		else if (!data->input || data->exit || g_sig < 256)
+		{
+			free(data->input);
 			break ;
-		if (data->prev_input)
-			free(data->prev_input);
-		data->prev_input = data->input;
+		}
+		free(data->input);
 		data->input = NULL;
 	}
 }
@@ -47,7 +48,6 @@ static void set_data(t_data *data, char **env)
 	data->exit_status = 0;
 	data->exit = false;
 	data->input = NULL;
-	data->prev_input = NULL;
 }
 
 static void unset_data(t_data *data)
