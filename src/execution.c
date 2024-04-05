@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/05 15:15:38 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/05 15:29:52 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static int execute(t_list *lst, t_data *data, int *stdin, t_exec exe) {
     dup2(exe.fd_out, STDOUT_FILENO);
     close(exe.fd_out);
   }
-  //   printf("zebi%d %d path%s\n", exe.fd_in, exe.fd_out, exe.path);
   execve(exe.path, exe.cmd, data->envp);
   return (1);
 }
@@ -110,7 +109,7 @@ static int execute_last(char *cmd, t_data *data, int *stdin) {
   exe.fd_out = 1;
   lst = parse_cmd(cmd, data, &exe, true);
   // if (is_builtin(lst)) {
-  // 	exe.cmd = lst_to_arr(lst);
+  // 	exe.cmd = lst_to_arr(lst); // check leaks
   // 	execute_builtin(data, &exe);
   // }
   // else if (!fork())

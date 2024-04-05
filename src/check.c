@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 14:08:51 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/05 15:19:52 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ static int not_valid(char *str) {
     else if (!(flag & FLAG_d) && str[it] == '\'')
       flag ^= FLAG_s;
     else if (!(flag & FLAG_s) && !(flag & FLAG_d) && istoken(str[it])) {
-      // reset_flag(&flag);
-      // flag ^= set_flag(str[it], str[it + 1]);
       if ((!len_cmd && (flag & FLAG_2)))
         return (set_error(flag));
       flag = set_flag(str[it], str[it + 1]);
