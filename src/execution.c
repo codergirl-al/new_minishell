@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 15:29:52 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:49:55 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,14 @@ static int execute_last(char *cmd, t_data *data, int *stdin) {
   exe.fd_in = 0;
   exe.fd_out = 1;
   lst = parse_cmd(cmd, data, &exe, true);
+  if (exe.fd_in < 0 || exe.fd_out < 0)
+    return 0;
   if (is_builtin(lst)) {
   	exe.cmd = lst_to_arr(lst);
   	execute_builtin(data, &exe);
   }
-  // else if (!fork())
-  if (exe.fd_in < 0 || exe.fd_out < 0)
-    return 0;
-  if (!fork()) {
+  else if (!fork()) {
+  // if (!fork()) {
     execute(lst, data, stdin, exe);
     return (1);
   }

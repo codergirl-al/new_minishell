@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 15:30:10 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:39:13 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	execute_builtin(t_data *data, t_exec *exe)
 }
 
 
-// handle cd
 void	update_env_var(char ***env, const char *name, const char *value)
 {
 	size_t	i;

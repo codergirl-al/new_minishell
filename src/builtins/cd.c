@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 19:18:18 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:44:21 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*get_env_var_value(char **envp, const char *name)
 {
-	int	i;
-	size_t name_len;
+	size_t	name_len;
+	int		i;
 
 	if (!envp || !name)
 		return (NULL);
@@ -70,13 +70,16 @@ void	b_cd(char *path, t_data *data)
 		data->exit_status = 1;
 		return ;
 	}
-	if (!ft_strncmp(path, "~", 2) || path == NULL || *path == '\0')
+	if (!path || !ft_strncmp(path, "~", 2) || path == NULL)
 		handle_home_case(data, "HOME");
-	if (chdir(path) != 0)
-		return (handle_cd_perror(data, "cd"));
-	update_env_var(&(data->envp), "OLDPWD", old_path);
-	if (getcwd(new_path, sizeof(new_path)) == NULL)
-		return (handle_cd_perror(data, "cd: error getting new directory"));
+	else if (chdir(path) != 0)
+		return (handle_cd_perror(data, "cididi"));
+	if (data->exit_status == 0)
+	{
+		update_env_var(&(data->envp), "OLDPWD", old_path);
+		if (getcwd(new_path, sizeof(new_path)) == NULL)
+			return (handle_cd_perror(data, "cd: error getting new directory"));
+	}
 	update_env_var(&(data->envp), "PWD", new_path);
 	data->exit_status = 0;
 }
