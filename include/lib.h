@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 14:27:57 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/04 16:59:26 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-
-# define STRFREE_S1 (1 << 0)
-# define STRFREE_S2 (1 << 1)
 
 typedef struct s_list
 {
