@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/05 15:29:52 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/05 17:28:30 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char *ft_getpath(char **env, char *f_cmd) {
   path = ft_strdup(p1);
   path += 5;
   tmp = path;
-  while (*path && access(s_tmp, X_OK)) {
+  while (*path && s_tmp && access(s_tmp, X_OK)) {
     if (s_tmp)
       free(s_tmp);
     path = tmp;
@@ -43,7 +43,7 @@ static char *ft_getpath(char **env, char *f_cmd) {
 
 static int execute(t_list *lst, t_data *data, int *stdin, t_exec exe) {
   exe.cmd = lst_to_arr(lst);
-
+  // ft_lstfree(lst);
   dup2(*stdin, STDIN_FILENO);
   exe.path = ft_getpath(data->envp, exe.cmd[0]);
   close(*stdin);
