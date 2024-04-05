@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:32:37 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:16:14 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*find_env_var(char **env, const char *name)
 	i = -1;
 	while (env[++i] != NULL)
 	{
-		if (strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
 			return (env[i] + name_len + 1);
 	}
 	return (NULL);

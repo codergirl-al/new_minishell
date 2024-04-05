@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:32:23 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/03 15:09:21 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:11:08 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	handle_heredoc(const char *delimiter)
 			free (read);
 			break ;
 		}
-		write(fd, read, strlen(read));
+		write(fd, read, ft_strlen(read));
 		write(fd, "\n", 1);
 		free (read); 
 	}

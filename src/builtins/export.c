@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:42:45 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/05 15:11:42 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	handle_env(char **env, char *name)
 	i = -1;
 	while (env[++i])
 	{
-		if (ft_strncmp(env[i], name, strlen(name)))
+		if (ft_strncmp(env[i], name, ft_strlen(name)))
 		{
 			free(env[i]);
 			env[i] = new_var;

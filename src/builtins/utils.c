@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/03 15:16:16 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:15:09 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	handle_void_error(char *message)
 
 void	execute_builtin(t_data *data, t_exec *exe)
 {
-	if (!strcmp("cd", exe->cmd[0]))
+	if (!ft_strncmp("cd", exe->cmd[0], 3))
 		b_cd(exe->cmd[1], data);
 	else if (!ft_strncmp("echo", exe->cmd[0], 5))
 		b_echo(exe->cmd);
@@ -59,11 +59,11 @@ void	update_env_var(char ***env, const char *name, const char *value)
 	i = -1;
 	while ((*env)[++i] != NULL)
 	{
-		if (ft_strncmp((*env)[i], name, strlen(name)) == 0 && \
-			(*env)[i][strlen(name)] == '=')
+		if (ft_strncmp((*env)[i], name, ft_strlen(name)) == 0 && \
+			(*env)[i][ft_strlen(name)] == '=')
 		{
 			free((*env)[i]);
-			len = ft_strlen(name) + strlen(value) + 2;
+			len = ft_strlen(name) + ft_strlen(value) + 2;
 			new_var = malloc(len);
 			if (new_var == NULL)
 				return (handle_void_perror("Failed to allocate memory."));

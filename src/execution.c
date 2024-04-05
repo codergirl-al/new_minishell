@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/04 14:25:33 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/05 15:15:38 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int execute_pipe(char *cmd, t_data *data, int *stdin) {
 }
 
 // static int	is_builtin(t_list *lst) {
-// 	if (!strcmp("cd", (char *)lst->content))
+//	if (!ft_strncmp("cd", (char *)lst->content, 3))
 // 		return (1);
 // 	else if (!ft_strncmp("echo", (char *)lst->content, 5))
 // 		return (1);

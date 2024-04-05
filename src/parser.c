@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:46:23 by khnishou          #+#    #+#             */
-/*   Updated: 2024/04/04 14:26:09 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/05 15:16:08 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int redirect(char **str, t_exec *exe, t_data *data) {
   int flag;
   if (str && *str) {
     flag = 0;
-    if (!strncmp(">", *str, 1))
+    if (!ft_strncmp(">", *str, 1))
       flag |= IS_INOOUT;
-    if (!strncmp("<<", *str, 2) || !strncmp(">>", *str, 2))
+    if (!ft_strncmp("<<", *str, 2) || !ft_strncmp(">>", *str, 2))
       flag |= IS_DOUBLE;
     while (**str && (ft_issep(**str) || **str == '>' || **str == '<'))
       *(*str)++ = 0;
