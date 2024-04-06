@@ -34,6 +34,7 @@
 #define GRAY "\033[1;30m"
 #define DEFAULT "\033[1;39m"
 
+#define FLAG_S (1 << 1)
 // int	g_sig;
 
 enum e_type {
@@ -62,6 +63,8 @@ typedef struct s_exec {
 // Utils
 char    *iter_quotes(char *str);
 int     get_env(char **env, char *str, char **exp, t_data *data);
+int     squote_handler(char **cont, int *it);
+int     dquote_handler(char **cont, t_data *data, int *len, int *it);
 
 // Parser
 int     checker(char **input);
