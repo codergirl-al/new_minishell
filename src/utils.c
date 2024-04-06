@@ -68,7 +68,7 @@ int squote_handler(char **cont, int *it)
 
 	it[1] = iter_quotes((*cont) + it[0]) - ((*cont) + it[0]) + 1;
 	i = it[0];
-	(*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, STRFREE_SRC), it, STRFREE_ARG);
+	(*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, 0), it, STRFREE_ARG | STRFREE_SRC);
 	it[0] = i;
 	it[0] += it[1] - 2;
 	return (0);
@@ -81,7 +81,7 @@ int dquote_handler(char **cont, t_data *data, int *len, int *it)
 	it[1] = iter_quotes((*cont) + it[0]) - ((*cont) + it[0]) + 1;
 	*len = it[1] + it[0] - 2;
 	i = it[0];
-	(*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, STRFREE_SRC), it, STRFREE_ARG);
+	(*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, 0), it, STRFREE_ARG | STRFREE_SRC);
 	it[0] = i;
 	while ((*cont)[it[0]] && it[0] < *len)
 	{

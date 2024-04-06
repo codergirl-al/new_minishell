@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/05 17:15:18 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:59:53 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,32 @@
 #define DEFAULT "\033[1;39m"
 
 #define FLAG_S (1 << 1)
+
+#define IS_INOOUT (1 << 0)
+#define IS_DOUBLE (1 << 1)
 // int	g_sig;
 
 enum e_type {
-  PIPED = 1,
-  SEMICOLONED = 0,
+	PIPED = 1,
+	SEMICOLONED = 0,
 };
 
 typedef struct s_arg {
-  char *arg;
+	char *arg;
 } t_arg;
 
 typedef struct s_data {
-  char **envp;
-  int exit_status;
-  bool exit;
-  char *input;
+	char **envp;
+	int exit_status;
+	bool exit;
+	char *input;
 } t_data;
 
 typedef struct s_exec {
-  char **cmd;
-  int fd_in;
-  int fd_out;
-  char *path;
+	char **cmd;
+	int fd_in;
+	int fd_out;
+	char *path;
 } t_exec;
 
 // Utils
@@ -65,6 +68,7 @@ char    *iter_quotes(char *str);
 int     get_env(char **env, char *str, char **exp, t_data *data);
 int     squote_handler(char **cont, int *it);
 int     dquote_handler(char **cont, t_data *data, int *len, int *it);
+int		dollar_handler(char **cont, t_data *data, int *len, int *it);
 
 // Parser
 int     checker(char **input);
