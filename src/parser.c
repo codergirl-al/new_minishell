@@ -84,17 +84,18 @@ char *parse_arg(char **cont, t_data *data) {
       it[1] = get_env(data->envp, (*cont) + it[0], &exp, data);
       i = it[0];
       if (it[1] != 1) {
-        (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC | STRFREE_ARG);
+        (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC);
         it[0] = i;
         it[0] += ft_strlen(exp) - 1;
         len += (-it[1]) + ft_strlen(exp);
+        free(exp);
       }
       it[0]++;
     } else if ((*cont)[it[0]] == '\'') {
       it[1] = iter_quotes((*cont) + it[0]) - ((*cont) + it[0]) + 1;
       i = it[0];
       (*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, STRFREE_SRC),
-                           it, STRFREE_SRC | STRFREE_ARG);
+                           it, STRFREE_ARG | STRFREE_SRC);
       it[0] = i;
       it[0] += it[1] - 2;
     } else if ((*cont)[it[0]] == '\"') {
@@ -102,17 +103,18 @@ char *parse_arg(char **cont, t_data *data) {
       len = it[1] + it[0] - 2;
       i = it[0];
       (*cont) = ft_swapstr((*cont), ft_substr((*cont), it[0] + 1, it[1] - 2, STRFREE_SRC),
-                           it, STRFREE_SRC | STRFREE_ARG);
+                           it, STRFREE_ARG | STRFREE_SRC);
       it[0] = i;
       while ((*cont)[it[0]] && it[0] < len) {
         if ((*cont)[it[0]] == '$') {
           it[1] = get_env(data->envp, (*cont) + it[0], &exp, data);
           i = it[0];
           if (it[1] != 1) {
-            (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC | STRFREE_ARG);
+            (*cont) = ft_swapstr((*cont), exp, it, STRFREE_SRC);
             it[0] = i;
             it[0] += ft_strlen(exp) - 1;
             len += (-it[1]) + ft_strlen(exp);
+            free(exp);
           }
         }
         it[0]++;
