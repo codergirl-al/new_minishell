@@ -6,7 +6,7 @@
 /*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/05 17:28:30 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/04/06 03:20:29 by khnishou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 #include <readline/history.h>
 
 static char *ft_getpath(char **env, char *f_cmd) {
+  int it;
   char *path;
-  char *p1;
   char *tmp;
   char *s_tmp;
 
+  it = 1;
   s_tmp = NULL;
-  p1 = ft_arrcmp((void **)env, "PATH=");
-  if (!p1)
+  tmp = ft_arrcmp((void **)env, "PATH=");
+  if (!tmp)
     return (NULL);
-  path = ft_strdup(p1);
-  path += 5;
+  path = ft_strdup(tmp + 5);
   tmp = path;
-  while (*path && s_tmp && access(s_tmp, X_OK)) {
+  while (*path && (it || access(s_tmp, X_OK))) {
+    it = 0;
     if (s_tmp)
       free(s_tmp);
     path = tmp;
