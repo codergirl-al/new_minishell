@@ -19,7 +19,7 @@
 
 int ft_open(char *start, int len, int flag, t_data *data) {
   int fd;
-  char *file_name; // check leaks
+  char *file_name;
 
   fd = 0;
   file_name = ft_substr(start, 0, len, 0);
@@ -34,7 +34,7 @@ int ft_open(char *start, int len, int flag, t_data *data) {
   else if ((flag & IS_INOOUT) && (flag & IS_DOUBLE))
     fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0000644);
   if (fd == -1) {
-    file_name = ft_strjoin("Minishell: ", file_name, STRFREE_S2);
+    file_name = ft_strjoin("Minishell: ", file_name, 0);
     perror(file_name);
   }
   free(file_name);
