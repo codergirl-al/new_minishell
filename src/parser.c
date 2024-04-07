@@ -6,13 +6,37 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:46:23 by khnishou          #+#    #+#             */
-/*   Updated: 2024/04/06 20:39:07 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 15:24:35 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_open(char *start, int len, int flag, t_data *data)
+static char	*parse_arg(char **cont, t_data *data)
+{
+	int		it[2];
+	int		len;
+
+	it[0] = 0;
+	it[1] = 0;
+	while ((*cont)[it[0]])
+	{
+		if ((*cont)[it[0]] == '$')
+		{
+			dollar_handler(cont, data, &len, it);
+			it[0]++;
+		}
+		else if ((*cont)[it[0]] == '\'')
+			squote_handler(cont, it);
+		else if ((*cont)[it[0]] == '\"')
+			dquote_handler(cont, data, &len, it);
+		else
+			it[0]++;
+	}
+	return ((*cont));
+}
+
+static int	ft_open(char *start, int len, int flag, t_data *data)
 {
 	int		fd;
 	char	*file_name;
@@ -38,18 +62,16 @@ int	ft_open(char *start, int len, int flag, t_data *data)
 	return (fd);
 }
 
-int	redirect(char **str, t_exec *exe, t_data *data)
+static void	redirect(char **str, t_exec *exe, t_data *data)
 {
 	char	*start;
 	int		flag;
+	int		*tmp_fd;
 
 	if (!(str && *str))
-		return (1);
-	flag = 0;
-	if (!ft_strncmp(">", *str, 1))
-		flag |= IS_INOOUT;
-	if (!ft_strncmp("<<", *str, 2) || !ft_strncmp(">>", *str, 2))
-		flag |= IS_DOUBLE;
+		return ;
+	flag = (!ft_strncmp(">", *str, 1) << 0)
+		| ((!ft_strncmp("<<", *str, 2) || !ft_strncmp(">>", *str, 2)) << 1);
 	while (**str && (ft_issep(**str) || **str == '>' || **str == '<'))
 		*(*str)++ = 0;
 	start = *str;
@@ -60,47 +82,16 @@ int	redirect(char **str, t_exec *exe, t_data *data)
 		(*str)++;
 	}
 	if (flag & IS_INOOUT)
-	{
-		if (exe->fd_out > 2)
-			close(exe->fd_out);
-		else if (!(exe->fd_out < 1))
-			exe->fd_out = ft_open(start, *str - start, flag, data);
-	}
+		tmp_fd = &(exe->fd_out);
 	else
-	{
-		if (exe->fd_in > 2)
-			close(exe->fd_in);
-		else if (!(exe->fd_in < 0))
-			exe->fd_in = ft_open(start, *str - start, flag, data);
-	}
-	return (0);
+		tmp_fd = &(exe->fd_in);
+	if (*tmp_fd > 2)
+		close(*tmp_fd);
+	else if (!(*tmp_fd < 0))
+		*tmp_fd = ft_open(start, *str - start, flag, data);
 }
 
-char	*parse_arg(char **cont, t_data *data)
-{
-	int		it[2];
-	int		len;
-
-	it[0] = 0;
-	it[1] = 0;
-	while ((*cont)[it[0]])
-	{
-		if ((*cont)[it[0]] == '$')
-		{
-			dollar_handler(cont, data, &len, it);
-			it[0]++; // check
-		}
-		else if ((*cont)[it[0]] == '\'')
-			squote_handler(cont, it);
-		else if ((*cont)[it[0]] == '\"')
-			dquote_handler(cont, data, &len, it);
-		else
-			it[0]++;
-	}
-	return ((*cont));
-}
-
-t_list	*set_arg(t_data *data, char *str, t_list *old, bool exp_flag)
+static t_list	*set_arg(t_data *data, char *str, t_list *old, bool exp_flag)
 {
 	t_list	*new;
 	char	*cont;

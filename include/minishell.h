@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/06 22:59:53 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/04/07 15:23:02 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int		dollar_handler(char **cont, t_data *data, int *len, int *it);
 int     checker(char **input);
 int     iter_cmd(t_data *data);
 t_list  *parse_cmd(char *str, t_data *data, t_exec *exe, bool exp_flag);
-char    *parse_arg(char **cont, t_data *data);
 
 // Signals
 void setup_signal_handling(void);
