@@ -6,11 +6,21 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:32:23 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/05 18:13:07 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/07 14:58:49 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void setup_heredoc_signals(void) {
+    signal(SIGINT, s_heredoc_case); // Use heredoc-specific signal handling
+    signal(SIGQUIT, SIG_IGN); // Ignore SIGQUIT in heredoc
+}
+
+// This function is called after finishing the heredoc input loop
+void restore_signals_after_heredoc(void) {
+    setup_signal_handling(); // Restore the original signal handling setup
+}
 
 static char	*handle_heredoc_expansion(char *line, t_data *data)
 {
@@ -26,7 +36,7 @@ static char	*handle_heredoc_expansion(char *line, t_data *data)
 		{
 			ints[0] = i;
 			ints[1] = get_env(data->envp, line + i, &env_var, data);
-			line = ft_swapstr(line, env_var, ints, 0);
+			line = ft_swapstr(line, env_var, ints, STRFREE_ARG | STRFREE_SRC);
 			i = ints[0];
 		}
 	}
@@ -68,6 +78,7 @@ int	handle_heredoc(const char *delimiter, t_data *data)
 		perror("open error");
 		exit(EXIT_FAILURE);
 	}
+	setup_heredoc_signals(); // Set heredoc-specific signal handling
 	found = 0;
 	while (!found)
 	{
@@ -87,5 +98,6 @@ int	handle_heredoc(const char *delimiter, t_data *data)
 		write(fd, "\n", 1);
 		free (read);
 	}
+	restore_signals_after_heredoc(); // Restore the original signal handling setup
 	return (fd);
 }

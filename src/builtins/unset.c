@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:45 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/02 18:29:00 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/07 21:28:23 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	b_unset(char **env, char **cmds)
 	size_t	k;
 	int		key_len;
 
-	if (!env || !cmds[1])
-		return (handle_void_error("Invalid arguments provided.\n"));
+	if (!cmds[1])
+		return ;
 	k = 0;
 	while (cmds[++k])
 	{

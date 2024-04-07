@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:00 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:42:26 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 16:27:47 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,8 @@ void	b_env(char	**env)
 
 	i = -1;
 	while (env[++i])
-		dprintf(2, "%s\n", env[i]);
+	{
+		if (ft_strchr(env[i], '='))
+			printf("%s\n", env[i]);
+	}
 }

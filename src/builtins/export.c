@@ -6,97 +6,91 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/05 17:59:01 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/07 21:23:55 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	validate_export_var(const char *name)
+void	h_realloc(char ***env, char ***new_env, char **new_var, const char *nm)
 {
-	const char	*ptr;
-
-	if (!name || !*name || !(ft_isalpha(*name)) || *name == '_')
-		return (0);
-	ptr = name + 1;
-	if (!ft_isalpha(*ptr) && *ptr != '_')
-		return (0);
-	while (*ptr)
-	{
-		if (!ft_isalnum(*ptr) && *ptr != '_')
-			return (0);
-		ptr++;
-	}
-	return (1);
-}
-
-static void	handle_reallocation(char **env, char **new_env, char *new_var)
-{
-	size_t	size;
 	size_t	i;
+	size_t	new_size;
 
-	size = 0;
-	while (env[size])
-		++size;
-	new_env = malloc(sizeof(char *) * (size + 2));
-	if (!new_env)
-	{
-		free(new_env);
-		return (handle_void_perror("Failed to reallocate environment array"));
-	}
 	i = -1;
-	while (++i < size)
-		new_env[i] = env[i];
-	env[size] = new_var;
-	env[size + 1] = NULL;
-}
-
-void	handle_env(char **env, char *name)
-{
-	char	*new_var;
-	char	**new_env;
-	size_t	len;
-	size_t	i;
-
-	len = ft_strlen(name) + 2;
-	new_var = malloc(len);
-	new_env = NULL;
-	if (!new_var)
-		return (handle_void_perror("Failed to allocate memory."));
-	snprintf(new_var, len, "%s", name);
-	i = -1;
-	while (env[++i])
+	while ((*env)[++i])
 	{
-		if (ft_strncmp(env[i], name, strlen(name)))
+		if (ft_strncmp((*env)[i], nm, ft_strlen(nm)) == 0
+				&& (*env)[i][ft_strlen(nm)] == '=')
 		{
-			free(env[i]);
-			env[i] = new_var;
+			free((*env)[i]);
+			(*env)[i] = (*new_var);
 			return ;
 		}
 	}
-	handle_reallocation(env, new_env, new_var);
-	free(env);
-	env = new_env;
-	free(new_var);
-	free(new_env);
+	new_size = sizeof(char *) * (i + 2);
+	(*new_env) = malloc(new_size);
+	if (!(*new_env))
+	{
+		perror("Failed to reallocate environment array.");
+		free(new_var);
+		exit(EXIT_FAILURE);
+	}
+	ft_copy_over(new_env, env, new_var, i);
+}
+
+void	handle_env(char ***env, const char *name, const char *value)
+{
+	char	*new_var;
+	char	**new_env;
+
+	new_env = NULL;
+	new_var = malloc(ft_strlen(name + ft_strlen(value) + 2));
+	if (!new_var)
+	{
+		perror("Failed to allocate memory.");
+		exit(EXIT_FAILURE);
+	}
+	build_string(new_var, name, value);
+	h_realloc(env, &new_env, &new_var, name);
+	free(*env);
+	*env = new_env;
+}
+
+static void	ft_export_print(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (data->envp[++i])
+		printf("declare -x %s\n", data->envp[i]);
 }
 
 void	b_export(t_data *data, char *assignment)
 {
-	char	*pos;
+	const char	*name;
+	const char	*value;
+	char		*pos;
 
 	if (!assignment)
-		return (handle_void_error("export: Missing argument\n"));
-	pos = ft_strchr(assignment, '=');
-	if (!pos || pos == assignment)
-		return (handle_void_error("export: Invalid assignment\n"));
-	*pos = '\0';
-	if (!validate_export_var(assignment))
 	{
-		fprintf(stderr, "export: '%s' is not a valid identifier\n", assignment);
-		*pos = '=';
+		ft_export_print(data);
 		return ;
 	}
-	*pos = '=';
-	handle_env(data->envp, assignment);
+	name = assignment;
+	value = NULL;
+	pos = ft_strchr(assignment, '=');
+	if (pos)
+	{
+		*pos = '\0';
+		value = pos + 1;
+	}
+	if (!validate_export_var(name))
+	{
+		fprintf(stderr, "export: '%s' is not a valid identifier\n", name);
+		if (pos)
+			*pos = '=';
+		return ;
+	}
+	handle_env(&(data->envp), name, value);
 }
