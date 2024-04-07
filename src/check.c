@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:34:56 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 21:32:30 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 21:45:12 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static int set_flag(char c, char c_next) {
 
 static int check_char(int *flag, int *len_cmd, int *it, char *str) {
   if ((!(*len_cmd) && ((*flag) & FLAG_2))) {
-    (*flag) = ft_setflag((*flag), FLAG_s, FLAG_d);
+    (*flag) = ft_setflag((*flag), FLAG_S, FLAG_D);
     return (1);
   }
   (*flag) = set_flag(str[(*it)], str[(*it) + 1]);
   if ((!(*len_cmd) && ((*flag) & FLAG_1) && !((*flag) & FLAG_2)) ||
       (((*flag) & FLAG_1) && !((*flag) & FLAG_2) && ((*flag) & FLAG_3))) {
-    (*flag) = ft_setflag((*flag), FLAG_s, FLAG_d);
+    (*flag) = ft_setflag((*flag), FLAG_S, FLAG_D);
     return (1);
   }
   (*it) += (((*flag) & FLAG_3) >> 4);
@@ -54,19 +54,19 @@ static int not_valid(char *str) {
   it = 0;
   len_cmd = 0;
   while (str[it]) {
-    if (!(flag & FLAG_s) && str[it] == '\"')
-      flag ^= FLAG_d;
-    else if (!(flag & FLAG_d) && str[it] == '\'')
-      flag ^= FLAG_s;
-    else if (!(flag & FLAG_s) && !(flag & FLAG_d) && ft_istoken(str[it]))
+    if (!(flag & FLAG_S) && str[it] == '\"')
+      flag ^= FLAG_D;
+    else if (!(flag & FLAG_D) && str[it] == '\'')
+      flag ^= FLAG_S;
+    else if (!(flag & FLAG_S) && !(flag & FLAG_D) && ft_istoken(str[it]))
       if (check_char(&flag, &len_cmd, &it, str))
         return (flag);
-    if ((!ft_issep(str[it]) && !ft_istoken(str[it])) || (flag & FLAG_s) ||
-        (flag & FLAG_d))
+    if ((!ft_issep(str[it]) && !ft_istoken(str[it])) || (flag & FLAG_S) ||
+        (flag & FLAG_D))
       len_cmd++;
     it++;
   }
-  if (len_cmd && !(flag & FLAG_s) && !(flag & FLAG_d))
+  if (len_cmd && !(flag & FLAG_S) && !(flag & FLAG_D))
     flag = ft_unsetflag(flag, FLAG_1, FLAG_2, FLAG_3);
   return (flag);
 }
@@ -81,9 +81,9 @@ static void interactive_promt(char **input, int flag) {
     printf(" outred");
   else if ((flag & FLAG_3) && (flag & FLAG_2) && !(flag & FLAG_1))
     printf(" heredoc");
-  if (flag & FLAG_d)
+  if (flag & FLAG_D)
     printf(" dquote");
-  else if (flag & FLAG_s)
+  else if (flag & FLAG_S)
     printf(" quote");
   *input =
       ft_strjoin(*input, ft_strjoin("\n", readline("> " DEFAULT), STRFREE_S2),
@@ -95,7 +95,7 @@ int checker(char **input) {
 
   while (1) {
     flag = not_valid(*input);
-    if (((flag & FLAG_s) && (flag & FLAG_d))) {
+    if (((flag & FLAG_S) && (flag & FLAG_D))) {
       print_error(flag);
       return (2);
     } else if (flag)
