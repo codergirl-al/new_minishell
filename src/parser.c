@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 14:46:23 by khnishou          #+#    #+#             */
-/*   Updated: 2024/04/07 15:24:35 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 22:18:32 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	ft_open(char *start, int len, int flag, t_data *data)
 	else if ((flag & IS_INOOUT) && !(flag & IS_DOUBLE))
 		fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0000644);
 	else if (!(flag & IS_INOOUT) && (flag & IS_DOUBLE))
-		fd = handle_heredoc(file_name);
+		fd = handle_heredoc(file_name, data);
 	else if ((flag & IS_INOOUT) && (flag & IS_DOUBLE))
 		fd = open(file_name, O_RDWR | O_CREAT | O_APPEND, 0000644);
 	if (fd == -1)

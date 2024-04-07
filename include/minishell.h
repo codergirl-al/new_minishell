@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 21:49:41 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 22:17:16 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,12 @@ void	handle_void_error(char *message);
 void	handle_void_perror(char *message);
 void	execute_builtin(t_data *data, t_exec *exe);
 void	update_env_var(char ***env, const char *name, const char *value);
+void	build_string(char *new_var, const char *name, const char *value);
+int		validate_export_var(const char *name);
 
 // Heredoc
-int		handle_heredoc(const char *delimiter);
+int		handle_heredoc(const char *delimiter, t_data *data);
+void	build_string(char *new_var, const char *name, const char *value);
+void	ft_copy_over(char ***new_env, char ***env, char **new_var, size_t i);
 
 #endif

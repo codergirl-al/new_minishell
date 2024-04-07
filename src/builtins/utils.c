@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/05 15:15:09 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 22:20:51 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ void	execute_builtin(t_data *data, t_exec *exe)
 		b_unset(data->envp, exe->cmd);
 }
 
-
-// handle cd
 void	update_env_var(char ***env, const char *name, const char *value)
 {
 	size_t	i;
- 	size_t	len;
- 	char	*new_var;
+	size_t	len;
+	char	*new_var;
 
 	i = -1;
 	while ((*env)[++i] != NULL)
