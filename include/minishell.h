@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 15:23:02 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 16:41:47 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@
 
 #define IS_INOOUT (1 << 0)
 #define IS_DOUBLE (1 << 1)
+
+#define FLAG_d (1 << 0)
+#define FLAG_s (1 << 1)
+#define FLAG_1 (1 << 2)
+#define FLAG_2 (1 << 3)
+#define FLAG_3 (1 << 4)
 // int	g_sig;
 
 enum e_type {
@@ -74,6 +80,9 @@ int		dollar_handler(char **cont, t_data *data, int *len, int *it);
 int     checker(char **input);
 int     iter_cmd(t_data *data);
 t_list  *parse_cmd(char *str, t_data *data, t_exec *exe, bool exp_flag);
+
+// Error
+void	print_error(int flag);
 
 // Signals
 void setup_signal_handling(void);
