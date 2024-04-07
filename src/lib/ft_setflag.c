@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 19:09:31 by ykerdel           #+#    #+#             */
-/*   Updated: 2024/04/07 19:09:48 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 20:04:17 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ int	ft_setflag(int flag, ...)
 
 	va_start(args, flag);
 	arg = va_arg(args, int);
-	while (arg != 0)
+	while (arg)
+	{
 		if (!(flag & arg))
 			flag |= arg;
+		arg = va_arg(args, int);
+	}
 	va_end(args);
 	return (flag);
 }
