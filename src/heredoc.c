@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:32:23 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 22:17:50 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/07 22:29:29 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*format_delimiter(char *delimiter)
 
 	len = ft_strlen(delimiter);
 	if ((delimiter[0] == '\'' || delimiter[0] == '"')
-			&& delimiter[len - 1] == delimiter[0])
+		&& delimiter[len - 1] == delimiter[0])
 	{
 		formatted = strndup(delimiter + 1, len - 2);
 		if (!formatted)
@@ -75,7 +75,8 @@ int	handle_heredoc(const char *delimiter, t_data *data)
 			break ;
 		if (ft_strchr(read, '$') != NULL)
 			read = handle_heredoc_expansion(read, data);
-		if (ft_strncmp(read, f_delimiter, ft_strlen(f_delimiter)) == 0 && ft_strlen(read) == ft_strlen(f_delimiter))
+		if (ft_strncmp(read, f_delimiter, ft_strlen(f_delimiter)) == 0
+			&& ft_strlen(read) == ft_strlen(f_delimiter))
 		{
 			found = 1;
 			free(read);

@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 22:15:57 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:24:50 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	g_sig;
 
-static void	prompt(t_data *data)
+static void	prompt(t_data *data, int status)
 {
 	while (g_sig >= 256)
 	{
@@ -26,10 +26,12 @@ static void	prompt(t_data *data)
 			data->input = readline(GREEN"➜ "DEFAULT);
 		if (data->input && *data->input)
 		{
-			data->exit_status = checker(&data->input);
+			status = checker(&data->input);
 			add_history(data->input);
-			if (!data->exit_status)
+			if (!status)
 				(void) iter_cmd(data);
+			else
+				data->exit_status = status;
 		}
 		else if (!data->input || data->exit || g_sig < 256)
 		{
@@ -57,13 +59,15 @@ static void	unset_data(t_data *data)
 
 int	main(int argc, char **argv, char **env)
 {
+	int		status;
 	t_data	data;
 
 	(void)argv;
+	status = 0;
 	set_data(&data, env);
 	if (argc != 1)
 		printf("All arguments will be ignored\n");
-	prompt(&data);
+	prompt(&data, status);
 	unset_data(&data);
 	return (data.exit_status);
 }

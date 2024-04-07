@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:14 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:42:38 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/08 00:05:41 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,25 @@ static int	my_atoi(const char *str, int *out)
 	return (0);
 }
 
-void	b_exit(t_data *data, char **args)
+int	b_exit(char **args)
 {
 	int	status;
 
 	if (args[1] && args[2])
 	{
 		fprintf(stderr, "exit: too many arguments\n");
-		data->exit_status = 1;
-		return ;
+		return (1);
 	}
+	printf("exit\n");
 	if (args[1])
 	{
 		if (my_atoi(args[1], &status) == -1)
 		{
 			fprintf(stderr, "exit: %s: numeric argument required\n", args[1]);
-			data->exit_status = 2;
+			return (2);
 		}
 		else
-			data->exit_status = status;
+			return (status);
 	}
-	exit((char)data->exit_status);
+	return (0);
 }

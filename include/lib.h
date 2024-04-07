@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 22:16:13 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/07 22:39:15 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		ft_issep(char c);
 int		ft_isalnum(int c);
 int		ft_istoken(char c);
 int		ft_isalpha(int c);
+int		ft_isbuiltin(t_list *lst);
 
 int		ft_arrlen(char **arr);
 char	*ft_arrcmp(void **arr, void *keyword);

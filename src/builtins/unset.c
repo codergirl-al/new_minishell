@@ -6,13 +6,13 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:45 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 21:28:23 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:05:09 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	b_unset(char **env, char **cmds)
+int	b_unset(char **env, char **cmds)
 {
 	size_t	i;
 	size_t	j;
@@ -20,10 +20,12 @@ void	b_unset(char **env, char **cmds)
 	int		key_len;
 
 	if (!cmds[1])
-		return ;
+		return (0);
 	k = 0;
 	while (cmds[++k])
 	{
+		if (!validate_export_var(cmds[k]))
+			return (1);
 		i = -1;
 		key_len = ft_strlen(cmds[k]);
 		while (env[++i] != NULL)
@@ -38,4 +40,5 @@ void	b_unset(char **env, char **cmds)
 			}
 		}
 	}
+	return (0);
 }

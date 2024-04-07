@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 22:20:51 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:12:47 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,30 @@ int	handle_error(int r_value, char *r_message)
 	return (r_value);
 }
 
-void	handle_void_perror(char *message)
+int	execute_builtin(t_data *data, t_exec *exe, int exit_flag)
 {
-	perror(message);
-	return ;
-}
+	int exit_n;
 
-void	handle_void_error(char *message)
-{
-	fprintf(stderr, "%s", message);
-	return ;
-}
-
-void	execute_builtin(t_data *data, t_exec *exe)
-{
 	if (!ft_strncmp("cd", exe->cmd[0], 3))
-		b_cd(exe->cmd[1], data);
+		exit_n = b_cd(exe->cmd[1], data);
 	else if (!ft_strncmp("echo", exe->cmd[0], 5))
-		b_echo(exe->cmd);
+		exit_n = b_echo(exe->cmd);
 	else if (!ft_strncmp("env", exe->cmd[0], 4))
-		b_env(data->envp);
+		exit_n = b_env(data->envp);
 	else if (!ft_strncmp("exit", exe->cmd[0], 5))
-		b_exit(data, exe->cmd);
+		exit_n = b_exit(exe->cmd);
 	else if (!ft_strncmp("export", exe->cmd[0], 7))
-		b_export(data, exe->cmd[1]);
+		exit_n = b_export(data, exe->cmd[1]);
 	else if (!ft_strncmp("pwd", exe->cmd[0], 4))
-		b_pwd();
+		exit_n = b_pwd();
 	else if (!ft_strncmp("unset", exe->cmd[0], 6))
-		b_unset(data->envp, exe->cmd);
+		exit_n = b_unset(data->envp, exe->cmd);
+	if (exit_flag)
+		exit(exit_n);
+	return (exit_n);
 }
 
-void	update_env_var(char ***env, const char *name, const char *value)
+int	update_env_var(char ***env, const char *name, const char *value)
 {
 	size_t	i;
 	size_t	len;
@@ -64,10 +57,11 @@ void	update_env_var(char ***env, const char *name, const char *value)
 			len = ft_strlen(name) + ft_strlen(value) + 2;
 			new_var = malloc(len);
 			if (new_var == NULL)
-				return (handle_void_perror("Failed to allocate memory."));
+				return (handle_error(1, "Failed to allocate memory."));
 			snprintf(new_var, len, "%s=%s", name, value);
 			(*env)[i] = new_var;
-			return ;
+			return (1);
 		}
 	}
+	return (0);
 }

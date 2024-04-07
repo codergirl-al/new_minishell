@@ -6,13 +6,13 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:00 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 16:27:47 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:00:54 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	b_env(char	**env)
+int	b_env(char	**env)
 {
 	int	i;
 
@@ -22,4 +22,5 @@ void	b_env(char	**env)
 		if (ft_strchr(env[i], '='))
 			printf("%s\n", env[i]);
 	}
+	return (0);
 }

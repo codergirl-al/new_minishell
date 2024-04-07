@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 22:17:16 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:12:28 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "lib.h"
 # include <fcntl.h>
 # include <limits.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -25,6 +23,8 @@
 # include <sys/wait.h>
 # include <termios.h>
 # include <unistd.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 # define RED "\033[1;31m"
 # define GREEN "\033[0;32m"
@@ -81,20 +81,18 @@ void	s_heredoc_case(int sig);
 void	handle_signals_extended(void (*func)(int));
 
 // Builtins
-void	b_cd(char *path, t_data *data);
-void	b_echo(char **cmds);
-void	b_env(char **env);
-void	b_exit(t_data *data, char **args);
-void	b_export(t_data *data, char *assignment);
-void	b_pwd(void);
-void	b_unset(char **env, char **cmds);
+int		b_cd(char *path, t_data *data);
+int		b_echo(char **cmds);
+int		b_env(char **env);
+int		b_exit(char **args);
+int		b_export(t_data *data, char *assignment);
+int		b_pwd(void);
+int		b_unset(char **env, char **cmds);
 
 // Builtin utils
 int		handle_error(int r_value, char *r_message);
-void	handle_void_error(char *message);
-void	handle_void_perror(char *message);
-void	execute_builtin(t_data *data, t_exec *exe);
-void	update_env_var(char ***env, const char *name, const char *value);
+int		execute_builtin(t_data *data, t_exec *exe, int exit_flag);
+int		update_env_var(char ***env, const char *name, const char *value);
 void	build_string(char *new_var, const char *name, const char *value);
 int		validate_export_var(const char *name);
 

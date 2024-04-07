@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:38 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/03/28 20:42:10 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/08 00:01:02 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	b_echo(char **cmds)
+int	b_echo(char **cmds)
 {
 	bool	newline;
 	int		arrlen;
@@ -38,4 +38,5 @@ void	b_echo(char **cmds)
 	}
 	if (newline)
 		putchar('\n');
+	return (0);
 }

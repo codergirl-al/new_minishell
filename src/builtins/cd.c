@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:31 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 22:19:52 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/07 23:55:57 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_env_var_value(char **envp, const char *name)
 	return (NULL);
 }
 
-void	handle_home_case(t_data *data, const char *var_name)
+int	handle_home_case(t_data *data, const char *var_name)
 {
 	char	*home_path;
 
@@ -37,49 +37,35 @@ void	handle_home_case(t_data *data, const char *var_name)
 	if (home_path == NULL)
 	{
 		fprintf(stderr, "cd: %s not set\n", var_name);
-		data->exit_status = 1;
-		return ;
+		return (1);
 	}
 	if (chdir(home_path) != 0)
-	{
-		perror("cd: error changing to home directory");
-		data->exit_status = 1;
-	}
-	else
-		data->exit_status = 0;
+		return (handle_error(1, "cd: error changing to home directory"));
+	return (0);
 }
 
-static void	handle_cd_perror(t_data *data, char *message)
-{
-	perror(message);
-	data->exit_status = 1;
-	return ;
-}
-
-void	b_cd(char *path, t_data *data)
+int	b_cd(char *path, t_data *data)
 {
 	char	old_path[1024];
 	char	new_path[1024];
 
-	data->exit = 0;
 	if (!data)
-		return (handle_void_error("cd: invalid data structure\n"));
+		return (handle_error(1, "cd: invalid data structure"));
 	if (getcwd(old_path, sizeof(old_path)) == NULL)
 	{
 		perror("cd: error getting current directory");
-		data->exit_status = 1;
-		return ;
+		return (1);
 	}
 	if (!path || !ft_strncmp(path, "~", 2) || path == NULL)
 		handle_home_case(data, "HOME");
 	else if (chdir(path) != 0)
-		return (handle_cd_perror(data, "cididi"));
+		return (handle_error(1, "cd"));
 	if (data->exit_status == 0)
 	{
 		update_env_var(&(data->envp), "OLDPWD", old_path);
 		if (getcwd(new_path, sizeof(new_path)) == NULL)
-			return (handle_cd_perror(data, "cd: error getting new directory"));
+			return (handle_error(1, "cd: error getting new directory"));
 	}
 	update_env_var(&(data->envp), "PWD", new_path);
-	data->exit_status = 0;
+	return (0);
 }

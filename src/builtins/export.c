@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 22:20:31 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:11:27 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	ft_export_print(t_data *data)
 		printf("declare -x %s\n", data->envp[i]);
 }
 
-void	b_export(t_data *data, char *assignment)
+int	b_export(t_data *data, char *assignment)
 {
 	const char	*name;
 	const char	*value;
@@ -75,7 +75,7 @@ void	b_export(t_data *data, char *assignment)
 	if (!assignment)
 	{
 		ft_export_print(data);
-		return ;
+		return (0);
 	}
 	name = assignment;
 	value = NULL;
@@ -90,7 +90,8 @@ void	b_export(t_data *data, char *assignment)
 		fprintf(stderr, "export: '%s' is not a valid identifier\n", name);
 		if (pos)
 			*pos = '=';
-		return ;
+		return (1);
 	}
 	handle_env(&(data->envp), name, value);
+	return (0);
 }
