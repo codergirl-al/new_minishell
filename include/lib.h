@@ -6,15 +6,15 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 15:58:56 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 21:37:48 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIB_H
 # define LIB_H
 
-# include <stdarg.h>
 # include <limits.h>
+# include <stdarg.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
@@ -25,35 +25,38 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-#define STRFREE_SRC (1 << 0)
-#define STRFREE_ARG (1 << 1)
-#define STRFREE_S1 (1 << 0)
-#define STRFREE_S2 (1 << 1)
+# define STRFREE_SRC 1
+# define STRFREE_ARG 2
+# define STRFREE_S1 1
+# define STRFREE_S2 2
 
 int		ft_issep(char c);
-int		istoken(char c);
 int		ft_isalnum(int c);
+int		ft_istoken(char c);
 int		ft_isalpha(int c);
+
 int		ft_arrlen(char **arr);
 char	*ft_arrcmp(void **arr, void *keyword);
 char	**ft_arrdup(char **arr);
-char	*ft_strjoin(char *s1, char *s2, int free_flag);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_arrfree(char **arr);
+
 size_t	ft_strlen(const char *s);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strdup(const char *s);
 char	*ft_substr(char *str, unsigned int start, size_t len, int free_flag);
 char	*ft_swapstr(char *src, char *swap, int *ints, int free_flag);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strjoin(char *s1, char *s2, int free_flag);
+char	*ft_itoa(int n);
 
 t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
 char	**lst_to_arr(t_list *head);
-void	ft_putstr_fd(char *s, int fd);
-char	*ft_strchr(const char *s, int c);
-char	*ft_itoa(int n);
 void	ft_lstfree(t_list *lst);
-void	ft_arrfree(char **arr);
-char	*ft_strdup(const char *s);
 
-int ft_setflag(int flag, ...);
-int ft_unsetflag(int flag, ...);
+void	ft_putstr_fd(char *s, int fd);
+
+int		ft_setflag(int flag, ...);
+int		ft_unsetflag(int flag, ...);
 
 #endif

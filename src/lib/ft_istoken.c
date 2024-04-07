@@ -6,13 +6,10 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 19:12:37 by ykerdel           #+#    #+#             */
-/*   Updated: 2024/04/07 19:12:55 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 21:32:35 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib.h"
 
-int	istoken(char c)
-{
-	return ((c == '|') || (c == '>') || (c == '<'));
-}
+int ft_istoken(char c) { return ((c == '|') || (c == '>') || (c == '<')); }
