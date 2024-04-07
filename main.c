@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khnishou <khnishou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:12 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/05 17:15:35 by khnishou         ###   ########.fr       */
+/*   Updated: 2024/04/07 21:50:15 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	prompt(t_data *data)
 	}
 }
 
-static void set_data(t_data *data, char **env)
+static void	set_data(t_data *data, char **env)
 {
 	g_sig = 256;
 	data->envp = ft_arrdup(env);
@@ -50,7 +50,7 @@ static void set_data(t_data *data, char **env)
 	data->input = NULL;
 }
 
-static void unset_data(t_data *data)
+static void	unset_data(t_data *data)
 {
 	ft_arrfree(data->envp);
 }

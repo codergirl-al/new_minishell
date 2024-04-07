@@ -6,7 +6,7 @@
 /*   By: ykerdel <ykerdel@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 21:47:28 by ykerdel          ###   ########.fr       */
+/*   Updated: 2024/04/07 21:49:41 by ykerdel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@
 # define FLAG_1 4
 # define FLAG_2 8
 # define FLAG_3 16
-
-// int	g_sig;
 
 typedef struct s_data
 {
