@@ -59,6 +59,12 @@ static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
 		dup2(exe.fd_out, STDOUT_FILENO);
 		close(exe.fd_out);
 	}
+	exe.path = ft_getpath(data->envp, exe.cmd[0]);
+	if (!exe.path)
+	{
+		write(2, "minishell: command not found\n", 30);
+		return (127);
+	}
 	execve(exe.path, exe.cmd, data->envp);
 	write(2, "minishell: command not found\n", 30);
 	return (127);
