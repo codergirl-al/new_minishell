@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 16:58:03 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:02:24 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	execute_pipe(char *cmd, t_data *data, int *stdin)
 		if (ft_isbuiltin(lst))
 		{
 			exe.cmd = lst_to_arr(lst);
-			execute_builtin(data, &exe, 1);
+			execute_builtin(lst, data, &exe, 1);
 		}
 		else
 			execute(lst, data, stdin, exe);
@@ -112,10 +112,7 @@ static int	execute_last(char *cmd, t_data *data, int *stdin)
 	if (exe.fd_in < 0 || exe.fd_out < 0)
 		return (0);
 	if (lst && ft_isbuiltin(lst))
-	{
-		exe.cmd = lst_to_arr(lst);
-		tmp = execute_builtin(data, &exe, 0);
-	}
+		tmp = execute_builtin(lst, data, &exe, 0);
 	else if (lst)
 	{
 		if (!fork())

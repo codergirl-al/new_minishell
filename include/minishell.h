@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 12:55:55 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 00:12:28 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:01:09 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		b_unset(char **env, char **cmds);
 
 // Builtin utils
 int		handle_error(int r_value, char *r_message);
-int		execute_builtin(t_data *data, t_exec *exe, int exit_flag);
+int		execute_builtin(t_list *lst, t_data *data, t_exec *exe, int exit_flag);
 int		update_env_var(char ***env, const char *name, const char *value);
 void	build_string(char *new_var, const char *name, const char *value);
 int		validate_export_var(const char *name);
