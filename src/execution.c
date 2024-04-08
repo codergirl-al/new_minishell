@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 17:02:24 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:04:00 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,7 @@ static int	execute_pipe(char *cmd, t_data *data, int *stdin)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		if (ft_isbuiltin(lst))
-		{
-			exe.cmd = lst_to_arr(lst);
 			execute_builtin(lst, data, &exe, 1);
-		}
 		else
 			execute(lst, data, stdin, exe);
 	}
