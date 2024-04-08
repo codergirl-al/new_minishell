@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:32:23 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 22:29:29 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 23:49:03 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,13 @@ char	*format_delimiter(char *delimiter)
 	return (delimiter);
 }
 
-int	handle_heredoc(const char *delimiter, t_data *data)
+static void	heredoc_logic(char *delimiter, t_data *data, int fd)
 {
-	int		fd;
 	int		found;
 	char	*read;
 	char	*f_delimiter;
 
 	f_delimiter = format_delimiter((char *)delimiter);
-	fd = open("heredoc", O_CREAT | O_RDWR | O_TRUNC, 0000644);
-	if (fd == -1)
-	{
-		perror("open error");
-		exit(EXIT_FAILURE);
-	}
 	found = 0;
 	while (!found)
 	{
@@ -86,5 +79,20 @@ int	handle_heredoc(const char *delimiter, t_data *data)
 		write(fd, "\n", 1);
 		free (read);
 	}
+}
+
+int	handle_heredoc(const char *delimiter, t_data *data)
+{
+	int		fd;
+
+	fd = open("heredoc", O_CREAT | O_RDWR | O_TRUNC, 0000644);
+	if (fd == -1)
+	{
+		perror("open error");
+		exit(EXIT_FAILURE);
+	}
+	heredoc_logic((char *)delimiter, data, fd);
+	close(fd);
+	fd = open("heredoc", O_RDONLY);
 	return (fd);
 }

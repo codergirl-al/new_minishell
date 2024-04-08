@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 17:04:00 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 23:47:23 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*ft_getpath(char **env, char *f_cmd)
 }
 
 static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
-{	
+{
 	exe.cmd = lst_to_arr(lst);
 	if (!exe.cmd)
 		return (0);
@@ -59,13 +59,11 @@ static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
 		close(exe.fd_out);
 	}
 	exe.path = ft_getpath(data->envp, exe.cmd[0]);
-	if (!exe.path)
-	{
-		write(2, "minishell: command not found\n", 30);
-		return (127);
-	}
-	execve(exe.path, exe.cmd, data->envp);
+	if (exe.path)
+		execve(exe.path, exe.cmd, data->envp);
 	write(2, "minishell: command not found\n", 30);
+	free(exe.cmd);
+	free(exe.path);
 	return (127);
 }
 
@@ -78,9 +76,7 @@ static int	execute_pipe(char *cmd, t_data *data, int *stdin)
 	exe.fd_in = 0;
 	exe.fd_out = 1;
 	lst = parse_cmd(cmd, data, &exe, true);
-	if (exe.fd_in < 0 || exe.fd_out < 0)
-		return (0);
-	if (!pipe(fd) && !fork())
+	if (!(exe.fd_in < 0 || exe.fd_out < 0) && !pipe(fd) && !fork())
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
@@ -88,13 +84,15 @@ static int	execute_pipe(char *cmd, t_data *data, int *stdin)
 		if (ft_isbuiltin(lst))
 			execute_builtin(lst, data, &exe, 1);
 		else
-			execute(lst, data, stdin, exe);
+			exit(execute(lst, data, stdin, exe));
 	}
-	close(fd[1]);
 	close(*stdin);
 	*stdin = fd[0];
-	ft_lstfree(lst);
-	return (0);
+	if (exe.fd_in > 2)
+		close(exe.fd_in);
+	if (exe.fd_out > 2)
+		close(exe.fd_out);
+	return (close(fd[1]), ft_lstfree(lst), 0);
 }
 
 static int	execute_last(char *cmd, t_data *data, int *stdin)
@@ -106,11 +104,9 @@ static int	execute_last(char *cmd, t_data *data, int *stdin)
 	exe.fd_in = 0;
 	exe.fd_out = 1;
 	lst = parse_cmd(cmd, data, &exe, true);
-	if (exe.fd_in < 0 || exe.fd_out < 0)
-		return (0);
-	if (lst && ft_isbuiltin(lst))
+	if (!(exe.fd_in < 0 || exe.fd_out < 0) && lst && ft_isbuiltin(lst))
 		tmp = execute_builtin(lst, data, &exe, 0);
-	else if (lst)
+	else if (!(exe.fd_in < 0 || exe.fd_out < 0) && lst)
 	{
 		if (!fork())
 			exit(execute(lst, data, stdin, exe));
@@ -121,6 +117,10 @@ static int	execute_last(char *cmd, t_data *data, int *stdin)
 	}
 	*stdin = dup(STDIN_FILENO);
 	ft_lstfree(lst);
+	if (exe.fd_in > 2)
+		close(exe.fd_in);
+	if (exe.fd_out > 2)
+		close(exe.fd_out);
 	return (0);
 }
 

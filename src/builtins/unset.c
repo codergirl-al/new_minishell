@@ -6,16 +6,33 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:23:45 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 00:05:09 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 23:48:51 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	b_unset(char **env, char **cmds)
+static void	handle_unset(size_t k, int key_len, char ***env, char **cmds)
 {
 	size_t	i;
 	size_t	j;
+
+	i = -1;
+	while ((*env)[++i] != NULL)
+	{
+		if (!ft_strncmp((*env)[i], cmds[k], key_len))
+		{
+			free((*env)[i]);
+			j = i - 1;
+			while ((*env)[++j])
+				(*env)[j] = (*env)[j + 1];
+			break ;
+		}
+	}
+}
+
+int	b_unset(char **env, char **cmds)
+{
 	size_t	k;
 	int		key_len;
 
@@ -26,19 +43,8 @@ int	b_unset(char **env, char **cmds)
 	{
 		if (!validate_export_var(cmds[k]))
 			return (1);
-		i = -1;
 		key_len = ft_strlen(cmds[k]);
-		while (env[++i] != NULL)
-		{
-			if (!ft_strncmp(env[i], cmds[k], key_len) && env[i][key_len] == '=')
-			{
-				free(env[i]);
-				j = i - 1;
-				while (env[++j])
-					env[j] = env[j + 1];
-				break ;
-			}
-		}
+		handle_unset(k, key_len, &env, cmds);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 15:26:14 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:50:04 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ void	handle_env(char ***env, const char *name, const char *value)
 	*env = new_env;
 }
 
-static void	ft_export_print(t_data *data)
+static int	ft_export_print(t_data *data)
 {
 	int	i;
 
 	i = -1;
 	while (data->envp[++i])
 		printf("declare -x %s\n", data->envp[i]);
+	return (0);
 }
 
 int	b_export(t_data *data, char *assignment)
@@ -73,10 +74,7 @@ int	b_export(t_data *data, char *assignment)
 	char		*pos;
 
 	if (!assignment)
-	{
-		ft_export_print(data);
-		return (0);
-	}
+		return (ft_export_print(data));
 	name = assignment;
 	value = NULL;
 	pos = ft_strchr(assignment, '=');

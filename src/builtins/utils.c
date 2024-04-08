@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 17:17:53 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:11:10 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	handle_error(int r_value, char *r_message)
 
 int	execute_builtin(t_list *lst, t_data *data, t_exec *exe, int exit_flag)
 {
-	int exit_n;
+	int	exit_n;
 
 	exe->cmd = lst_to_arr(lst);
 	if (!ft_strncmp("cd", exe->cmd[0], 3))
