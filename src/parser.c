@@ -87,7 +87,7 @@ static void	redirect(char **str, t_exec *exe, t_data *data)
 		tmp_fd = &(exe->fd_in);
 	if (*tmp_fd > 2)
 		close(*tmp_fd);
-	else if (!(*tmp_fd < 0))
+	if (!(*tmp_fd < 0))
 		*tmp_fd = ft_open(start, *str - start, flag, data);
 }
 
