@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:00:03 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 17:07:40 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:17:53 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	execute_builtin(t_list *lst, t_data *data, t_exec *exe, int exit_flag)
 		exit_n = b_pwd();
 	else if (!ft_strncmp("unset", exe->cmd[0], 6))
 		exit_n = b_unset(data->envp, exe->cmd);
-	// ft_arrfree(exe->cmd);
+	free(exe->cmd);
 	if (exit_flag)
 		exit(exit_n);
 	return (exit_n);
