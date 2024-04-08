@@ -112,12 +112,12 @@ static int	execute_last(char *cmd, t_data *data, int *stdin)
 	lst = parse_cmd(cmd, data, &exe, true);
 	if (exe.fd_in < 0 || exe.fd_out < 0)
 		return (0);
-	if (ft_isbuiltin(lst))
+	if (lst && ft_isbuiltin(lst))
 	{
 		exe.cmd = lst_to_arr(lst);
 		tmp = execute_builtin(data, &exe, 0);
 	}
-	else
+	else if (lst)
 	{
 		if (!fork())
 			exit(execute(lst, data, stdin, exe));
