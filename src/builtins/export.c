@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 20:19:32 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 00:11:27 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:26:14 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	b_export(t_data *data, char *assignment)
 	}
 	if (!validate_export_var(name))
 	{
-		fprintf(stderr, "export: '%s' is not a valid identifier\n", name);
+		printf("export: '%s' is not a valid identifier\n", name);
 		if (pos)
 			*pos = '=';
 		return (1);

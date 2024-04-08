@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:25:14 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 00:05:41 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:26:05 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	b_exit(char **args)
 
 	if (args[1] && args[2])
 	{
-		fprintf(stderr, "exit: too many arguments\n");
+		printf("exit: too many arguments\n");
 		return (1);
 	}
 	printf("exit\n");
@@ -55,7 +55,7 @@ int	b_exit(char **args)
 	{
 		if (my_atoi(args[1], &status) == -1)
 		{
-			fprintf(stderr, "exit: %s: numeric argument required\n", args[1]);
+			printf("exit: %s: numeric argument required\n", args[1]);
 			return (2);
 		}
 		else
