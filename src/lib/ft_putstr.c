@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 18:23:38 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 16:05:48 by apeposhi         ###   ########.fr       */
+/*   Created: 2024/04/08 16:02:40 by apeposhi          #+#    #+#             */
+/*   Updated: 2024/04/08 16:03:22 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/lib.h"
 
-int	b_echo(char **cmds)
+int	ft_putstr(char *str)
 {
-	bool	newline;
-	int		start_index;
-	int		i;
+	int	i;
 
-	newline = true;
-	start_index = 1;
-	if (cmds[1] && ft_strncmp(cmds[1], "-n", 2) == 0)
-	{
-		newline = false;
-		start_index = 2;
-	}
-	i = start_index - 1;
-	while (cmds[++i])
-	{
-		ft_putstr(cmds[i]);
-		if (cmds[i + 1])
-			ft_putchar(' ');
-	}
-	if (newline)
-		ft_putchar('\n');
-	return (0);
+	i = 0;
+	if (!str)
+		return (write(1, "(null)", 6));
+	while (str[i])
+		i++;
+	return (write(1, str, i));
 }
