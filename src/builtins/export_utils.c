@@ -37,11 +37,11 @@ void	build_string(char *new_var, const char *name, const char *value)
 		printf("Invalid argument(s)\n");
 		return ;
 	}
-	strcpy(new_var, name);
+	my_strcpy(new_var, name);
 	if (value)
 	{
-		strcat(new_var, "=");
-		strcat(new_var, value);
+		my_strcat(new_var, "=");
+		my_strcat(new_var, value);
 	}
 }
 

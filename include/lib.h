@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/07 22:39:15 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 00:46:27 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	*ft_swapstr(char *src, char *swap, int *ints, int free_flag);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2, int free_flag);
 char	*ft_itoa(int n);
+char	*my_strcpy(char *dest, const char *src);
+char	*my_strcat(char *dest, const char *src);
 
 t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);

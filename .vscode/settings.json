@@ -2,6 +2,7 @@
 	"files.associations": {
 		"minibash.h": "c",
 		"minishell.h": "c",
-		"typeinfo": "c"
+		"typeinfo": "c",
+		"lib.h": "c"
 	}
 }
