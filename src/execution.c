@@ -59,6 +59,12 @@ static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
 		dup2(exe.fd_out, STDOUT_FILENO);
 		close(exe.fd_out);
 	}
+	exe.path = ft_getpath(data->envp, exe.cmd[0]);
+	if (!exe.path)
+	{
+		write(2, "minishell: command not found\n", 30);
+		return (127);
+	}
 	execve(exe.path, exe.cmd, data->envp);
 	write(2, "minishell: command not found\n", 30);
 	return (127);
@@ -106,12 +112,12 @@ static int	execute_last(char *cmd, t_data *data, int *stdin)
 	lst = parse_cmd(cmd, data, &exe, true);
 	if (exe.fd_in < 0 || exe.fd_out < 0)
 		return (0);
-	if (ft_isbuiltin(lst))
+	if (lst && ft_isbuiltin(lst))
 	{
 		exe.cmd = lst_to_arr(lst);
 		tmp = execute_builtin(data, &exe, 0);
 	}
-	else
+	else if (lst)
 	{
 		if (!fork())
 			exit(execute(lst, data, stdin, exe));
