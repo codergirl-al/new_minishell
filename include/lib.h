@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:10:15 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 15:46:31 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:03:36 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		ft_lstsize(t_list *lst);
 char	**lst_to_arr(t_list *head);
 void	ft_lstfree(t_list *lst);
 int		ft_putchar(char c);
+int		ft_putstr(char *str);
 int		ft_setflag(int flag, ...);
 int		ft_unsetflag(int flag, ...);
 
