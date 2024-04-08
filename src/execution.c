@@ -6,7 +6,7 @@
 /*   By: apeposhi <apeposhi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 13:01:36 by apeposhi          #+#    #+#             */
-/*   Updated: 2024/04/08 00:13:15 by apeposhi         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:58:03 by apeposhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static int	execute(t_list *lst, t_data *data, int *stdin, t_exec exe)
 	if (!exe.cmd)
 		return (0);
 	dup2(*stdin, STDIN_FILENO);
-	exe.path = ft_getpath(data->envp, exe.cmd[0]);
 	close(*stdin);
 	if (exe.fd_in > 2)
 	{
